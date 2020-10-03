@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "An example app using the Spotify API",
   "scripts": {
-    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\"",
-    "postinstall": "cd backend && npm install && cd ../frontend && npm install"
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\""
   },
   "author": "Chinedum Echeta",
   "license": "ISC",

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The backend module of the Meps project",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "dotenv": "^8.2.0"
   }
 }
