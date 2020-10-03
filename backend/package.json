@@ -1,0 +1,17 @@
+{
+  "name": "mebs-backend",
+  "version": "1.0.0",
+  "description": "The backend module of the Meps project",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "express": "^4.17.1"
+  }
+}
