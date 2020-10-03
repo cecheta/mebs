@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The backend module of the Meps project",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
