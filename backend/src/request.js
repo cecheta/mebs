@@ -10,7 +10,7 @@ const request = {
       try {
         await this.auth();
       } catch (error) {
-        return error;
+        throw new Error(error);
       }
     }
 
@@ -22,7 +22,7 @@ const request = {
       });
       return response.data;
     } catch (error) {
-      return error;
+      throw new Error(error);
     }
   },
 
@@ -40,9 +40,12 @@ const request = {
       this.token = res.data.access_token;
       this.expires = Math.floor(Date.now() / 1000) + 3500;
     } catch (error) {
-      return error;
+      throw new Error(error);
     }
   },
 };
+
+request.get = request.get.bind(request);
+request.auth = request.auth.bind(request);
 
 module.exports = request;
