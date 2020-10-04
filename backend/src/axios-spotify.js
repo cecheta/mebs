@@ -5,7 +5,7 @@ const request = {
   expires: null,
   token: null,
 
-  async get(url) {
+  async get(url, config = {}) {
     if (!this.token || Date.now() / 1000 > this.expires) {
       try {
         await this.auth();
@@ -13,14 +13,14 @@ const request = {
         throw new Error(error);
       }
     }
-
     try {
       const response = await axios.get(`https://api.spotify.com${url}`, {
+        ...config,
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
       });
-      return response.data;
+      return response;
     } catch (error) {
       throw new Error(error);
     }

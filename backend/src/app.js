@@ -1,10 +1,22 @@
 const express = require('express');
-const dotenv = require('dotenv');
+const axios = require('./axios-spotify');
+
+if (process.env.NODE_ENV !== 'PRODUCTION') {
+  require('dotenv').config();
+}
 
 const app = express();
-dotenv.config();
 
 const PORT = process.env.PORT || 4000;
+
+app.get('/api/search', (req, res) => {
+  const query = req.query;
+  const config = { params: query };
+  axios
+    .get('/v1/search', config)
+    .then((response) => res.send(response.data))
+    .catch((error) => res.send({ error }));
+});
 
 app.get('*', (req, res) => {
   res.send('Server is up');
