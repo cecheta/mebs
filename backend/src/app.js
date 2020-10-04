@@ -15,7 +15,11 @@ app.get('/api/search', (req, res) => {
   axios
     .get('/v1/search', config)
     .then((response) => res.send(response.data))
-    .catch((error) => res.send({ error }));
+    .catch((error) => {
+      res.status(error.response.status).send({
+        error: { message: error.message },
+      });
+    });
 });
 
 app.get('*', (req, res) => {
