@@ -10,56 +10,66 @@ import './Results.scss';
 
 const Results = (props) => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
   const [searchType, setSearchType] = useState(null);
+  const [error, setError] = useState(false);
 
   let queryString = props.location.search;
   const searchParams = new URLSearchParams(queryString);
   const type = searchParams.get('type');
   const q = searchParams.get('q');
 
+  const validType = type === 'all' || type === 'album' || type === 'artist' || type === 'track';
+
   useEffect(() => {
     (async () => {
-      if (q && type && (type === 'all' || type === 'album' || type === 'artist' || type === 'track')) {
-        setLoading(true);
+      if (q && validType) {
         setSearchType(type);
-        let searchQuery = queryString;
-        if (searchQuery.includes('type=all')) {
-          searchQuery = searchQuery.replace('type=all', 'type=album,artist,track');
-        }
-
-        try {
-          const response = await axios.get(`/api/search${searchQuery}`);
-          setData(response.data);
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setLoading(false);
+        
+        if (!data[type]) {
+          setError(false);
+          setLoading(true);
+          let searchQuery = queryString;
+          if (searchQuery.includes('type=all')) {
+            searchQuery = searchQuery.replace('type=all', 'type=album,artist,track');
+          }
+          
+          try {
+            const response = await axios.get(`/api/search${searchQuery}`);
+            setData((prevState) => ({
+              ...prevState,
+              [type]: response.data,
+            }));
+          } catch (error) {
+            setError(true);
+          } finally {
+            setLoading(false);
+          }
         }
       }
     })();
-  }, [q, type, queryString]);
+  }, [q, type, validType, queryString, data]);
 
   let results = loading ? <Spinner /> : null;
 
-  if (!type || (type !== 'all' && type !== 'album' && type !== 'artist' && type !== 'track')) {
+  if (!validType) {
     results = <Redirect to={`/search?q=${q}&type=all`} />;
   }
   if (!q) {
     results = <Redirect to="/" />;
   }
 
-  if (!loading && data) {
+  if (error) {
+    results = <div>An error has occurred...</div>;
+  } else if (!loading) {
     if (searchType === 'all') {
-      results = <AllItems data={data} />;
+      results = <AllItems data={data.all} />;
     } else if (searchType === 'album') {
-      results = <Albums data={data.albums} />;
+      results = <Albums data={data.album.albums} />;
     } else if (searchType === 'artist') {
-      results = <Artists data={data.artists} />;
+      results = <Artists data={data.artist.artists} />;
     } else if (searchType === 'track') {
-      results = <Songs data={data.tracks} />;
-    } else {
-      results = null;
+      results = <Songs data={data.track.tracks} />;
     }
   }
 
