@@ -25,7 +25,7 @@ const Results = (props) => {
     (async () => {
       if (q && validType) {
         setSearchType(type);
-        
+
         if (!data[type]) {
           setError(false);
           setLoading(true);
@@ -33,7 +33,7 @@ const Results = (props) => {
           if (searchQuery.includes('type=all')) {
             searchQuery = searchQuery.replace('type=all', 'type=album,artist,track');
           }
-          
+
           try {
             const response = await axios.get(`/api/search${searchQuery}`);
             setData((prevState) => ({
@@ -73,12 +73,12 @@ const Results = (props) => {
     }
   }
 
-  let classes = 'Results';
+  const classes = ['Results'];
   if (loading) {
-    classes += ' loading';
+    classes.push('loading');
   }
 
-  return <div className={classes}>{results}</div>;
+  return <div className={classes.join(' ')}>{results}</div>;
 };
 
 export default withRouter(Results);
