@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "An example app using the Spotify API",
   "scripts": {
-    "postinstall": "cd backend && npm install && cd ../frontend && npm install",
-    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\""
+    "postinstall": "cd frontend && npm install && cd ../backend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "heroku-postbuild": "cd frontend && npm prune --production && cd ../backend && npm prune --production",
+    "dev": "concurrently \"cd frontend && npm start\" \"cd backend && npm start\""
   },
   "author": "Chinedum Echeta",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.3.0"
-  },
-  "dependencies": {}
+  }
 }
