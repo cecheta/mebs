@@ -1,0 +1,19 @@
+.Album {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  .Info {
+    h3 {
+      font-size: 4rem;
+    }
+    h4 {
+      font-size: 2rem;
+    }
+  }
+}

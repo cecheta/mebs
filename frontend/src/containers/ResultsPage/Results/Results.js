@@ -133,11 +133,11 @@ const Results = (props) => {
     classes.push('loading');
   }
 
-  const scroll = (e) => {
+  const scrollHandler = (e) => {
     const element = e.target;
-    if (type !== 'all' && !loading && !data[type].complete) {
+    if (type !== 'all' && !loading && data[type] && !data[type].complete) {
       const percentage = ((Math.ceil(element.scrollHeight - element.scrollTop) - element.clientHeight) / element.clientHeight) * 100;
-      if (percentage < 10) {
+      if (percentage < 100) {
         setOffset((oldOffset) => ({
           ...oldOffset,
           [type]: oldOffset[type] + 20,
@@ -148,7 +148,7 @@ const Results = (props) => {
   };
 
   return (
-    <div className={classes.join(' ')} onScroll={scroll}>
+    <div className={classes.join(' ')} onScroll={scrollHandler}>
       {results}
     </div>
   );
