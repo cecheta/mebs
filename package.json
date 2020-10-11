@@ -7,7 +7,7 @@
     "build": "cd frontend && npm run build",
     "start": "cd backend && npm start",
     "heroku-postbuild": "cd frontend && npm prune --production && cd ../backend && npm prune --production",
-    "dev": "concurrently \"cd frontend && npm start\" \"cd backend && npm start\""
+    "dev": "concurrently \"cd frontend && npm start\" \"cd backend && npm run dev\""
   },
   "author": "Chinedum Echeta",
   "license": "ISC",
