@@ -2,8 +2,7 @@ import React from 'react';
 import classes from './Song.module.scss';
 
 const Song = ({ data }) => {
-  let artists = data.artists;
-  artists = artists.map((artist) => artist.name);
+  const artists = data.artists.map((artist) => artist.name);
 
   return (
     <div className={classes.Song}>
