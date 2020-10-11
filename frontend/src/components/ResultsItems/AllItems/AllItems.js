@@ -5,9 +5,9 @@ import Song from './Song/Song';
 import classes from './AllItems.module.scss';
 
 const AllItems = ({ data }) => {
-  const albumsArray = data.albums.items;
-  const artistsArray = data.artists.items;
-  const songsArray = data.tracks.items;
+  const albumsArray = data.albums;
+  const artistsArray = data.artists;
+  const songsArray = data.tracks;
 
   const albums = albumsArray.map((album) => <Album key={album.id} data={album} />);
   const artists = artistsArray.map((artists) => <Artist key={artists.id} data={artists} />);

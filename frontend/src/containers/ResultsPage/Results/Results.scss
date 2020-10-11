@@ -1,4 +1,6 @@
 .Results {
+  overflow: scroll;
+  
   &.loading {
     flex-grow: 1;
     display: flex;

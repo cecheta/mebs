@@ -13,6 +13,9 @@ app.get('/api/search', async (req, res) => {
   const config = { params: req.query };
   try {
     const response = await axios.get('/v1/search', config);
+    for (const property in response.data) {
+      response.data[property] = response.data[property].items;
+    }
     res.send(response.data);
   } catch (error) {
     res.status(error.response.status).send({ error: { message: error.message } });
