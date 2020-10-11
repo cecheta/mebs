@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useLayoutEffect, useReducer, useRef } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import AllItems from '../../../components/ResultsItems/AllItems/AllItems';
@@ -16,7 +15,7 @@ const reducer = (state, action) => {
       result.all = action.data;
       return result;
     case 'artist':
-      if (action.data.artists.length === 0) {
+      if (action.data.artists.length === 0 && result.artist) {
         result.artist.complete = true;
       } else if (!state.artist) {
         result.artist = {
@@ -28,7 +27,7 @@ const reducer = (state, action) => {
       }
       return result;
     case 'album':
-      if (action.data.albums.length === 0) {
+      if (action.data.albums.length === 0 && result.album) {
         result.album.complete = true;
       } else if (!state.album) {
         result.album = {
@@ -40,7 +39,7 @@ const reducer = (state, action) => {
       }
       return result;
     case 'track':
-      if (action.data.tracks.length === 0) {
+      if (action.data.tracks.length === 0 && result.track) {
         result.track.complete = true;
       } else if (!state.track) {
         result.track = {
@@ -71,47 +70,60 @@ const Results = (props) => {
       track: 0,
     },
   });
+  const requestRef = useRef({
+    source: axios.CancelToken.source(),
+  });
   const domRef = useRef(null);
 
-  let queryString = props.location.search;
-  const searchParams = new URLSearchParams(queryString);
-  const type = searchParams.get('type');
-  const q = searchParams.get('q');
-
-  const validType = type === 'all' || type === 'artist' || type === 'album' || type === 'track';
+  const type = props.type;
+  const q = props.query;
 
   useEffect(() => {
     (async () => {
-      if (q && validType) {
-        if ((!data[type] || scrolled) && !loading) {
-          setError(false);
+      if (q && props.valid) {
+        if ((!data[type] || scrolled) && !loading && !error) {
           setLoading(true);
           setScrolled(false);
 
-          let searchQuery = queryString;
-          if (searchQuery.includes('type=all')) {
-            searchQuery = searchQuery.replace('type=all', 'type=album,artist,track');
-            searchQuery += '&limit=10';
-          }
-
           try {
-            const response = await axios.get(`/api/search${searchQuery}&offset=${offset[type]}`);
+            const searchQuery = encodeURIComponent(q);
+            const searchType = type === 'all' ? 'album,artist,track' : type;
+            const response = await axios.get(`/api/search?q=${searchQuery}&type=${searchType}&offset=${offset[type]}`, {
+              cancelToken: requestRef.current.source.token,
+            });
             dispatch({ type, data: response.data });
-          } catch (error) {
-            setError(true);
-          } finally {
             setLoading(false);
+          } catch (error) {
+            if (!axios.isCancel(error)) {
+              setError(true);
+              setLoading(false);
+            }
           }
         }
       }
     })();
-  }, [q, type, validType, queryString, data, offset, scrolled, loading]);
+  }, [q, type, props.valid, data, offset, scrolled, loading, error]);
+
+  useEffect(() => {
+    return () => {
+      if (error) {
+        setError(false);
+      }
+    };
+  }, [type, error]);
+
+  useEffect(() => {
+    const source = requestRef.current.source;
+    return () => {
+      source.cancel();
+    };
+  }, []);
 
   useLayoutEffect(() => {
-    if (validType && domRef.current) {
+    if (props.valid && domRef.current) {
       domRef.current.scrollTop = positionRef.current.position[type];
     }
-  }, [type, validType]);
+  }, [type, props.valid]);
 
   let results;
 
@@ -129,14 +141,6 @@ const Results = (props) => {
     results = <div>An error has occurred...</div>;
   } else {
     results = <Spinner />;
-  }
-
-  if (!validType) {
-    results = <Redirect to={`/search?q=${q}&type=all`} />;
-  }
-
-  if (!q) {
-    results = <Redirect to="/" />;
   }
 
   const classes = ['Results'];
@@ -169,4 +173,4 @@ const Results = (props) => {
   );
 };
 
-export default withRouter(Results);
+export default Results;
