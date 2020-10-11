@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useReducer, useRef } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -59,10 +59,19 @@ const reducer = (state, action) => {
 const Results = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [searchType, setSearchType] = useState('');
   const [offset, setOffset] = useState({ all: 0, artist: 0, album: 0, track: 0 });
   const [scrolled, setScrolled] = useState(false);
+
   const [data, dispatch] = useReducer(reducer, {});
+
+  const positionRef = useRef({
+    position: {
+      artist: 0,
+      album: 0,
+      track: 0,
+    },
+  });
+  const domRef = useRef(null);
 
   let queryString = props.location.search;
   const searchParams = new URLSearchParams(queryString);
@@ -70,10 +79,6 @@ const Results = (props) => {
   const q = searchParams.get('q');
 
   const validType = type === 'all' || type === 'artist' || type === 'album' || type === 'track';
-
-  if (validType && type !== searchType) {
-    setSearchType(type);
-  }
 
   useEffect(() => {
     (async () => {
@@ -101,6 +106,12 @@ const Results = (props) => {
       }
     })();
   }, [q, type, validType, queryString, data, offset, scrolled, loading]);
+
+  useLayoutEffect(() => {
+    if (validType && domRef.current) {
+      domRef.current.scrollTop = positionRef.current.position[type];
+    }
+  }, [type, validType]);
 
   let results;
 
@@ -135,20 +146,24 @@ const Results = (props) => {
 
   const scrollHandler = (e) => {
     const element = e.target;
-    if (type !== 'all' && !loading && data[type] && !data[type].complete) {
-      const percentage = ((Math.ceil(element.scrollHeight - element.scrollTop) - element.clientHeight) / element.clientHeight) * 100;
-      if (percentage < 100) {
-        setOffset((oldOffset) => ({
-          ...oldOffset,
-          [type]: oldOffset[type] + 20,
-        }));
-        setScrolled(true);
+    if (type !== 'all' && !loading) {
+      positionRef.current.position[type] = element.scrollTop;
+
+      if (data[type] && !data[type].complete) {
+        const percentage = ((Math.ceil(element.scrollHeight - element.scrollTop) - element.clientHeight) / element.clientHeight) * 100;
+        if (percentage < 100) {
+          setOffset((oldOffset) => ({
+            ...oldOffset,
+            [type]: oldOffset[type] + 20,
+          }));
+          setScrolled(true);
+        }
       }
     }
   };
 
   return (
-    <div className={classes.join(' ')} onScroll={scrollHandler}>
+    <div className={classes.join(' ')} onScroll={scrollHandler} ref={domRef}>
       {results}
     </div>
   );
