@@ -1,0 +1,10 @@
+.Song {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+  }
+}
