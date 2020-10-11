@@ -138,7 +138,12 @@ const Results = (props) => {
       results = <Songs data={data.track.items} />;
     }
   } else if (error) {
-    results = <div>An error has occurred...</div>;
+    results = (
+      <div>
+        An error has occurred...
+        <button onClick={() => setError(false)}>Try again</button>
+      </div>
+    );
   } else {
     results = <Spinner />;
   }
