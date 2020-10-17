@@ -1,24 +1,37 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import './Tabs.scss';
 
 const Tabs = (props) => {
   const params = new URLSearchParams(props.location.search);
   const query = params.get('q');
+  const searchType = params.get('type');
+
+  const isActive = (type) => {
+    return searchType === type;
+  };
 
   return (
     <ul className="Tabs">
       <li>
-        <Link to={`/search?q=${encodeURIComponent(query)}&type=all`}>All</Link>
+        <NavLink isActive={() => isActive('all')} to={`/search?q=${encodeURIComponent(query)}&type=all`}>
+          All
+        </NavLink>
       </li>
       <li>
-        <Link to={`/search?q=${encodeURIComponent(query)}&type=artist`}>Artists</Link>
+        <NavLink isActive={() => isActive('artist')} to={`/search?q=${encodeURIComponent(query)}&type=artist`}>
+          Artists
+        </NavLink>
       </li>
       <li>
-        <Link to={`/search?q=${encodeURIComponent(query)}&type=album`}>Albums</Link>
+        <NavLink isActive={() => isActive('album')} to={`/search?q=${encodeURIComponent(query)}&type=album`}>
+          Albums
+        </NavLink>
       </li>
       <li>
-        <Link to={`/search?q=${encodeURIComponent(query)}&type=track`}>Songs</Link>
+        <NavLink isActive={() => isActive('track')} to={`/search?q=${encodeURIComponent(query)}&type=track`}>
+          Songs
+        </NavLink>
       </li>
     </ul>
   );

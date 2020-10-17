@@ -5,6 +5,16 @@
   li {
     flex-grow: 1;
     text-align: center;
-    font-size: 3rem;
+    
+    a:link,
+    a:visited {
+      font-size: 3rem;
+      text-decoration: none;
+      color: rgb(161, 161, 161);
+    }
+
+    a.active {
+      color: black;
+    }
   }
 }
