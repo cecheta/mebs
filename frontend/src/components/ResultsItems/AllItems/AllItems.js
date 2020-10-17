@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Album from './Album/Album';
 import Artist from './Artist/Artist';
 import Song from './Song/Song';
@@ -9,7 +10,11 @@ const AllItems = ({ data }) => {
   const artistsArray = data.artists;
   const songsArray = data.tracks;
 
-  const albums = albumsArray.map((album) => <Album key={album.id} data={album} />);
+  const albums = albumsArray.map((album) => (
+    <Link key={album.id} to={`/album/${album.id}`}>
+      <Album data={album} />
+    </Link>
+  ));
   const artists = artistsArray.map((artists) => <Artist key={artists.id} data={artists} />);
   const songs = songsArray.map((song) => <Song key={song.id} data={song} />);
 

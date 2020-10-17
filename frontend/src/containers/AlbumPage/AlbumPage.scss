@@ -1,0 +1,12 @@
+.AlbumPage {
+  margin: 6rem auto 0;
+  background-color: #fff;
+  width: 80%;
+  height: 80rem;
+  overflow: auto;
+
+  &.loading {
+    flex-grow: 1;
+    display: flex;
+  }
+}

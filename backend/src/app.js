@@ -22,6 +22,15 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
+app.get('/api/album/:id', async (req, res) => {
+  try {
+    const response = await axios.get(`/v1/albums/${req.params.id}`);
+    res.send(response.data);
+  } catch (error) {
+    res.status(error.response.status).send({ error: { message: error.message } });
+  }
+});
+
 app.get('*', (req, res) => {
   res.send('Server is up');
 });

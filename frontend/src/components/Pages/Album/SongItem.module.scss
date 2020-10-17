@@ -1,0 +1,28 @@
+.SongItem {
+  font-size: 3rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow-x: scroll; // Temporary
+
+  &:not(:last-child) {
+    border-bottom: 2px solid rgb(216, 216, 216);
+  }
+
+  .number {
+    flex-shrink: 0;
+    display: inline-block;
+    width: 8rem;
+  }
+
+  .artists {
+    color: rgb(185, 185, 185);
+
+    a:link,
+    a:visited {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+}
