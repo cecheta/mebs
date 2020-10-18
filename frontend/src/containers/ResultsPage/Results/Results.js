@@ -128,18 +128,16 @@ const Results = ({ valid, type, query }) => {
         <button onClick={() => setError(false)}>Try again</button>
       </div>
     );
-  } else {
-    results = <Spinner />;
   }
 
   const classes = ['Results'];
-  if (loadingRef.current) {
+  if (!data[type] && !error) {
     classes.push('loading');
   }
 
   const scrollHandler = (e) => {
     const element = e.target;
-    if (type !== 'all' && !loadingRef.current) {
+    if (type !== 'all' && !loadingRef.current && !scrolled) {
       positionRef.current.position[type] = element.scrollTop;
 
       if (data[type] && !data[type].complete) {
@@ -155,9 +153,12 @@ const Results = ({ valid, type, query }) => {
     }
   };
 
+  const showSpinner = (type !== 'all' && !data[type]?.complete) || (type === 'all' && !data[type]);
+
   return (
     <div className={classes.join(' ')} onScroll={scrollHandler} ref={domRef}>
       {results}
+      {showSpinner ? <Spinner /> : null}
     </div>
   );
 };
