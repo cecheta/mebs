@@ -55,8 +55,7 @@ const reducer = (state, action) => {
   }
 };
 
-const Results = (props) => {
-  const [loading, setLoading] = useState(false);
+const Results = ({ valid, type, query }) => {
   const [error, setError] = useState(false);
   const [offset, setOffset] = useState({ all: 0, artist: 0, album: 0, track: 0 });
   const [scrolled, setScrolled] = useState(false);
@@ -74,35 +73,33 @@ const Results = (props) => {
     source: axios.CancelToken.source(),
   });
   const domRef = useRef(null);
-
-  const type = props.type;
-  const q = props.query;
+  let loadingRef = useRef(true);
 
   useEffect(() => {
     (async () => {
-      if (q && props.valid) {
-        if ((!data[type] || scrolled) && !loading && !error) {
-          setLoading(true);
+      if (query && valid) {
+        if ((!data[type] || scrolled) && !error) {
+          loadingRef.current = true;
           setScrolled(false);
 
           try {
-            const searchQuery = encodeURIComponent(q);
+            const searchQuery = encodeURIComponent(query);
             const searchType = type === 'all' ? 'album,artist,track' : type;
-            const response = await axios.get(`/api/search?q=${searchQuery}&type=${searchType}&offset=${offset[type]}`, {
+            const response = await axios.get(`/api/search?query=${searchQuery}&type=${searchType}&offset=${offset[type]}`, {
               cancelToken: requestRef.current.source.token,
             });
+            loadingRef.current = false;
             dispatch({ type, data: response.data });
-            setLoading(false);
           } catch (error) {
             if (!axios.isCancel(error)) {
+              loadingRef.current = false;
               setError(true);
-              setLoading(false);
             }
           }
         }
       }
     })();
-  }, [q, type, props.valid, data, offset, scrolled, loading, error]);
+  }, [query, type, valid, data, offset, scrolled, error]);
 
   useEffect(() => {
     return () => {
@@ -120,13 +117,12 @@ const Results = (props) => {
   }, []);
 
   useLayoutEffect(() => {
-    if (props.valid && domRef.current) {
+    if (valid && domRef.current) {
       domRef.current.scrollTop = positionRef.current.position[type];
     }
-  }, [type, props.valid]);
+  }, [type, valid]);
 
   let results;
-
   if (data[type]) {
     if (type === 'all') {
       results = <AllItems data={data.all} />;
@@ -149,13 +145,13 @@ const Results = (props) => {
   }
 
   const classes = ['Results'];
-  if (loading) {
+  if (loadingRef.current) {
     classes.push('loading');
   }
 
   const scrollHandler = (e) => {
     const element = e.target;
-    if (type !== 'all' && !loading) {
+    if (type !== 'all' && !loadingRef.current) {
       positionRef.current.position[type] = element.scrollTop;
 
       if (data[type] && !data[type].complete) {
