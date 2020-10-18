@@ -14,7 +14,15 @@ app.get('/api/search', async (req, res) => {
   try {
     const response = await axios.get('/v1/search', config);
     for (const property in response.data) {
-      response.data[property] = response.data[property].items;
+      let complete = false;
+      if (response.data[property].items.length < 20) {
+        complete = true;
+      }
+
+      response.data[property] = {
+        items: response.data[property].items,
+        complete,
+      };
     }
     res.send(response.data);
   } catch (error) {

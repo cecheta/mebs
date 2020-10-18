@@ -15,39 +15,27 @@ const reducer = (state, action) => {
       result.all = action.data;
       return result;
     case 'artist':
-      if (action.data.artists.length === 0 && result.artist) {
-        result.artist.complete = true;
-      } else if (!state.artist) {
-        result.artist = {
-          items: action.data.artists,
-          complete: false,
-        };
+      if (!result.artist) {
+        result.artist = action.data.artists;
       } else {
-        result.artist.items.push(...action.data.artists);
+        result.artist.items.push(...action.data.artists.items);
+        result.artist.complete = action.data.artists.complete;
       }
       return result;
     case 'album':
-      if (action.data.albums.length === 0 && result.album) {
-        result.album.complete = true;
-      } else if (!state.album) {
-        result.album = {
-          items: action.data.albums,
-          complete: false,
-        };
+      if (!result.album) {
+        result.album = action.data.albums;
       } else {
-        result.album.items.push(...action.data.albums);
+        result.album.items.push(...action.data.albums.items);
+        result.album.complete = action.data.albums.complete;
       }
       return result;
     case 'track':
-      if (action.data.tracks.length === 0 && result.track) {
-        result.track.complete = true;
-      } else if (!state.track) {
-        result.track = {
-          items: action.data.tracks,
-          complete: false,
-        };
+      if (!result.track) {
+        result.track = action.data.tracks;
       } else {
-        result.track.items.push(...action.data.tracks);
+        result.track.items.push(...action.data.tracks.items);
+        result.track.complete = action.data.tracks.complete;
       }
       return result;
     default:
