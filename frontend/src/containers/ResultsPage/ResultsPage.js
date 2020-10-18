@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withRouter, Redirect, Switch } from 'react-router-dom';
 import Tabs from '../../components/Tabs/Tabs';
 import Results from './Results/Results';
@@ -14,19 +14,35 @@ const ResultsPage = (props) => {
   const [text, setText] = useState(q);
   const [query, setQuery] = useState(q);
 
-  let timer = useRef(null);
+  const timerRef = useRef(null);
+  const inputChangedRef = useRef(false);
+
+  if (q !== text && !inputChangedRef.current) {
+    setText(q);
+    setQuery(q);
+  }
 
   const changeHandler = (e) => {
     const input = e.target.value;
+    inputChangedRef.current = true;
     setText(input);
-
+    
     if (input !== '') {
-      clearTimeout(timer.current);
-      timer.current = setTimeout(() => {
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        const queryString = props.location.search.replace(encodeURIComponent(q), encodeURIComponent(input));
+        props.history.push(`/search${queryString}`);
+        inputChangedRef.current = false;
         setQuery(input);
       }, 300);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerRef.current);
+    };
+  }, []);
 
   return (
     <div className="ResultsPage">
