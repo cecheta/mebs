@@ -16,13 +16,13 @@ const SongItem = ({ data, artists }) => {
     if (i === 0) {
       return (
         <span className={classes.artists} key={artist.id}>
-          &nbsp;- <Link to={`/artist/${artist.id}`}>{text}</Link>
+          &nbsp;- <Link to={`/r/artist/${artist.id}`}>{text}</Link>
         </span>
       );
     }
     return (
       <span className={classes.artists} key={artist.id}>
-        &nbsp;<Link to={`/artist/${artist.id}`}>{text}</Link>
+        &nbsp;<Link to={`/r/artist/${artist.id}`}>{text}</Link>
       </span>
     );
   });

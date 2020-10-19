@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Album from '../../components/Pages/Album/Album';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import './AlbumPage.scss';
+import './ResultPage.scss';
 
-const AlbumPage = (props) => {
+const ResultPage = (props) => {
   const [error, setError] = useState(false);
   const [data, setData] = useState(null);
 
@@ -14,12 +14,13 @@ const AlbumPage = (props) => {
   });
 
   const id = props.match.params.id;
+  const type = props.match.params.type;
 
   useEffect(() => {
     (async () => {
       if (!error && !data) {
         try {
-          const response = await axios.get(`/api/album/${id}`, {
+          const response = await axios.get(`/api/${type}/${id}`, {
             cancelToken: requestRef.current.source.token,
           });
           loadingRef.current = false;
@@ -32,7 +33,7 @@ const AlbumPage = (props) => {
         }
       }
     })();
-  }, [data, error, id]);
+  }, [data, error, id, type]);
 
   useEffect(() => {
     return () => {
@@ -44,7 +45,9 @@ const AlbumPage = (props) => {
 
   let results;
   if (data) {
-    results = <Album data={data} />;
+    if (type === 'album') {
+      results = <Album data={data} />;
+    }
   } else if (error) {
     results = (
       <div>
@@ -56,7 +59,7 @@ const AlbumPage = (props) => {
     results = <Spinner />;
   }
 
-  const classes = ['AlbumPage'];
+  const classes = ['ResultPage'];
   if (loadingRef.current) {
     classes.push('loading');
   }
@@ -64,4 +67,4 @@ const AlbumPage = (props) => {
   return <div className={classes.join(' ')}>{results}</div>;
 };
 
-export default AlbumPage;
+export default ResultPage;

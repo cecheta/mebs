@@ -11,7 +11,7 @@ const AllItems = ({ data }) => {
   const songsArray = data.tracks.items;
 
   const albums = albumsArray.map((album) => (
-    <Link key={album.id} to={`/album/${album.id}`}>
+    <Link key={album.id} to={`/r/album/${album.id}`}>
       <Album data={album} />
     </Link>
   ));
