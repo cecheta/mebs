@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect, useReducer, useRef } from 'react';
 import axios from 'axios';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import AllItems from '../../../components/ResultsItems/AllItems/AllItems';
-import Albums from '../../../components/ResultsItems/Albums/Albums';
-import Artists from '../../../components/ResultsItems/Artists/Artists';
-import Songs from '../../../components/ResultsItems/Songs/Songs';
-import './Results.scss';
+import AllItems from '../../../components/SearchResultsItems/AllItems/AllItems';
+import Albums from '../../../components/SearchResultsItems/Albums/Albums';
+import Artists from '../../../components/SearchResultsItems/Artists/Artists';
+import Songs from '../../../components/SearchResultsItems/Songs/Songs';
+import './SearchResults.scss';
 
 const reducer = (state, action) => {
   const result = JSON.parse(JSON.stringify(state));

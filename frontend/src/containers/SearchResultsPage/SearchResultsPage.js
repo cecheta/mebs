@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { withRouter, Redirect, Switch } from 'react-router-dom';
 import Tabs from '../../components/Tabs/Tabs';
-import Results from './Results/Results';
-import './ResultsPage.scss';
+import Results from './SearchResults/SearchResults';
+import './SearchResultsPage.scss';
 
-const ResultsPage = (props) => {
+const SearchResultsPage = (props) => {
   const queryString = props.location.search;
   const searchParams = new URLSearchParams(queryString);
   const q = searchParams.get('q');
@@ -45,7 +45,7 @@ const ResultsPage = (props) => {
   }, []);
 
   return (
-    <div className="ResultsPage">
+    <div className="SearchResultsPage">
       <Switch>
         {!q ? <Redirect to="/" /> : null}
         {!valid ? <Redirect to={`/search?q=${q}&type=all`} /> : null}
@@ -57,4 +57,4 @@ const ResultsPage = (props) => {
   );
 };
 
-export default withRouter(ResultsPage);
+export default withRouter(SearchResultsPage);
