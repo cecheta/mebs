@@ -1,11 +1,11 @@
 import React from 'react';
 import classes from './Artist.module.scss';
 
-const Artist = ({ data }) => {
+const Artist = ({ name, image }) => {
   return (
     <div className={classes.Artist}>
-      <img src={data.images[2]?.url} alt="" />
-      <h3>{data.name}</h3>
+      {image ? <img src={image.url} alt="" /> : null}
+      <h3>{name}</h3>
     </div>
   );
 };

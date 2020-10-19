@@ -113,13 +113,13 @@ const Results = ({ valid, type, query }) => {
   let results;
   if (data[type]) {
     if (type === 'all') {
-      results = <AllItems data={data.all} />;
+      results = <AllItems albums={data.all.albums.items} artists={data.all.artists.items} songs={data.all.tracks.items} />;
     } else if (type === 'artist') {
-      results = <Artists data={data.artist.items} />;
+      results = <Artists artists={data.artist.items} />;
     } else if (type === 'album') {
-      results = <Albums data={data.album.items} />;
+      results = <Albums albums={data.album.items} />;
     } else if (type === 'track') {
-      results = <Songs data={data.track.items} />;
+      results = <Songs songs={data.track.items} />;
     }
   } else if (error) {
     results = (

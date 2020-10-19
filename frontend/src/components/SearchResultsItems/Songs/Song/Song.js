@@ -1,15 +1,15 @@
 import React from 'react';
 import classes from './Song.module.scss';
 
-const Song = ({ data }) => {
-  const artists = data.artists.map((artist) => artist.name);
+const Song = ({ name, artists, image }) => {
+  const songArtists = artists.map((artist) => artist.name);
 
   return (
     <div className={classes.Song}>
-      <img src={data.album.images[1]?.url} alt="" />
+      {image ? <img src={image.url} alt="" /> : null}
       <div className="info">
-        <h4>{data.name}</h4>
-        <h5>{artists.join(', ')}</h5>
+        <h4>{name}</h4>
+        <h5>{songArtists.join(', ')}</h5>
       </div>
     </div>
   );

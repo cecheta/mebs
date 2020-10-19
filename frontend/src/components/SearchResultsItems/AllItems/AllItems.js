@@ -5,27 +5,24 @@ import Artist from './Artist/Artist';
 import Song from './Song/Song';
 import classes from './AllItems.module.scss';
 
-const AllItems = ({ data }) => {
-  const albumsArray = data.albums.items;
-  const artistsArray = data.artists.items;
-  const songsArray = data.tracks.items;
+const AllItems = ({ albums, artists, songs }) => {
 
-  const albums = albumsArray.map((album) => (
+  const albumsElements = albums.map((album) => (
     <Link key={album.id} to={`/r/album/${album.id}`}>
-      <Album data={album} />
+      <Album name={album.name} artists={album.artists} image={album.images[1]} />
     </Link>
   ));
-  const artists = artistsArray.map((artists) => <Artist key={artists.id} data={artists} />);
-  const songs = songsArray.map((song) => <Song key={song.id} data={song} />);
+  const artistsElements = artists.map((artists) => <Artist key={artists.id} name={artists.name} image={artists.images[2]} />);
+  const songsElements = songs.map((song) => <Song key={song.id} name={song.name} artists={song.artists} image={song.album.images[2]} />);
 
   return (
     <>
       <h3>Albums</h3>
-      <div className={classes.Albums}>{albums}</div>
+      <div className={classes.Albums}>{albumsElements}</div>
       <h3>Artists</h3>
-      <div className={classes.Artists}>{artists}</div>
+      <div className={classes.Artists}>{artistsElements}</div>
       <h3>Songs</h3>
-      <div className={classes.Songs}>{songs}</div>
+      <div className={classes.Songs}>{songsElements}</div>
     </>
   );
 };

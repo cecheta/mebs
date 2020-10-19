@@ -2,14 +2,14 @@ import React from 'react';
 import Album from './Album/Album';
 import classes from './Albums.module.scss';
 
-const Albums = ({ data }) => {
-  const albums = data.map((album) => <Album key={album.id} data={album} />);
+const Albums = ({ albums }) => {
+  const albumsElements = albums.map((album) => <Album key={album.id} id={album.id} name={album.name} artists={album.artists} image={album.images[1]} />);
 
-  return <div className={classes.Albums}>{albums}</div>;
+  return <div className={classes.Albums}>{albumsElements}</div>;
 };
 
 const areEqual = (prevProps, nextProps) => {
-  return prevProps.data.length === nextProps.data.length;
+  return prevProps.albums.length === nextProps.albums.length;
 };
 
 export default React.memo(Albums, areEqual);

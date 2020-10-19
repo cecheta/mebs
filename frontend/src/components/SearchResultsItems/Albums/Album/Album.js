@@ -2,16 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Album.module.scss';
 
-const Album = ({ data }) => {
-  const artists = data.artists.map((artist) => artist.name);
+const Album = ({ id, name, artists, image }) => {
+  const albumArtists = artists.map((artist) => artist.name);
 
   return (
-    <Link to={`/r/album/${data.id}`}>
+    <Link to={`/r/album/${id}`}>
       <div className={classes.Album}>
-        <img src={data.images[1]?.url} alt="" />
+        {image ? <img src={image.url} alt="" /> : null}
         <div className={classes.Info}>
-          <h3>{data.name}</h3>
-          <h4>{artists.join(', ')}</h4>
+          <h3>{name}</h3>
+          <h4>{albumArtists.join(', ')}</h4>
         </div>
       </div>
     </Link>
