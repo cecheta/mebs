@@ -41,6 +41,13 @@ const ResultPage = (props) => {
     };
   }, [error]);
 
+  useEffect(() => {
+    const source = requestRef.current.source;
+    return () => {
+      source.cancel();
+    };
+  }, []);
+
   let results;
   if (data[type]) {
     if (type === 'album') {
