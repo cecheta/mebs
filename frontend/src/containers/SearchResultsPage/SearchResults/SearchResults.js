@@ -19,6 +19,9 @@ const reducer = (state, action) => {
         result.artist = action.data.artists;
       } else {
         result.artist.items.push(...action.data.artists.items);
+        result.artist.items = result.artist.items.filter((item, i, arr) => { // REMOVE DUPLICATES, NEEDS REFACTOR
+          return i === arr.findIndex((t) => t.id === item.id);
+        });
         result.artist.complete = action.data.artists.complete;
       }
       return result;
@@ -27,6 +30,9 @@ const reducer = (state, action) => {
         result.album = action.data.albums;
       } else {
         result.album.items.push(...action.data.albums.items);
+        result.album.items = result.album.items.filter((item, i, arr) => {
+          return i === arr.findIndex((t) => t.id === item.id);
+        });
         result.album.complete = action.data.albums.complete;
       }
       return result;
@@ -35,6 +41,9 @@ const reducer = (state, action) => {
         result.track = action.data.tracks;
       } else {
         result.track.items.push(...action.data.tracks.items);
+        result.track.items = result.track.items.filter((item, i, arr) => {
+          return i === arr.findIndex((t) => t.id === item.id);
+        });
         result.track.complete = action.data.tracks.complete;
       }
       return result;
