@@ -42,8 +42,8 @@ app.get('/api/album/:id', async (req, res) => {
 app.get('/api/artist/:id', async (req, res) => {
   try {
     const response = (await axios.get(`/v1/artists/${req.params.id}`)).data;
-    response.albums = (await axios.get(`/v1/artists/${req.params.id}/albums`)).data;
-    response.tracks = (await axios.get(`/v1/artists/${req.params.id}/top-tracks?country=GB`)).data;
+    response.albums = (await axios.get(`/v1/artists/${req.params.id}/albums`)).data.items;
+    response.tracks = (await axios.get(`/v1/artists/${req.params.id}/top-tracks?country=GB`)).data.tracks;
     res.send(response);
   } catch (error) {
     res.status(error.response.status).send({ error: { message: error.message } });

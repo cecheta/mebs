@@ -2,13 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './SongItem.module.scss';
 
-const SongItem = ({ data, artists }) => {
-  let songArtists = data.artists.map((artist) => ({
+const SongItem = ({ name, number, songArtists, albumArtists }) => {
+  let artists = songArtists.map((artist) => ({
     name: artist.name,
     id: artist.id,
   }));
-  songArtists = songArtists.filter((artist) => !artists.includes(artist.name));
-  songArtists = songArtists.map((artist, i, arr) => {
+  artists = artists.filter((artist) => {
+    const artistNames = albumArtists.map((artist) => artist.name);
+    return !artistNames.includes(artist.name);
+  });
+  artists = artists.map((artist, i, arr) => {
     let text = artist.name;
     if (i !== arr.length - 1) {
       text += ',';
@@ -29,9 +32,11 @@ const SongItem = ({ data, artists }) => {
 
   return (
     <div className={classes.SongItem}>
-      <span className={classes.number}>{data.track_number}.</span>
-      {data.name}
-      {songArtists}
+      <h4>
+        <span className={classes.number}>{number}.</span>
+        {name}
+        {artists}
+      </h4>
     </div>
   );
 };

@@ -1,0 +1,10 @@
+.Item{
+  display: flex;
+  align-items: center;
+
+  .ItemImage {
+    height: 7rem;
+    width: 7rem;
+    object-fit: cover;
+  }
+}

@@ -1,19 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Album from './Album/Album';
 import Artist from './Artist/Artist';
 import Song from './Song/Song';
 import classes from './AllItems.module.scss';
 
 const AllItems = ({ albums, artists, songs }) => {
-
-  const albumsElements = albums.map((album) => (
-    <Link key={album.id} to={`/r/album/${album.id}`}>
-      <Album name={album.name} artists={album.artists} image={album.images[1]} />
-    </Link>
-  ));
-  const artistsElements = artists.map((artists) => <Artist key={artists.id} name={artists.name} image={artists.images[2]} />);
-  const songsElements = songs.map((song) => <Song key={song.id} name={song.name} artists={song.artists} image={song.album.images[2]} />);
+  const albumsElements = albums.map((album) => <Album key={album.id} id={album.id} name={album.name} artists={album.artists} image={album.images[1]} />);
+  const artistsElements = artists.map((artists) => <Artist key={artists.id} id={artists.id} name={artists.name} image={artists.images[2]} />);
+  const songsElements = songs.map((song) => <Song key={song.id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
 
   return (
     <>

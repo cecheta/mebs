@@ -1,10 +1,11 @@
-.Album {
+.Artist {
   margin: 0 auto;
   width: 80%;
 
-  img {
+  &Image {
     height: 30rem;
     width: 30rem;
+    border-radius: 50%;
     object-fit: cover;
   }
 }
@@ -20,7 +21,7 @@
 
 .Info {
   margin-left: 3rem;
-  
+
   h2 {
     font-size: 6rem;
   }
@@ -28,4 +29,10 @@
   h3 {
     font-size: 4rem;
   }
+}
+
+.Songs,
+.Albums {
+  width: 50%;
+  float: left;
 }

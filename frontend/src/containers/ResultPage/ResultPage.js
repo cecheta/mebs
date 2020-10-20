@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Album from '../../components/Pages/Album/Album';
+import Artist from '../../components/Pages/Artist/Artist';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import './ResultPage.scss';
 
 const ResultPage = (props) => {
   const [error, setError] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
 
-  let loadingRef = useRef(true);
   const requestRef = useRef({
     source: axios.CancelToken.source(),
   });
@@ -18,17 +18,15 @@ const ResultPage = (props) => {
 
   useEffect(() => {
     (async () => {
-      if (!error && !data) {
+      if (!error && !data[type]) {
         try {
           const response = await axios.get(`/api/${type}/${id}`, {
             cancelToken: requestRef.current.source.token,
           });
-          loadingRef.current = false;
-          setData(response.data);
+          setData({ [type]: response.data });
         } catch (error) {
           if (!axios.isCancel(error)) {
             setError(true);
-            loadingRef.current = false;
           }
         }
       }
@@ -44,9 +42,11 @@ const ResultPage = (props) => {
   }, [error]);
 
   let results;
-  if (data) {
+  if (data[type]) {
     if (type === 'album') {
-      results = <Album data={data} />;
+      results = <Album name={data.album.name} artists={data.album.artists} image={data.album.images[0]} songs={data.album.tracks} />;
+    } else if (type === 'artist') {
+      results = <Artist name={data.artist.name} albums={data.artist.albums} image={data.artist.images[0]} songs={data.artist.tracks} />;
     }
   } else if (error) {
     results = (
@@ -60,7 +60,7 @@ const ResultPage = (props) => {
   }
 
   const classes = ['ResultPage'];
-  if (loadingRef.current) {
+  if (!data[type] && !error) {
     classes.push('loading');
   }
 
