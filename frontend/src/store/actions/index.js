@@ -1,0 +1,1 @@
+export { addArtist } from './favourites';

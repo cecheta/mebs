@@ -53,7 +53,7 @@ const ResultPage = (props) => {
     if (type === 'album') {
       results = <Album name={data.album.name} artists={data.album.artists} image={data.album.images[0]} songs={data.album.tracks} />;
     } else if (type === 'artist') {
-      results = <Artist name={data.artist.name} albums={data.artist.albums} image={data.artist.images[0]} songs={data.artist.tracks} />;
+      results = <Artist id={data.artist.id} name={data.artist.name} albums={data.artist.albums} image={data.artist.images[0]} songs={data.artist.tracks} />;
     }
   } else if (error) {
     results = (
