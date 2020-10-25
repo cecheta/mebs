@@ -5,7 +5,7 @@ import SearchResultsPage from './containers/SearchResultsPage/SearchResultsPage'
 import ResultPage from './containers/ResultPage/ResultPage';
 import './App.scss';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Switch>
@@ -15,6 +15,6 @@ function App() {
       </Switch>
     </div>
   );
-}
+};
 
 export default App;
