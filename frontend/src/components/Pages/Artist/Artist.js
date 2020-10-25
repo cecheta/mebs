@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import SongItem from './SongItem';
 import AlbumItem from './AlbumItem';
 import * as actions from '../../../store/actions';
@@ -11,6 +11,19 @@ const Artist = ({ id, name, albums, image, songs }) => {
 
   const dispatch = useDispatch();
   const addArtist = (id) => dispatch(actions.addArtist(id));
+  const removeArtist = (id) => dispatch(actions.removeArtist(id));
+
+  const { favouriteArtists } = useSelector((state) => ({ favouriteArtists: state.favourites.artists }), shallowEqual);
+
+  const favourite = favouriteArtists.includes(id);
+
+  const handleToggleFavourite = (id) => {
+    if (!favourite) {
+      addArtist(id);
+    } else {
+      removeArtist(id);
+    }
+  };
 
   return (
     <div className={classes.Artist}>
@@ -18,7 +31,7 @@ const Artist = ({ id, name, albums, image, songs }) => {
         {image ? <img className={classes.ArtistImage} src={image.url} alt="" /> : null}
         <div className={classes.Info}>
           <h2>{name}</h2>
-          <h3 onClick={() => addArtist(id)}>Add</h3>
+          <h3 onClick={() => handleToggleFavourite(id)}>{!favourite ? 'Add' : 'Remove'}</h3>
         </div>
       </div>
       <div className={classes.Songs}>

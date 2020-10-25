@@ -10,10 +10,20 @@ const addArtist = (state, action) => {
   return newState;
 };
 
+const removeArtist = (state, action) => {
+  const newState = { ...state };
+  const artists = state.artists.filter((id) => id !== action.id);
+  newState.artists = artists;
+  return newState;
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_ARTIST:
       return addArtist(state, action);
+
+    case actionTypes.REMOVE_ARTIST:
+      return removeArtist(state, action);
 
     default:
       return state;

@@ -6,3 +6,11 @@ export const addArtist = (id) => {
     id,
   };
 };
+
+export const removeArtist = (id) => {
+  return {
+    type: actionTypes.REMOVE_ARTIST,
+    id,
+  };
+};
+
