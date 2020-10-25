@@ -1,21 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import SongItem from './SongItem';
 import AlbumItem from './AlbumItem';
 import * as actions from '../../../store/actions';
 import classes from './Artist.module.scss';
 
-const Artist = (props) => {
-  const songsElements = props.songs.map((song) => <SongItem key={song.id} name={song.name} image={song.album.images[2]} album={song.album} />);
-  const albumElements = props.albums.map((album) => <AlbumItem key={album.id} id={album.id} name={album.name} image={album.images[2]} />);
+const Artist = ({ id, name, albums, image, songs }) => {
+  const songsElements = songs.map((song) => <SongItem key={song.id} name={song.name} image={song.album.images[2]} album={song.album} />);
+  const albumElements = albums.map((album) => <AlbumItem key={album.id} id={album.id} name={album.name} image={album.images[2]} />);
+
+  const dispatch = useDispatch();
+  const addArtist = (id) => dispatch(actions.addArtist(id));
 
   return (
     <div className={classes.Artist}>
       <div className={classes.Header}>
-        {props.image ? <img className={classes.ArtistImage} src={props.image.url} alt="" /> : null}
+        {image ? <img className={classes.ArtistImage} src={image.url} alt="" /> : null}
         <div className={classes.Info}>
-          <h2>{props.name}</h2>
-          <h3 onClick={() => props.addArtist(props.id)}>Add</h3>
+          <h2>{name}</h2>
+          <h3 onClick={() => addArtist(id)}>Add</h3>
         </div>
       </div>
       <div className={classes.Songs}>
@@ -30,10 +33,4 @@ const Artist = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addArtist: (id) => dispatch(actions.addArtist(id)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(Artist);
+export default Artist;
