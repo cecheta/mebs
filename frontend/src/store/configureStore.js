@@ -1,5 +1,5 @@
 import { applyMiddleware, createStore, combineReducers } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import authReducer from './reducers/auth';
 import favouritesReducer from './reducers/favourites';
@@ -9,8 +9,13 @@ const configureStore = () => {
     auth: authReducer,
     favourites: favouritesReducer,
   });
-  const composedEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware));
+  const composedEnhancers = composeWithDevTools(applyMiddleware(thunk));
   const store = createStore(rootReducer, composedEnhancers);
+
+  store.subscribe(() => {
+    const favourites = store.getState().favourites;
+    localStorage.setItem('favouritesState', JSON.stringify(favourites));
+  });
 
   return store;
 };
