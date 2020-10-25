@@ -21,9 +21,14 @@
 
 .Info {
   margin-left: 3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   h2 {
     font-size: 6rem;
+    width: 70%;
   }
 
   h3 {
@@ -35,4 +40,9 @@
 .Albums {
   width: 50%;
   float: left;
+}
+
+.Star {
+  height: 5rem;
+  width: 5rem;
 }

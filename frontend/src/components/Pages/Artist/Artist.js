@@ -3,6 +3,8 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import SongItem from './SongItem';
 import AlbumItem from './AlbumItem';
 import * as actions from '../../../store/actions';
+import { ReactComponent as StarEmpty } from '../../../assets/images/star-empty.svg';
+import { ReactComponent as StarFull } from '../../../assets/images/star-full.svg';
 import classes from './Artist.module.scss';
 
 const Artist = ({ id, name, albums, image, songs }) => {
@@ -18,12 +20,10 @@ const Artist = ({ id, name, albums, image, songs }) => {
   const favourite = favouriteArtists.includes(id);
 
   const handleToggleFavourite = (id) => {
-    if (!favourite) {
-      addArtist(id);
-    } else {
-      removeArtist(id);
-    }
+    !favourite ? addArtist(id) : removeArtist(id);
   };
+
+  const star = favourite ? <StarFull fill="orange" onClick={() => handleToggleFavourite(id)} /> : <StarEmpty onClick={() => handleToggleFavourite(id)} />;
 
   return (
     <div className={classes.Artist}>
@@ -31,7 +31,7 @@ const Artist = ({ id, name, albums, image, songs }) => {
         {image ? <img className={classes.ArtistImage} src={image.url} alt="" /> : null}
         <div className={classes.Info}>
           <h2>{name}</h2>
-          <h3 onClick={() => handleToggleFavourite(id)}>{!favourite ? 'Add' : 'Remove'}</h3>
+          <div className={classes.Star}>{star}</div>
         </div>
       </div>
       <div className={classes.Songs}>
