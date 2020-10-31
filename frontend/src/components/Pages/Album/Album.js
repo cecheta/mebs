@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import SongItem from './SongItem';
+import * as actions from '../../../store/actions';
+import { ReactComponent as StarEmpty } from '../../../assets/images/star-empty.svg';
+import { ReactComponent as StarFull } from '../../../assets/images/star-full.svg';
 import classes from './Album.module.scss';
 
-const Album = ({ artists, name, image, songs }) => {
+const Album = ({ id, artists, name, image, songs }) => {
   const albumArtists = artists.map((artist) => ({
     name: artist.name,
     id: artist.id,
@@ -19,13 +23,30 @@ const Album = ({ artists, name, image, songs }) => {
   });
   const albumSongs = songs.items.map((song) => <SongItem key={song.id} songArtists={song.artists} albumArtists={albumArtists} number={song.track_number} name={song.name} />);
 
+  const dispatch = useDispatch();
+  const addAlbum = (id) => dispatch(actions.addAlbum(id));
+  const removeAlbum = (id) => dispatch(actions.removeAlbum(id));
+
+  const { favouriteAlbums } = useSelector((state) => ({ favouriteAlbums: state.favourites.albums }), shallowEqual);
+
+  const favourite = favouriteAlbums.includes(id);
+
+  const handleToggleFavourite = (id) => {
+    !favourite ? addAlbum(id) : removeAlbum(id);
+  };
+
+  const star = favourite ? <StarFull fill="orange" onClick={() => handleToggleFavourite(id)} /> : <StarEmpty onClick={() => handleToggleFavourite(id)} />;
+
   return (
     <div className={classes.Album}>
       <div className={classes.Header}>
         {image ? <img src={image.url} alt="" /> : null}
         <div className={classes.Info}>
-          <h2>{name}</h2>
-          <h3>{artistElements}</h3>
+          <div className={classes.InfoAlbum}>
+            <h2>{name}</h2>
+            <h3>{artistElements}</h3>
+          </div>
+          <div className={classes.Star}>{star}</div>
         </div>
       </div>
       {albumSongs}

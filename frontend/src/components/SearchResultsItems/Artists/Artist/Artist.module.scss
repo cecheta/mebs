@@ -8,3 +8,16 @@
     object-fit: cover;
   }
 }
+
+.Name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+
+  .Star {
+    margin-left: 0.5rem;
+    height: 2rem;
+    width: 2rem;
+  }
+}

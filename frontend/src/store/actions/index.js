@@ -1,1 +1,1 @@
-export { addArtist, removeArtist, loadFavourites } from './favourites';
+export { loadFavourites, addArtist, removeArtist, addAlbum, removeAlbum } from './favourites';

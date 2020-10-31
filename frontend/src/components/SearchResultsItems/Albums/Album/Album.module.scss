@@ -9,11 +9,21 @@
   }
 
   .Info {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
     h3 {
       font-size: 4rem;
     }
     h4 {
       font-size: 2rem;
+    }
+
+    .Star {
+      height: 4rem;
+      width: 4rem;
     }
   }
 }

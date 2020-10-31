@@ -2,6 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   artists: [],
+  albums: [],
 };
 
 const loadFavourites = (state) => {
@@ -28,6 +29,19 @@ const removeArtist = (state, action) => {
   return newState;
 };
 
+const addAlbum = (state, action) => {
+  const newState = { ...state };
+  newState.albums = [...state.albums, action.id];
+  return newState;
+};
+
+const removeAlbum = (state, action) => {
+  const newState = { ...state };
+  const albums = state.albums.filter((id) => id !== action.id);
+  newState.albums = albums;
+  return newState;
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOAD_FAVOURITES:
@@ -38,6 +52,12 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.REMOVE_ARTIST:
       return removeArtist(state, action);
+
+    case actionTypes.ADD_ALBUM:
+      return addAlbum(state, action);
+
+    case actionTypes.REMOVE_ALBUM:
+      return removeAlbum(state, action);
 
     default:
       return state;

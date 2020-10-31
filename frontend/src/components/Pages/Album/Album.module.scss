@@ -20,7 +20,11 @@
 
 .Info {
   margin-left: 3rem;
-  
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   h2 {
     font-size: 6rem;
   }
@@ -28,4 +32,9 @@
   h3 {
     font-size: 4rem;
   }
+}
+
+.Star {
+  height: 5rem;
+  width: 5rem;
 }

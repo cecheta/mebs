@@ -19,3 +19,18 @@ export const removeArtist = (id) => {
     id,
   };
 };
+
+
+export const addAlbum = (id) => {
+  return {
+    type: actionTypes.ADD_ALBUM,
+    id,
+  };
+};
+
+export const removeAlbum = (id) => {
+  return {
+    type: actionTypes.REMOVE_ALBUM,
+    id,
+  };
+};
