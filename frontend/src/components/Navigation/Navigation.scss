@@ -1,0 +1,14 @@
+.Navigation {
+  background-color: white;
+  list-style: none;
+  display: inline-flex;
+  justify-content: flex-end;
+  float: right;
+
+  a:link,
+  a:visited {
+    text-decoration: none;
+    font-size: 2rem;
+    color: black;
+  }
+}
