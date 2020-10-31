@@ -1,0 +1,15 @@
+.Back {
+  position: absolute;
+  font-size: 8rem;
+  left: 15px;
+  top: 15px;
+  border: 2px solid #2e1377;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Album from '../../components/Pages/Album/Album';
 import Artist from '../../components/Pages/Artist/Artist';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Back from '../../components/UI/Back/Back';
 import './ResultPage.scss';
 
 const ResultPage = (props) => {
@@ -71,7 +72,12 @@ const ResultPage = (props) => {
     classes.push('loading');
   }
 
-  return <div className={classes.join(' ')}>{results}</div>;
+  return (
+    <div className={classes.join(' ')}>
+      <Back />
+      {results}
+    </div>
+  );
 };
 
 export default ResultPage;

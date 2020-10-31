@@ -4,6 +4,7 @@
   width: 80%;
   height: 80rem;
   overflow: auto;
+  position: relative;
 
   &.loading {
     flex-grow: 1;
