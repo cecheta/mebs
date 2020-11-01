@@ -39,12 +39,30 @@ app.get('/api/albums/:id', async (req, res) => {
   }
 });
 
+app.get('/api/albums', async (req, res) => {
+  try {
+    const response = await axios.get(`/v1/albums?ids=${req.query.ids}`);
+    res.send(response.data);
+  } catch (error) {
+    res.status(error.response.status).send({ error: { message: error.message } });
+  }
+});
+
 app.get('/api/artists/:id', async (req, res) => {
   try {
     const response = (await axios.get(`/v1/artists/${req.params.id}`)).data;
     response.albums = (await axios.get(`/v1/artists/${req.params.id}/albums`)).data.items;
     response.tracks = (await axios.get(`/v1/artists/${req.params.id}/top-tracks?country=GB`)).data.tracks;
     res.send(response);
+  } catch (error) {
+    res.status(error.response.status).send({ error: { message: error.message } });
+  }
+});
+
+app.get('/api/artists', async (req, res) => {
+  try {
+    const response = await axios.get(`/v1/artists?ids=${req.query.ids}`);
+    res.send(response.data);
   } catch (error) {
     res.status(error.response.status).send({ error: { message: error.message } });
   }
