@@ -5,6 +5,10 @@
   justify-content: flex-end;
   float: right;
 
+  li:not(:first-child) {
+    margin-left: 2rem;
+  }
+
   a:link,
   a:visited {
     text-decoration: none;
