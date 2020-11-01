@@ -30,7 +30,7 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-app.get('/api/album/:id', async (req, res) => {
+app.get('/api/albums/:id', async (req, res) => {
   try {
     const response = await axios.get(`/v1/albums/${req.params.id}`);
     res.send(response.data);
@@ -39,7 +39,7 @@ app.get('/api/album/:id', async (req, res) => {
   }
 });
 
-app.get('/api/artist/:id', async (req, res) => {
+app.get('/api/artists/:id', async (req, res) => {
   try {
     const response = (await axios.get(`/v1/artists/${req.params.id}`)).data;
     response.albums = (await axios.get(`/v1/artists/${req.params.id}/albums`)).data.items;

@@ -21,7 +21,7 @@ const ResultPage = (props) => {
     (async () => {
       if (!error && !data[type]) {
         try {
-          const response = await axios.get(`/api/${type}/${id}`, {
+          const response = await axios.get(`/api/${type}s/${id}`, {
             cancelToken: requestRef.current.source.token,
           });
           setData({ [type]: response.data });
