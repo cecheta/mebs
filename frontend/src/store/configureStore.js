@@ -14,7 +14,9 @@ const configureStore = () => {
 
   store.subscribe(() => {
     const favourites = store.getState().favourites;
-    localStorage.setItem('favouritesState', JSON.stringify(favourites));
+    const data = { ...favourites };
+    delete data.loaded;
+    localStorage.setItem('favouritesState', JSON.stringify(data));
   });
 
   return store;

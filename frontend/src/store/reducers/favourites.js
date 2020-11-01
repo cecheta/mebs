@@ -3,17 +3,24 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   artists: [],
   albums: [],
+  loaded: false,
 };
 
 const loadFavourites = (state) => {
+  let data;
   try {
     const favourites = localStorage.getItem('favouritesState');
     if (favourites) {
-      return JSON.parse(favourites);
+      data = JSON.parse(favourites);
+    } else {
+      data = { ...state };
     }
-  } catch (e) {}
+  } catch (e) {
+    data = { ...state };
+  }
 
-  return state;
+  data.loaded = true;
+  return data;
 };
 
 const addArtist = (state, action) => {
