@@ -50,10 +50,14 @@ app.get('/api/albums', async (req, res) => {
 
 app.get('/api/artists/:id', async (req, res) => {
   try {
-    const response = (await axios.get(`/v1/artists/${req.params.id}`)).data;
-    response.albums = (await axios.get(`/v1/artists/${req.params.id}/albums`)).data.items;
-    response.tracks = (await axios.get(`/v1/artists/${req.params.id}/top-tracks?country=GB`)).data.tracks;
-    res.send(response);
+    const requests = [axios.get(`/v1/artists/${req.params.id}`), axios.get(`/v1/artists/${req.params.id}/albums`), axios.get(`/v1/artists/${req.params.id}/top-tracks?country=GB`)];
+
+    const [artist, albums, tracks] = await Promise.all(requests);
+    res.send({
+      ...artist.data,
+      albums: albums.data.items,
+      tracks: tracks.data.tracks,
+    });
   } catch (error) {
     res.status(error.response.status).send({ error: { message: error.message } });
   }
