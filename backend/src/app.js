@@ -68,6 +68,32 @@ app.get('/api/artists', async (req, res) => {
   }
 });
 
+app.get('/api/account', async (req, res) => {
+  try {
+    const response = {
+      artists: [],
+      albums: [],
+    };
+
+    const artistRequest = req.query.artists ? axios.get(`/v1/artists?ids=${req.query.artists}`) : null;
+    const albumRequest = req.query.albums ? axios.get(`/v1/albums?ids=${req.query.albums}`) : null;
+    const requests = [artistRequest, albumRequest];
+
+    [artistResponse, albumResponse] = await Promise.all(requests);
+
+    if (artistResponse) {
+      response.artists = artistResponse.data.artists;
+    }
+    if (albumResponse) {
+      response.albums = albumResponse.data.albums;
+    }
+
+    res.send(response);
+  } catch (error) {
+    res.status(error.response.status).send({ error: { message: error.message } });
+  }
+});
+
 app.get('*', (req, res) => {
   res.send('Server is up');
 });

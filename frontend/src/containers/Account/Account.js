@@ -23,25 +23,23 @@ const Account = () => {
   const albumIds = albums.join(',');
   const artistIds = artists.join(',');
 
+  const query = [];
+  if (albumIds) {
+    query.push(`albums=${albumIds}`);
+  }
+  if (artistIds) {
+    query.push(`artists=${artistIds}`);
+  }
+  const queryString = query.join('&');
+
   useEffect(() => {
     (async () => {
       if (loaded && !data && !error) {
         try {
-          let albumResponse, artistResponse;
-          if (albumIds) {
-            albumResponse = await axios.get(`/api/albums?ids=${albumIds}`, {
-              cancelToken: requestRef.current.source.token,
-            });
-          }
-          if (artistIds) {
-            artistResponse = await axios.get(`/api/artists?ids=${artistIds}`, {
-              cancelToken: requestRef.current.source.token,
-            });
-          }
-          setData({
-            albums: albumResponse?.data,
-            artists: artistResponse?.data,
+          const response = await axios.get(`/api/account?${queryString}`, {
+            cancelToken: requestRef.current.source.token,
           });
+          setData(response.data);
         } catch (error) {
           if (!axios.isCancel(error)) {
             setError(true);
@@ -49,7 +47,7 @@ const Account = () => {
         }
       }
     })();
-  }, [loaded, data, error, albumIds, artistIds]);
+  }, [loaded, data, error, queryString]);
 
   useEffect(() => {
     return () => {
