@@ -6,6 +6,11 @@
   overflow: auto;
   position: relative;
 
+  &.loading {
+    display: flex;
+    flex-grow: 1;
+  }
+
   h1 {
     padding: 3rem 0 3rem 5rem;
     font-size: 5rem;

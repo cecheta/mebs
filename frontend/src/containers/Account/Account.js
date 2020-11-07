@@ -3,6 +3,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
 import Album from '../../components/AccountItems/Album/Album';
 import Artist from '../../components/AccountItems/Artist/Artist';
+import Spinner from '../../components/UI/Spinner/Spinner';
 import './Account.scss';
 
 const Account = () => {
@@ -72,17 +73,42 @@ const Account = () => {
     artistItems = data.artists.map((artist) => <Artist key={artist.id} id={artist.id} name={artist.name} image={artist.images[0]} />);
   }
 
+  let results;
+  // let results = <Spinner />;
+
+  if (data) {
+    results = (
+      <>
+        <div className="container">
+          <h2>My Albums</h2>
+          {albumItems}
+        </div>
+        <div className="container">
+          <h2>My Artists</h2>
+          {artistItems}
+        </div>
+      </>
+    );
+  } else if (error) {
+    results = (
+      <div>
+        An error has occurred...
+        <button onClick={() => setError(false)}>Try again</button>
+      </div>
+    );
+  } else {
+    results = <Spinner />;
+  }
+
+  const classes = ['Results'];
+  if (!data && !error) {
+    classes.push('loading');
+  }
+
   return (
     <div className="Account">
       <h1>My Account</h1>
-      <div className="container">
-        <h2>My Albums</h2>
-        {albumItems}
-      </div>
-      <div className="container">
-        <h2>My Artists</h2>
-        {artistItems}
-      </div>
+      <div className={classes.join(' ')}>{results}</div>
     </div>
   );
 };
