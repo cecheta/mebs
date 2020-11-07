@@ -1,10 +1,11 @@
 .Back {
-  position: absolute;
+  position: fixed;
   z-index: 1;
   font-size: 8rem;
   left: 15px;
   top: 15px;
   border: 2px solid #2e1377;
+  background-color: white;
   width: 10rem;
   height: 10rem;
   border-radius: 50%;
@@ -13,4 +14,6 @@
   justify-content: center;
   cursor: pointer;
   overflow: hidden;
+  top: 6vh;
+  left: 3vw;
 }
