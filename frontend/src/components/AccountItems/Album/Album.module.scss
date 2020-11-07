@@ -1,0 +1,14 @@
+.Album {
+  display: flex;
+  align-items: center;
+
+  .Info {
+    margin-left: 2rem;
+  }
+
+  img {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+  }
+}

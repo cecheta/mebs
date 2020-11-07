@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
+import Album from '../../components/AccountItems/Album/Album';
+import Artist from '../../components/AccountItems/Artist/Artist';
 import './Account.scss';
 
 const Account = () => {
@@ -64,9 +66,23 @@ const Account = () => {
     };
   }, []);
 
+  let albumItems, artistItems;
+  if (data) {
+    albumItems = data.albums.map((album) => <Album key={album.id} id={album.id} name={album.name} artists={album.artists} image={album.images[0]} />);
+    artistItems = data.artists.map((artist) => <Artist key={artist.id} id={artist.id} name={artist.name} image={artist.images[0]} />);
+  }
+
   return (
     <div className="Account">
       <h1>My Account</h1>
+      <div className="container">
+        <h2>My Albums</h2>
+        {albumItems}
+      </div>
+      <div className="container">
+        <h2>My Artists</h2>
+        {artistItems}
+      </div>
     </div>
   );
 };
