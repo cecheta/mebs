@@ -2,17 +2,24 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   addingStart: false,
+  song: null,
 };
 
 const playlistStart = (state, action) => {
-  const newState = { ...state };
-  newState.addingStart = true;
+  const newState = {
+    ...state,
+    addingStart: true,
+    song: action.song,
+  };
   return newState;
 };
 
 const playlistCancel = (state, action) => {
-  const newState = { ...state };
-  newState.addingStart = false;
+  const newState = {
+    ...state,
+    addingStart: false,
+    song: null,
+  };
   return newState;
 };
 

@@ -21,7 +21,7 @@ const Album = ({ id, artists, name, image, songs }) => {
       </span>
     );
   });
-  const albumSongs = songs.items.map((song) => <SongItem key={song.id} songArtists={song.artists} albumArtists={albumArtists} number={song.track_number} name={song.name} />);
+  const albumSongs = songs.items.map((song) => <SongItem key={song.id} id={song.id} songArtists={song.artists} albumArtists={albumArtists} number={song.track_number} name={song.name} />);
 
   const dispatch = useDispatch();
   const addAlbum = (id) => dispatch(actions.addAlbum(id));

@@ -1,8 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export const playlistStart = () => {
+export const playlistStart = (song) => {
   return {
     type: actionTypes.PLAYLIST_START,
+    song
   };
 };
 
