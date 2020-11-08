@@ -5,3 +5,10 @@ export const playlistStart = () => {
     type: actionTypes.PLAYLIST_START,
   };
 };
+
+
+export const playlistCancel = () => {
+  return {
+    type: actionTypes.PLAYLIST_CANCEL,
+  };
+};

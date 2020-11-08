@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
 import Album from '../../components/Pages/Album/Album';
 import Artist from '../../components/Pages/Artist/Artist';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Back from '../../components/UI/Back/Back';
+import Modal from '../../components/UI/Modal/Modal';
+import * as actions from '../../store/actions';
 import './ResultPage.scss';
 
 const ResultPage = (props) => {
   const [error, setError] = useState(false);
   const [data, setData] = useState({});
+
+  const dispatch = useDispatch();
+
+  const { adding } = useSelector((state) => ({ adding: state.playlists.addingStart }), shallowEqual);
 
   const requestRef = useRef({
     source: axios.CancelToken.source(),
@@ -72,11 +79,18 @@ const ResultPage = (props) => {
     classes.push('loading');
   }
 
+  const cancelPlaylist = () => {
+    dispatch(actions.playlistCancel());
+  };
+
   return (
-    <div className={classes.join(' ')}>
-      <Back />
-      {results}
-    </div>
+    <>
+      <div className={classes.join(' ')}>
+        <Back />
+        {results}
+      </div>
+      {adding ? <Modal close={cancelPlaylist}>ADD TO PLAYLIST</Modal> : null}
+    </>
   );
 };
 

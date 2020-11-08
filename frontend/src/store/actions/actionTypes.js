@@ -5,3 +5,4 @@ export const ADD_ALBUM = 'ADD_ALBUM';
 export const REMOVE_ALBUM = 'REMOVE_ALBUM';
 
 export const PLAYLIST_START = 'PLAYLIST_START';
+export const PLAYLIST_CANCEL = 'PLAYLIST_CANCEL';
