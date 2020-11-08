@@ -74,7 +74,6 @@ const Account = () => {
   }
 
   let results;
-  // let results = <Spinner />;
 
   if (data) {
     results = (

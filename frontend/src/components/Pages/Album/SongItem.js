@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../../store/actions';
+import { ReactComponent as Add } from '../../../assets/images/plus.svg';
 import classes from './SongItem.module.scss';
 
 const SongItem = ({ name, number, songArtists, albumArtists }) => {
+  const dispatch = useDispatch();
+
   let artists = songArtists.map((artist) => ({
     name: artist.name,
     id: artist.id,
@@ -30,6 +35,10 @@ const SongItem = ({ name, number, songArtists, albumArtists }) => {
     );
   });
 
+  const addToPlaylist = () => {
+    dispatch(actions.playlistStart());
+  };
+
   return (
     <div className={classes.SongItem}>
       <h4>
@@ -37,6 +46,9 @@ const SongItem = ({ name, number, songArtists, albumArtists }) => {
         {name}
         {artists}
       </h4>
+      <div className={classes.Add}>
+        <Add fill="green" onClick={addToPlaylist} />
+      </div>
     </div>
   );
 };

@@ -2,6 +2,7 @@
   font-size: 3rem;
   height: 5rem;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   white-space: nowrap;
   overflow-x: scroll; // Temporary
@@ -25,4 +26,9 @@
       color: inherit;
     }
   }
+}
+
+.Add {
+  height: 3rem;
+  width: 3rem;
 }
