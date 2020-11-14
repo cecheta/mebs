@@ -22,7 +22,7 @@ const Playlist = (props) => {
 
   useEffect(() => {
     (async () => {
-      if (loaded && !data && !error) {
+      if (loaded && !data && songIds.length > 0 && !error) {
         try {
           const response = await axios.get(`/api/songs?ids=${songIds.join(',')}`, {
             cancelToken: requestRef.current.source.token,
@@ -54,12 +54,6 @@ const Playlist = (props) => {
 
   let songItems;
   if (data) {
-    // const songs = [...data];
-    // console.log(songs);
-    // songs.filter((song) => {
-    // return playlist.songs.findIndex((playlistSong) => playlistSong.id === song.id) > -1;
-    // });
-    // songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
     songItems = data.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
   }
 
@@ -86,6 +80,10 @@ const Playlist = (props) => {
     );
   } else {
     results = <Spinner />;
+  }
+
+  if (songIds?.length === 0) {
+    results = <div>This playlist is empty</div>
   }
 
   const classes = ['Songs'];
