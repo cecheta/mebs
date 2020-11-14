@@ -61,6 +61,13 @@ const playlistDelete = (state, action) => {
   return newState;
 };
 
+const playlistDeleteSong = (state, action) => {
+  const newState = JSON.parse(JSON.stringify(state));
+  const playlist = newState.playlists.find((playlist) => playlist.id === action.playlistId);
+  playlist.songs = playlist.songs.filter((song) => song.id !== action.songId);
+  return newState;
+};
+
 const playlistCancel = (state, action) => {
   const newState = {
     ...state,
@@ -86,6 +93,9 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.PLAYLIST_DELETE:
       return playlistDelete(state, action);
+
+    case actionTypes.PLAYLIST_DELETE_SONG:
+      return playlistDeleteSong(state, action);
 
     case actionTypes.PLAYLIST_CANCEL:
       return playlistCancel(state, action);

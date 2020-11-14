@@ -36,6 +36,14 @@ export const playlistDelete = (id) => {
   }
 }
 
+export const playlistDeleteSong = (songId, playlistId) => {
+  return {
+    type: actionTypes.PLAYLIST_DELETE_SONG,
+    songId,
+    playlistId,
+  }
+}
+
 export const playlistCancel = () => {
   return {
     type: actionTypes.PLAYLIST_CANCEL,

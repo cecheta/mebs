@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
 import SongItem from '../../components/Playlist/SongItem/SongItem';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -18,7 +18,7 @@ const Playlist = (props) => {
   const id = props.match.params.id;
   const playlist = playlists.find((playlist) => playlist.id === id);
 
-  const songIds = playlist?.songs.map((song) => song.id)
+  const songIds = playlist?.songs.map((song) => song.id);
 
   useEffect(() => {
     (async () => {
@@ -54,7 +54,23 @@ const Playlist = (props) => {
 
   let songItems;
   if (data) {
-    songItems = data.map((song) => <SongItem key={song.id} id={song.id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
+    // const songs = [...data];
+    // console.log(songs);
+    // songs.filter((song) => {
+    // return playlist.songs.findIndex((playlistSong) => playlistSong.id === song.id) > -1;
+    // });
+    // songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
+    songItems = data.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
+  }
+
+  if (data && data.length !== playlist.songs.length) {
+    setData((oldData) => {
+      const songs = [...oldData];
+      return songs.filter((song) => {
+        const id = song.id;
+        return playlist.songs.findIndex((song) => song.id === id) > -1;
+      });
+    });
   }
 
   let results;
