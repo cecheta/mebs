@@ -16,9 +16,22 @@ const configureStore = () => {
 
   store.subscribe(() => {
     const favourites = store.getState().favourites;
-    const data = { ...favourites };
-    delete data.loaded;
-    localStorage.setItem('favouritesState', JSON.stringify(data));
+    const playlists = store.getState().playlists;
+    const favouritesData = { ...favourites };
+    const playlistsData = { ...playlists };
+
+    delete favouritesData.loaded;
+    delete playlistsData.addingStart;
+    delete playlistsData.song;
+
+    const data = {
+      favourites: favouritesData,
+      playlists: playlistsData,
+    };
+
+    try {
+      localStorage.setItem('data', JSON.stringify(data));
+    } catch (e) {}
   });
 
   return store;

@@ -4,5 +4,8 @@ export const REMOVE_ARTIST = 'REMOVE_ARTIST';
 export const ADD_ALBUM = 'ADD_ALBUM';
 export const REMOVE_ALBUM = 'REMOVE_ALBUM';
 
+export const LOAD_PLAYLISTS = 'LOAD_PLAYLISTS';
 export const PLAYLIST_START = 'PLAYLIST_START';
+export const PLAYLIST_ADD = 'PLAYLIST_ADD';
+export const PLAYLIST_ADD_SONG = 'PLAYLIST_ADD_SONG';
 export const PLAYLIST_CANCEL = 'PLAYLIST_CANCEL';

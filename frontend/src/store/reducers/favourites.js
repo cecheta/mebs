@@ -6,21 +6,14 @@ const initialState = {
   loaded: false,
 };
 
-const loadFavourites = (state) => {
-  let data;
-  try {
-    const favourites = localStorage.getItem('favouritesState');
-    if (favourites) {
-      data = JSON.parse(favourites);
-    } else {
-      data = { ...state };
-    }
-  } catch (e) {
-    data = { ...state };
+const loadFavourites = (state, action) => {
+  let newState = { ...state };
+  if (action.favourites) {
+    newState = action.favourites;
   }
 
-  data.loaded = true;
-  return data;
+  newState.loaded = true;
+  return newState;
 };
 
 const addArtist = (state, action) => {
@@ -52,7 +45,7 @@ const removeAlbum = (state, action) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOAD_FAVOURITES:
-      return loadFavourites(state);
+      return loadFavourites(state, action);
 
     case actionTypes.ADD_ARTIST:
       return addArtist(state, action);

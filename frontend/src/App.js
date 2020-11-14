@@ -13,7 +13,14 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.loadFavourites());
+    let data;
+    try {
+      data = localStorage.getItem('data');
+      data = JSON.parse(data);
+    } catch (e) {}
+
+    dispatch(actions.loadFavourites(data?.favourites));
+    dispatch(actions.loadPlaylists(data?.playlists));
   }, [dispatch]);
 
   return (

@@ -1,2 +1,2 @@
 export { loadFavourites, addArtist, removeArtist, addAlbum, removeAlbum } from './favourites';
-export { playlistStart, playlistCancel } from './playlists';
+export { loadPlaylists, playlistStart, playlistAdd, playlistAddSong, playlistCancel } from './playlists';

@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
+import { nanoid } from 'nanoid';
 import Album from '../../components/Pages/Album/Album';
 import Artist from '../../components/Pages/Artist/Artist';
+import AddToPlaylist from '../../components/Playlist/AddToPlaylist/AddToPlaylist';
+import NewPlaylist from '../../components/Playlist/NewPlaylist/NewPlaylist';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Back from '../../components/UI/Back/Back';
 import Modal from '../../components/UI/Modal/Modal';
@@ -12,6 +15,7 @@ import './ResultPage.scss';
 const ResultPage = (props) => {
   const [error, setError] = useState(false);
   const [data, setData] = useState({});
+  const [newPlaylist, setNewPlaylist] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -83,13 +87,37 @@ const ResultPage = (props) => {
     dispatch(actions.playlistCancel());
   };
 
+  const addNewPlaylist = () => {
+    setNewPlaylist(true);
+  };
+
+  const cancelNewPlaylist = () => {
+    setNewPlaylist(false);
+  };
+
+  const submitNewPlaylist = (e, name) => {
+    e.preventDefault();
+    const id = nanoid();
+    dispatch(actions.playlistAdd(name, id));
+    setNewPlaylist(false);
+  };
+
   return (
     <>
       <div className={classes.join(' ')}>
         <Back />
         {results}
       </div>
-      {adding ? <Modal close={cancelPlaylist}>ADD TO PLAYLIST</Modal> : null}
+      {adding ? (
+        <Modal close={cancelPlaylist}>
+          <AddToPlaylist addNewPlaylist={addNewPlaylist} />
+        </Modal>
+      ) : null}
+      {adding && newPlaylist ? (
+        <Modal close={cancelNewPlaylist} order={2} size="small">
+          <NewPlaylist submit={submitNewPlaylist} />
+        </Modal>
+      ) : null}
     </>
   );
 };

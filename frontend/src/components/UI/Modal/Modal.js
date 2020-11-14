@@ -3,10 +3,15 @@ import Backdrop from '../Backdrop/Backdrop';
 import './Modal.scss';
 
 const Modal = (props) => {
+  const classes = ['Modal'];
+  if (props.size) {
+    classes.push(props.size);
+  }
+
   return (
     <>
-      <Backdrop close={props.close} />
-      <div className="Modal">{props.children}</div>
+      <Backdrop close={props.close} order={props.order} />
+      <div className={classes.join(' ')} style={props.order ? { zIndex: props.order * 20 } : {}}>{props.children}</div>
     </>
   );
 };
