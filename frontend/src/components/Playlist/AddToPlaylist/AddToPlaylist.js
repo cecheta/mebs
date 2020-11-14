@@ -4,7 +4,7 @@ import * as actions from '../../../store/actions';
 import './AddToPlaylist.scss';
 
 const AddToPlaylist = (props) => {
-  const { playlists } = useSelector((state) => ({ playlists: state.playlists.playlists }), shallowEqual);
+  const { playlists, song } = useSelector((state) => ({ playlists: state.playlists.playlists, song: state.playlists.song }), shallowEqual);
 
   const dispatch = useDispatch();
 
@@ -15,7 +15,12 @@ const AddToPlaylist = (props) => {
   ));
 
   const addSong = (playlistId) => {
-    dispatch(actions.playlistAddSong(playlistId));
+    const playlist = playlists.find((playlist) => playlist.id === playlistId);
+    if (playlist.songs.find((playlistSong) => playlistSong.id === song.id)) {
+      alert('Song is already in playlist!');
+    } else {
+      dispatch(actions.playlistAddSong(playlistId));
+    }
   };
 
   return (
