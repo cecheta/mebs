@@ -48,6 +48,14 @@ const playlistAddSong = (state, action) => {
   return newState;
 };
 
+const playlistDelete = (state, action) => {
+  const newState = {
+    ...state,
+    playlists: state.playlists.filter((playlist) => playlist.id !== action.id),
+  };
+  return newState;
+};
+
 const playlistCancel = (state, action) => {
   const newState = {
     ...state,
@@ -70,6 +78,9 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.PLAYLIST_ADD_SONG:
       return playlistAddSong(state, action);
+
+    case actionTypes.PLAYLIST_DELETE:
+      return playlistDelete(state, action);
 
     case actionTypes.PLAYLIST_CANCEL:
       return playlistCancel(state, action);

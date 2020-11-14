@@ -29,6 +29,13 @@ export const playlistAddSong = (id) => {
   };
 };
 
+export const playlistDelete = (id) => {
+  return {
+    type: actionTypes.PLAYLIST_DELETE,
+    id,
+  }
+}
+
 export const playlistCancel = () => {
   return {
     type: actionTypes.PLAYLIST_CANCEL,

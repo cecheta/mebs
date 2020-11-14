@@ -22,4 +22,16 @@
     font-size: 2rem;
     padding-left: 5rem;
   }
+
+  .playlists li {
+    list-style: none;
+    font-size: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      height: 2rem;
+    }
+  }
 }

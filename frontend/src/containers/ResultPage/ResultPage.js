@@ -99,6 +99,7 @@ const ResultPage = (props) => {
     e.preventDefault();
     const id = nanoid();
     dispatch(actions.playlistAdd(name, id));
+    dispatch(actions.playlistAddSong(id));
     setNewPlaylist(false);
   };
 
