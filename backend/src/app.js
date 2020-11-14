@@ -72,6 +72,15 @@ app.get('/api/artists', async (req, res) => {
   }
 });
 
+app.get('/api/songs', async (req, res) => {
+  try {
+    const response = await axios.get(`/v1/tracks?ids=${req.query.ids}`);
+    res.send(response.data.tracks);
+  } catch (error) {
+    res.status(error.response.status).send({ error: { message: error.message } });
+  }
+});
+
 app.get('/api/account', async (req, res) => {
   try {
     const response = {

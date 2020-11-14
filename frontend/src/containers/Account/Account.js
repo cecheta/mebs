@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Album from '../../components/AccountItems/Album/Album';
 import Artist from '../../components/AccountItems/Artist/Artist';
@@ -84,7 +85,7 @@ const Account = () => {
 
   const playlistItems = playlists.map((playlist) => (
     <li key={playlist.id}>
-      {playlist.name}
+      <Link to={`/account/playlist/${playlist.id}`}>{playlist.name}</Link>
       <Delete fill="red" onClick={() => deletePlaylist(playlist.id)} />
     </li>
   ));

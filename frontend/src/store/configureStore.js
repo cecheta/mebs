@@ -21,6 +21,7 @@ const configureStore = () => {
     const playlistsData = { ...playlists };
 
     delete favouritesData.loaded;
+    delete playlistsData.loaded;
     delete playlistsData.addingStart;
     delete playlistsData.song;
 

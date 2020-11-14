@@ -4,14 +4,19 @@ const initialState = {
   addingStart: false,
   playlists: [],
   song: null,
+  loaded: false,
 };
 
 const loadPlaylists = (state, action) => {
   let newState = { ...state };
   if (action.playlists) {
-    newState = action.playlists;
+    newState = {
+      ...newState,
+      ...action.playlists,
+    };
   }
 
+  newState.loaded = true;
   return newState;
 };
 

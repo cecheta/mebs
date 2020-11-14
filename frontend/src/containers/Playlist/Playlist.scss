@@ -1,0 +1,22 @@
+.Playlist {
+  margin: 6rem auto 0;
+  padding: 5rem;
+  background-color: #fff;
+  width: 80%;
+  height: 80rem;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    font-size: 5rem;
+  }
+
+  .Songs {
+    &.loading {
+      display: flex;
+      flex-grow: 1;
+    }
+  }
+}
