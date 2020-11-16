@@ -17,7 +17,14 @@ router.post('/api/auth/register', async (req, res) => {
     });
     await user.save();
     const jwt = user.generateJwtToken();
-    res.send({
+    const refreshToken = user.generateRefreshToken();
+    const cookieOptions = {
+      httpOnly: true,
+      signed: true,
+    }
+    res.cookie('refresh', refreshToken, cookieOptions);
+
+    res.status(201).send({
       user,
       jwt,
     });

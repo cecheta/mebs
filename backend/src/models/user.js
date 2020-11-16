@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
@@ -39,6 +40,16 @@ userSchema.methods.generateJwtToken = function () {
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, options);
+
+  return token;
+};
+
+userSchema.methods.generateRefreshToken = async function () {
+  const user = this;
+
+  const token = crypto.randomBytes(200).toString('hex');
+  user.tokens.push({ token });
+  await user.save();
 
   return token;
 };

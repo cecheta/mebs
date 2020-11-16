@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const cookieParser = require('cookie-parser')
 const axios = require('./axios/axios-spotify');
 const searchRouter = require('./routers/search');
 const authRouter = require('./routers/auth');
@@ -17,6 +18,7 @@ require('./config/passport')(passport);
 app.use(passport.initialize());
 
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(searchRouter);
 app.use(authRouter);
