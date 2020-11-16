@@ -1,5 +1,6 @@
 const express = require('express');
-const axios = require('./axios-spotify');
+const passport = require('passport');
+const axios = require('./axios/axios-spotify');
 const searchRouter = require('./routers/search');
 const authRouter = require('./routers/auth');
 
@@ -9,6 +10,12 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
 const PORT = process.env.PORT;
 
 const app = express();
+
+require('./config/database');
+require('./models/user');
+
+require('./config/passport')(passport);
+app.use(passport.initialize());
 
 app.use(searchRouter);
 app.use(authRouter);

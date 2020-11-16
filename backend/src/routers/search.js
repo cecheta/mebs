@@ -1,5 +1,5 @@
 const express = require('express');
-const axios = require('../axios-spotify');
+const axios = require('../axios/axios-spotify');
 
 const router = express.Router();
 
