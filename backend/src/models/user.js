@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const JWT_EXPIRES_IN = '30m';
 
@@ -29,7 +30,22 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-userSchema.methods.generateJwtToken = function () {
+userSchema.statics.findByCredentials = async (username, password) => {
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    throw new Error('Unable to login');
+  }
+
+  const isMatch = await bcrypt.compare(password, user.hash);
+  if (!isMatch) {
+    throw new Error('Unable to login');
+  }
+
+  return user;
+};
+
+userSchema.methods.generateTokens = async function () {
   const user = this;
 
   const payload = {
@@ -39,19 +55,16 @@ userSchema.methods.generateJwtToken = function () {
     expiresIn: JWT_EXPIRES_IN,
   };
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET, options);
+  const jwtToken = jwt.sign(payload, process.env.JWT_SECRET, options);
 
-  return token;
-};
-
-userSchema.methods.generateRefreshToken = async function () {
-  const user = this;
-
-  const token = crypto.randomBytes(200).toString('hex');
-  user.tokens.push({ token });
+  const refreshToken = crypto.randomBytes(200).toString('hex');
+  user.tokens.push({ token: refreshToken });
   await user.save();
 
-  return token;
+  return {
+    jwtToken,
+    refreshToken,
+  };
 };
 
 userSchema.methods.toJSON = function () {
@@ -65,4 +78,6 @@ userSchema.methods.toJSON = function () {
   return userObject;
 };
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

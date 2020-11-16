@@ -16,17 +16,35 @@ router.post('/api/auth/register', async (req, res) => {
       hash,
     });
     await user.save();
-    const jwt = user.generateJwtToken();
-    const refreshToken = user.generateRefreshToken();
+    const { jwtToken, refreshToken } = await user.generateTokens();
     const cookieOptions = {
       httpOnly: true,
       signed: true,
-    }
+    };
     res.cookie('refresh', refreshToken, cookieOptions);
 
     res.status(201).send({
       user,
-      jwt,
+      jwt: jwtToken,
+    });
+  } catch (err) {
+    res.send({ error: err.message });
+  }
+});
+
+router.post('/api/auth/login', async (req, res) => {
+  try {
+    const user = await User.findByCredentials(req.body.username, req.body.password);
+    const { jwtToken, refreshToken } = await user.generateTokens();
+    const cookieOptions = {
+      httpOnly: true,
+      signed: true,
+    };
+    
+    res.cookie('refresh', refreshToken, cookieOptions);
+    res.send({
+      user,
+      jwt: jwtToken,
     });
   } catch (err) {
     res.send({ error: err.message });
