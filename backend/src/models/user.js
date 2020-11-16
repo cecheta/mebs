@@ -45,7 +45,7 @@ userSchema.statics.findByCredentials = async (username, password) => {
   return user;
 };
 
-userSchema.methods.generateTokens = async function () {
+const generateJwtToken = function () {
   const user = this;
 
   const payload = {
@@ -56,6 +56,18 @@ userSchema.methods.generateTokens = async function () {
   };
 
   const jwtToken = jwt.sign(payload, process.env.JWT_SECRET, options);
+
+  return jwtToken;
+};
+
+userSchema.methods.generateJwtToken = function () {
+  return generateJwtToken.bind(this)();
+};
+
+userSchema.methods.generateTokens = async function () {
+  const user = this;
+
+  const jwtToken = generateJwtToken.bind(user)();
 
   const refreshToken = crypto.randomBytes(200).toString('hex');
   user.tokens.push({ token: refreshToken });

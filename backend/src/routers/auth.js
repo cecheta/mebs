@@ -40,12 +40,24 @@ router.post('/api/auth/login', async (req, res) => {
       httpOnly: true,
       signed: true,
     };
-    
+
     res.cookie('refresh', refreshToken, cookieOptions);
     res.send({
       user,
       jwt: jwtToken,
     });
+  } catch (err) {
+    res.send({ error: err.message });
+  }
+});
+
+router.post('/api/auth/refresh', async (req, res) => {
+  try {
+    const refresh = req.signedCookies.refresh;
+    const user = await User.findOne({ 'tokens.token': refresh });
+    const jwtToken = user.generateJwtToken();
+
+    res.send({ token: jwtToken });
   } catch (err) {
     res.send({ error: err.message });
   }
