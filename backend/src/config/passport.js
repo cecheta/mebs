@@ -1,5 +1,5 @@
 const passportJwt = require('passport-jwt');
-const User = require('mongoose').model('User');
+const User = require('../models/user');
 
 const JWTStrategy = passportJwt.Strategy;
 const ExtractJwt = passportJwt.ExtractJwt;
@@ -17,7 +17,7 @@ module.exports = (passport) => {
     new JWTStrategy(options, async (jwt_payload, done) => {
       console.log(jwt_payload);
       try {
-        const user = await User.findOne({ id: jwt_payload.sub }).exec();
+        const user = await User.findOne({ _id: jwt_payload.sub }).exec();
         if (user) {
           return done(null, user);
         } else {

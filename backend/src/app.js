@@ -12,10 +12,11 @@ const PORT = process.env.PORT;
 const app = express();
 
 require('./config/database');
-require('./models/user');
 
 require('./config/passport')(passport);
 app.use(passport.initialize());
+
+app.use(express.urlencoded({extended: true}));
 
 app.use(searchRouter);
 app.use(authRouter);
