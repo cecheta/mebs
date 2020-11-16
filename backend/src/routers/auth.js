@@ -54,10 +54,18 @@ router.post('/api/auth/login', async (req, res) => {
 router.post('/api/auth/refresh', async (req, res) => {
   try {
     const refresh = req.signedCookies.refresh;
+
+    if (refresh === undefined) {
+      throw new Error('Refresh token missing');
+    }
+
     const user = await User.findOne({ 'tokens.token': refresh });
+    if (!user || refresh === false) {
+      throw new Error('Invalid refresh token');
+    }
     const jwtToken = user.generateJwtToken();
 
-    res.send({ token: jwtToken });
+    res.send({ jwt: jwtToken });
   } catch (err) {
     res.send({ error: err.message });
   }
