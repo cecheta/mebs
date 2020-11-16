@@ -1,9 +1,10 @@
 const express = require('express');
 const passport = require('passport');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 const axios = require('./axios/axios-spotify');
 const searchRouter = require('./routers/search');
 const authRouter = require('./routers/auth');
+const authMiddleware = require('./middleware/auth');
 
 if (process.env.NODE_ENV !== 'PRODUCTION') {
   require('dotenv').config();
@@ -17,13 +18,13 @@ require('./config/database');
 require('./config/passport')(passport);
 app.use(passport.initialize());
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(searchRouter);
 app.use(authRouter);
 
-app.get('/api/account', async (req, res) => {
+app.get('/api/account', authMiddleware, async (req, res) => {
   try {
     const response = {
       artists: [],

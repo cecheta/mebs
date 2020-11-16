@@ -15,9 +15,8 @@ const options = {
 module.exports = (passport) => {
   passport.use(
     new JWTStrategy(options, async (jwt_payload, done) => {
-      console.log(jwt_payload);
       try {
-        const user = await User.findOne({ _id: jwt_payload.sub }).exec();
+        const user = await User.findOne({ _id: jwt_payload._id }).exec();
         if (user) {
           return done(null, user);
         } else {
