@@ -71,4 +71,10 @@ router.post('/api/auth/refresh', async (req, res) => {
   }
 });
 
+// TESTING
+router.delete('/api/auth/delete', async (req, res) => {
+  await User.deleteMany({});
+  res.send('OK');
+});
+
 module.exports = router;
