@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Album from '../../components/AccountItems/Album/Album';
 import Artist from '../../components/AccountItems/Artist/Artist';
@@ -18,9 +18,11 @@ const Account = () => {
   });
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { albums, artists, playlists, loaded } = useSelector(
+  const { token, albums, artists, playlists, loaded } = useSelector(
     (state) => ({
+      token: state.auth.token,
       albums: state.favourites.albums,
       artists: state.favourites.artists,
       playlists: state.playlists.playlists,
@@ -28,6 +30,10 @@ const Account = () => {
     }),
     shallowEqual
   );
+
+  if (!token) {
+    history.push('/login');
+  }
 
   const albumIds = albums.join(',');
   const artistIds = artists.join(',');
@@ -46,6 +52,7 @@ const Account = () => {
       if (loaded && !data && !error) {
         try {
           const response = await axios.get(`/api/account?${queryString}`, {
+            headers: { Authorization: `Bearer ${token}` },
             cancelToken: requestRef.current.source.token,
           });
           setData(response.data);
@@ -56,7 +63,7 @@ const Account = () => {
         }
       }
     })();
-  }, [loaded, data, error, queryString]);
+  }, [token, loaded, data, error, queryString]);
 
   useEffect(() => {
     return () => {

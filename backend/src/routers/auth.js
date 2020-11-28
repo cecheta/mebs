@@ -28,13 +28,21 @@ router.post('/api/auth/register', async (req, res) => {
       jwt: jwtToken,
     });
   } catch (err) {
-    res.send({ error: err.message });
+    res.status(400).send({ error: err.message });
   }
 });
 
 router.post('/api/auth/login', async (req, res) => {
   try {
-    const user = await User.findByCredentials(req.body.username, req.body.password);
+    let user;
+    if (req.body.username) {
+      user = await User.findByUsername(req.body.username, req.body.password);
+    } else if (req.body.email) {
+      user = await User.findByEmail(req.body.email, req.body.password);
+    } else {
+      throw new Error('Bad request');
+    }
+
     const { jwtToken, refreshToken } = await user.generateTokens();
     const cookieOptions = {
       httpOnly: true,
@@ -47,7 +55,7 @@ router.post('/api/auth/login', async (req, res) => {
       jwt: jwtToken,
     });
   } catch (err) {
-    res.send({ error: err.message });
+    res.status(400).send({ error: err.message });
   }
 });
 

@@ -18,7 +18,7 @@ require('./config/database');
 require('./config/passport')(passport);
 app.use(passport.initialize());
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(searchRouter);
