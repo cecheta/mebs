@@ -35,7 +35,7 @@ const Login = () => {
       const response = await axios.post('/api/auth/login', payload);
       const token = response.data.jwt;
 
-      dispatch(actions.authSaveToken(token));
+      dispatch(actions.authLogin(token));
       history.push('/account')
     } catch (err) {
       console.log(err);
@@ -48,11 +48,11 @@ const Login = () => {
       <form onSubmit={submitHandler}>
         <div className="input">
           <label htmlFor="name">Username or Email</label>
-          <input type="text" id="name" name="name" value={name} placeholder="Email" onChange={(e) => nameChangedHandler(e)} />
+          <input type="text" id="name" name="name" value={name} onChange={(e) => nameChangedHandler(e)} />
         </div>
         <div className="input">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" value={password} placeholder="Password" onChange={(e) => passwordChangedHandler(e)} />
+          <input type="password" id="password" name="password" value={password} onChange={(e) => passwordChangedHandler(e)} />
         </div>
         <p>
           Don't have an account? <Link to="/register">Register</Link>

@@ -38,7 +38,7 @@ const Register = () => {
       const response = await axios.post('/api/auth/register', payload);
       const token = response.data.jwt;
 
-      dispatch(actions.authSaveToken(token));
+      dispatch(actions.authLogin(token));
       history.push('/account');
     } catch (err) {
       console.log(err);
@@ -51,11 +51,11 @@ const Register = () => {
       <form onSubmit={submitHandler}>
         <div className="input">
           <label htmlFor="username">Username</label>
-          <input type="text" id="username" name="username" value={username} placeholder="Username" onChange={(e) => usernameChangedHandler(e)} />
+          <input type="text" id="username" name="username" value={username} onChange={(e) => usernameChangedHandler(e)} />
         </div>
         <div className="input">
           <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" value={email} placeholder="Email" onChange={(e) => emailChangedHandler(e)} />
+          <input type="email" id="email" name="email" value={email} onChange={(e) => emailChangedHandler(e)} />
         </div>
         <div className="input">
           <label htmlFor="password">Password</label>

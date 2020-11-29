@@ -3,13 +3,16 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
   token: null,
   loggedIn: false,
+  error: false,
 };
 
 const authSaveToken = (state, action) => {
-  return {
+  const newState = {
+    ...state,
     token: action.token,
-    loggedIn: true,
   };
+
+  return newState;
 };
 
 const reducer = (state = initialState, action) => {

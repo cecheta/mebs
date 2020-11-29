@@ -75,7 +75,7 @@ router.post('/api/auth/refresh', async (req, res) => {
 
     res.send({ jwt: jwtToken });
   } catch (err) {
-    res.send({ error: err.message });
+    res.status(400).send({ error: err.message });
   }
 });
 
