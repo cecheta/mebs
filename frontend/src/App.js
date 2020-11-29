@@ -18,8 +18,6 @@ const App = () => {
   const { loaded } = useSelector((state) => ({ loaded: state.auth.loaded }), shallowEqual);
 
   useEffect(() => {
-    dispatch(actions.authLoadRefresh());
-
     let data;
     try {
       data = localStorage.getItem('data');
@@ -28,21 +26,25 @@ const App = () => {
 
     dispatch(actions.loadFavourites(data?.favourites));
     dispatch(actions.loadPlaylists(data?.playlists));
+
+    dispatch(actions.authLoadRefresh());
   }, [dispatch]);
 
   return (
     <div className="App">
       <Navigation />
-      {loaded ? <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/register" component={Register} />
-        <Route path="/search" component={SearchResultsPage} />
-        <Route path="/account/playlist/:id" component={Playlist} />
-        <Route path="/account" component={Account} />
-        <Route path="/r/:type/:id" component={ResultPage} />
-        <Route path="/" component={Home} />
-      </Switch> : null}
+      {loaded ? (
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/register" component={Register} />
+          <Route path="/search" component={SearchResultsPage} />
+          <Route path="/account/playlist/:id" component={Playlist} />
+          <Route path="/account" component={Account} />
+          <Route path="/r/:type/:id" component={ResultPage} />
+          <Route path="/" component={Home} />
+        </Switch>
+      ) : null}
     </div>
   );
 };

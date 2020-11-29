@@ -7,6 +7,12 @@ export const authLogin = (token) => {
   return (dispatch) => {
     dispatch(authSaveToken(token));
     dispatch(authRefreshTimer());
+
+    try {
+      localStorage.removeItem('logout');
+    } catch (err) {
+      console.log('err');
+    }
   };
 };
 
@@ -27,10 +33,17 @@ const authRefreshTimer = () => {
 
 export const authLoadRefresh = () => {
   return async (dispatch) => {
-    await dispatch(authRefresh());
-    dispatch(authLoadFinish());
-  }
-}
+    try {
+      if (!localStorage.getItem('logout')) {
+        await dispatch(authRefresh());
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      dispatch(authLoadFinish());
+    }
+  };
+};
 
 const authRefresh = () => {
   return async (dispatch) => {
@@ -43,11 +56,11 @@ const authRefresh = () => {
 export const authLogout = () => {
   return {
     type: actionTypes.AUTH_LOGOUT,
-  }
+  };
 };
 
 const authLoadFinish = () => {
   return {
     type: actionTypes.AUTH_LOAD_FINISH,
-  }
-}
+  };
+};

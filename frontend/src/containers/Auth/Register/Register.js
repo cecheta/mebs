@@ -59,7 +59,7 @@ const Register = () => {
         </div>
         <div className="input">
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" value={password} placeholder="Password" onChange={(e) => passwordChangedHandler(e)} />
+          <input type="password" id="password" name="password" value={password} onChange={(e) => passwordChangedHandler(e)} />
         </div>
         <p>
           Already have an account? <Link to="/login">Login</Link>

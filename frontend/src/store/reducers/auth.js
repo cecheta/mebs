@@ -28,6 +28,7 @@ const authLoadFinish = (state, action) => {
 const authLogout = (state, action) => {
   const newState = {
     ...initialState,
+    loaded: true,
   }
 
   return newState;

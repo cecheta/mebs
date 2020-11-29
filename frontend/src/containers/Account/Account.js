@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Album from '../../components/AccountItems/Album/Album';
 import Artist from '../../components/AccountItems/Artist/Artist';
@@ -18,7 +18,6 @@ const Account = () => {
   });
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const { token, albums, artists, playlists, loaded } = useSelector(
     (state) => ({
@@ -30,10 +29,6 @@ const Account = () => {
     }),
     shallowEqual
   );
-
-  if (!token) {
-    history.push('/login');
-  }
 
   const albumIds = albums.join(',');
   const artistIds = artists.join(',');
@@ -128,6 +123,10 @@ const Account = () => {
   const classes = ['Results'];
   if (!data && !error) {
     classes.push('loading');
+  }
+
+  if (!token) {
+    results = <Redirect to="/login" />;
   }
 
   return (
