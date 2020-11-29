@@ -10,7 +10,7 @@ export const authLogin = (token) => {
   };
 };
 
-export const authSaveToken = (token) => {
+const authSaveToken = (token) => {
   return {
     type: actionTypes.AUTH_SAVE_TOKEN,
     token,
@@ -25,6 +25,13 @@ const authRefreshTimer = () => {
   };
 };
 
+export const authLoadRefresh = () => {
+  return async (dispatch) => {
+    await dispatch(authRefresh());
+    dispatch(authLoadFinish());
+  }
+}
+
 const authRefresh = () => {
   return async (dispatch) => {
     const response = await axios.post('/api/auth/refresh');
@@ -32,3 +39,15 @@ const authRefresh = () => {
     dispatch(authLogin(token));
   };
 };
+
+export const authLogout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  }
+};
+
+const authLoadFinish = () => {
+  return {
+    type: actionTypes.AUTH_LOAD_FINISH,
+  }
+}

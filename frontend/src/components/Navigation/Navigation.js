@@ -18,6 +18,9 @@ const Navigation = (props) => {
       <li>
         <Link to="/register">REGISTER</Link>
       </li>
+      <li>
+        <Link to="/logout">LOGOUT</Link>
+      </li>
     </ul>
   );
 };
