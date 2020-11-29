@@ -47,7 +47,6 @@ const Account = () => {
       if (loaded && !data && !error) {
         try {
           const response = await axios.get(`/api/account?${queryString}`, {
-            headers: { Authorization: `Bearer ${token}` },
             cancelToken: requestRef.current.source.token,
           });
           setData(response.data);
