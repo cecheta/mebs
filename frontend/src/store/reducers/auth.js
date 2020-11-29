@@ -11,6 +11,7 @@ const authSaveToken = (state, action) => {
   const newState = {
     ...state,
     token: action.token,
+    loggedIn: true,
   };
 
   return newState;
