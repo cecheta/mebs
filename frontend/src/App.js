@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Home from './containers/Home/Home';
 import SearchResultsPage from './containers/SearchResultsPage/SearchResultsPage';
@@ -15,6 +15,7 @@ import './App.scss';
 
 const App = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { loaded } = useSelector((state) => ({ loaded: state.auth.loaded }), shallowEqual);
 
   useEffect(() => {
@@ -29,6 +30,20 @@ const App = () => {
 
     dispatch(actions.authLoadRefresh());
   }, [dispatch]);
+
+  const logoutListener = (e) => {
+    if (e.key === 'logout' && e.newValue) {
+      dispatch(actions.authLogout());
+      history.push('/');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('storage', logoutListener);
+    return () => {
+      window.removeEventListener('storage', logoutListener);
+    };
+  });
 
   return (
     <div className="App">
