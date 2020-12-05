@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const axios = require('./axios/axios-spotify');
 const searchRouter = require('./routers/search');
 const authRouter = require('./routers/auth');
+const favouritesRouter = require('./routers/favourites');
 const authMiddleware = require('./middleware/auth');
 
 if (process.env.NODE_ENV !== 'PRODUCTION') {
@@ -23,6 +24,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(searchRouter);
 app.use(authRouter);
+app.use(favouritesRouter);
 
 app.get('/api/account', authMiddleware, async (req, res) => {
   try {
