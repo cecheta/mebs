@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 const JWT_EXPIRES_IN = 30; //minutes
+let timeout;
 
 export const authLogin = (token) => {
   return (dispatch) => {
@@ -25,7 +26,7 @@ const authSaveToken = (token) => {
 
 const authRefreshTimer = () => {
   return (dispatch) => {
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       dispatch(authRefresh());
     }, (JWT_EXPIRES_IN - 0.5) * 60 * 1000);
   };
@@ -54,6 +55,7 @@ const authRefresh = () => {
 };
 
 export const authLogout = () => {
+  clearTimeout(timeout);
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
