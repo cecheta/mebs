@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import axios from 'axios';
 import SongItem from './SongItem';
 import * as actions from '../../../store/actions';
 import { ReactComponent as StarEmpty } from '../../../assets/images/star-empty.svg';
@@ -24,8 +25,26 @@ const Album = ({ id, artists, name, image, songs }) => {
   const albumSongs = songs.items.map((song) => <SongItem key={song.id} id={song.id} songArtists={song.artists} albumArtists={albumArtists} number={song.track_number} name={song.name} />);
 
   const dispatch = useDispatch();
-  const addAlbum = (id) => dispatch(actions.addAlbum(id));
-  const removeAlbum = (id) => dispatch(actions.removeAlbum(id));
+
+  const addAlbum = async (id) => {
+    try {
+      const payload = {
+        id,
+      };
+      await axios.post('/favourites/album', payload);
+      dispatch(actions.addAlbum(id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const removeAlbum = async (id) => {
+    try {
+      await axios.delete(`/favourites/album/${id}`);
+      dispatch(actions.removeAlbum(id));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const { favouriteAlbums } = useSelector((state) => ({ favouriteAlbums: state.favourites.albums }), shallowEqual);
 

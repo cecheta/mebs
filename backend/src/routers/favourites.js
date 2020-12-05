@@ -16,6 +16,19 @@ router.post('/favourites/artist', authMiddleware, async (req, res) => {
   }
 });
 
+router.post('/favourites/album', authMiddleware, async (req, res) => {
+  const user = req.user;
+  const id = req.body.id;
+
+  try {
+    user.favourites.albums.push(id);
+    await user.save();
+    res.status(201).send();
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
 router.delete('/favourites/artist/:id', authMiddleware, async (req, res) => {
   const user = req.user;
   const id = req.params.id;
@@ -23,6 +36,20 @@ router.delete('/favourites/artist/:id', authMiddleware, async (req, res) => {
 
   try {
     user.favourites.artists = artists.filter((artist) => artist !== id);
+    await user.save();
+    res.send();
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
+router.delete('/favourites/album/:id', authMiddleware, async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+  const albums = user.favourites.albums;
+
+  try {
+    user.favourites.albums = albums.filter((album) => album !== id);
     await user.save();
     res.send();
   } catch (err) {

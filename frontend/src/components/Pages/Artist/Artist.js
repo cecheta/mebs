@@ -13,6 +13,7 @@ const Artist = ({ id, name, albums, image, songs }) => {
   const albumElements = albums.map((album) => <AlbumItem key={album.id} id={album.id} name={album.name} image={album.images[2]} />);
 
   const dispatch = useDispatch();
+  
   const addArtist = async (id) => {
     try {
       const payload = {
