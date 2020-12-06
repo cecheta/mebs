@@ -2,7 +2,6 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   token: null,
-  loggedIn: false,
   error: false,
   loaded: false,
 };
@@ -11,7 +10,6 @@ const authSaveToken = (state, action) => {
   const newState = {
     ...state,
     token: action.token,
-    loggedIn: true,
   };
 
   return newState;

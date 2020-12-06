@@ -16,10 +16,10 @@ import './App.scss';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loaded, loggedIn } = useSelector(
+  const { loaded, token } = useSelector(
     (state) => ({
       loaded: state.auth.loaded,
-      loggedIn: state.auth.loggedIn,
+      token: state.auth.token,
     }),
     shallowEqual
   );
@@ -29,11 +29,11 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (loggedIn) {
+    if (token) {
       dispatch(actions.loadFavourites());
       // dispatch(actions.loadPlaylists(data?.playlists));
     }
-  }, [dispatch, loggedIn]);
+  }, [dispatch, token]);
 
   const logoutListener = (e) => {
     if (e.key === 'loggedin' && !e.newValue) {

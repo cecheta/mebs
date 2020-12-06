@@ -19,9 +19,9 @@ const Account = () => {
 
   const dispatch = useDispatch();
 
-  const { loggedIn, playlists, loaded } = useSelector(
+  const { token, playlists, loaded } = useSelector(
     (state) => ({
-      loggedIn: state.auth.loggedIn,
+      token: state.auth.token,
       playlists: state.playlists.playlists,
       loaded: state.favourites.loaded,
     }),
@@ -110,7 +110,7 @@ const Account = () => {
     classes.push('loading');
   }
 
-  if (!loggedIn) {
+  if (!token) {
     results = <Redirect to="/login" />;
   }
 

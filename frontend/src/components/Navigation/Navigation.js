@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import './Navigation.scss';
 
 const Navigation = (props) => {
-  const { loggedIn } = useSelector(
+  const { token } = useSelector(
     (state) => ({
-      loggedIn: state.auth.loggedIn,
+      token: state.auth.token,
     }),
     shallowEqual
   );
@@ -17,7 +17,7 @@ const Navigation = (props) => {
       <li>
         <Link to="/">HOME</Link>
       </li>
-      {loggedIn ? (
+      {token ? (
         <>
           <li>
             <Link to="/account">MY ACCOUNT</Link>
