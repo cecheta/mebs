@@ -24,7 +24,7 @@ const authLoadFinish = (state, action) => {
   return newState;
 };
 
-const authLogout = (state, action) => {
+const authClearToken = (state, action) => {
   const newState = {
     ...initialState,
     loaded: true,
@@ -39,8 +39,8 @@ const reducer = (state = initialState, action) => {
       return authSaveToken(state, action);
     case actionTypes.AUTH_LOAD_FINISH:
       return authLoadFinish(state, action);
-    case actionTypes.AUTH_LOGOUT:
-      return authLogout(state, action);
+    case actionTypes.AUTH_CLEAR_TOKEN:
+      return authClearToken(state, action);
     default:
       return state;
   }

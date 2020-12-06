@@ -38,7 +38,6 @@ const App = () => {
   const logoutListener = (e) => {
     if (e.key === 'loggedin' && !e.newValue) {
       dispatch(actions.authLogout());
-      dispatch(actions.clearFavourites());
       history.push('/');
     }
   };

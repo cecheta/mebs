@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as actions from '.';
 import * as actionTypes from './actionTypes';
 
 const JWT_EXPIRES_IN = 30; //minutes
@@ -48,16 +49,31 @@ export const authLoadRefresh = () => {
 
 const authRefresh = () => {
   return async (dispatch) => {
-    const response = await axios.post('/api/auth/refresh');
-    const token = response.data.jwt;
-    dispatch(authLogin(token));
+    try {
+      const response = await axios.post('/api/auth/refresh');
+      const token = response.data.jwt;
+      dispatch(authLogin(token));
+    } catch (err) {
+      try {
+        localStorage.removeItem('loggedin');
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 };
 
 export const authLogout = () => {
-  clearTimeout(timeout);
+  return (dispatch) => {
+    clearTimeout(timeout);
+    dispatch(actions.clearFavourites());
+    dispatch(authClearToken());
+  };
+};
+
+const authClearToken = () => {
   return {
-    type: actionTypes.AUTH_LOGOUT,
+    type: actionTypes.AUTH_CLEAR_TOKEN,
   };
 };
 
