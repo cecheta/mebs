@@ -34,7 +34,11 @@ const Album = ({ id, artists, name, image, songs }) => {
       await axios.post('/api/favourites/album', payload);
       dispatch(actions.addAlbum(id));
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 409) {
+        dispatch(actions.addAlbum(id));
+      } else {
+        console.log(e);
+      }
     }
   };
   const removeAlbum = async (id) => {
@@ -42,7 +46,11 @@ const Album = ({ id, artists, name, image, songs }) => {
       await axios.delete(`/api/favourites/album/${id}`);
       dispatch(actions.removeAlbum(id));
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 409) {
+        dispatch(actions.removeAlbum(id));
+      } else {
+        console.log(e);
+      }
     }
   };
 

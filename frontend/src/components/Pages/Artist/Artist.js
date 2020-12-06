@@ -13,7 +13,7 @@ const Artist = ({ id, name, albums, image, songs }) => {
   const albumElements = albums.map((album) => <AlbumItem key={album.id} id={album.id} name={album.name} image={album.images[2]} />);
 
   const dispatch = useDispatch();
-  
+
   const addArtist = async (id) => {
     try {
       const payload = {
@@ -22,7 +22,11 @@ const Artist = ({ id, name, albums, image, songs }) => {
       await axios.post('/api/favourites/artist', payload);
       dispatch(actions.addArtist(id));
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 409) {
+        dispatch(actions.addArtist(id));
+      } else {
+        console.log(e);
+      }
     }
   };
   const removeArtist = async (id) => {
@@ -30,7 +34,11 @@ const Artist = ({ id, name, albums, image, songs }) => {
       await axios.delete(`/api/favourites/artist/${id}`);
       dispatch(actions.removeArtist(id));
     } catch (e) {
-      console.log(e);
+      if (e.response.status === 409) {
+        dispatch(actions.removeArtist(id));
+      } else {
+        console.log(e);
+      }
     }
   };
 

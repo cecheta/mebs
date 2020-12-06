@@ -15,9 +15,13 @@ router.post('/artist', authMiddleware, async (req, res) => {
   const id = req.body.id;
 
   try {
-    user.favourites.artists.push(id);
-    await user.save();
-    res.status(201).send();
+    if (user.favourites.artists.includes(id)) {
+      res.status(409).send({ error: `${id} already in favourites` });
+    } else {
+      user.favourites.artists.push(id);
+      await user.save();
+      res.status(201).send();
+    }
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
@@ -28,9 +32,13 @@ router.post('/album', authMiddleware, async (req, res) => {
   const id = req.body.id;
 
   try {
-    user.favourites.albums.push(id);
-    await user.save();
-    res.status(201).send();
+    if (user.favourites.albums.includes(id)) {
+      res.status(409).send({ error: `${id} already in favourites` });
+    } else {
+      user.favourites.albums.push(id);
+      await user.save();
+      res.status(201).send();
+    }
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
@@ -42,9 +50,13 @@ router.delete('/artist/:id', authMiddleware, async (req, res) => {
   const artists = user.favourites.artists;
 
   try {
-    user.favourites.artists = artists.filter((artist) => artist !== id);
-    await user.save();
-    res.send();
+    if (!user.favourites.artists.includes(id)) {
+      res.status(409).send({ error: `${id} not in favourites` });
+    } else {
+      user.favourites.artists = artists.filter((artist) => artist !== id);
+      await user.save();
+      res.send();
+    }
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
@@ -56,9 +68,13 @@ router.delete('/album/:id', authMiddleware, async (req, res) => {
   const albums = user.favourites.albums;
 
   try {
-    user.favourites.albums = albums.filter((album) => album !== id);
-    await user.save();
-    res.send();
+    if (!user.favourites.albums.includes(id)) {
+      res.status(409).send({ error: `${id} not in favourites` });
+    } else {
+      user.favourites.albums = albums.filter((album) => album !== id);
+      await user.save();
+      res.send();
+    }
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
