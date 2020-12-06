@@ -1,9 +1,24 @@
+import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
-export const loadFavourites = (favourites) => {
+export const loadFavourites = () => {
+  return async (dispatch) => {
+    const response = await axios.get('/favourites');
+    const favourites = response.data.favourites;
+    dispatch(saveFavourites(favourites));
+  }
+};
+
+export const saveFavourites = (favourites) => {
   return {
     type: actionTypes.LOAD_FAVOURITES,
     favourites,
+  };
+};
+
+export const clearFavourites = () => {
+  return {
+    type: actionTypes.CLEAR_FAVOURITES,
   };
 };
 

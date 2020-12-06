@@ -16,6 +16,16 @@ const loadFavourites = (state, action) => {
   return newState;
 };
 
+const clearFavourites = (state, action) => {
+  const newState = {
+    ...state,
+    artists: [],
+    albums: [],
+  };
+
+  return newState;
+};
+
 const addArtist = (state, action) => {
   const newState = { ...state };
   newState.artists = [...state.artists, action.id];
@@ -46,6 +56,9 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOAD_FAVOURITES:
       return loadFavourites(state, action);
+
+    case actionTypes.CLEAR_FAVOURITES:
+      return clearFavourites(state, action);
 
     case actionTypes.ADD_ARTIST:
       return addArtist(state, action);

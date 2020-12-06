@@ -10,9 +10,9 @@ export const authLogin = (token) => {
     dispatch(authRefreshTimer());
 
     try {
-      localStorage.removeItem('logout');
+      localStorage.setItem('loggedin', true);
     } catch (err) {
-      console.log('err');
+      console.log(err);
     }
   };
 };
@@ -35,7 +35,7 @@ const authRefreshTimer = () => {
 export const authLoadRefresh = () => {
   return async (dispatch) => {
     try {
-      if (!localStorage.getItem('logout')) {
+      if (localStorage.getItem('loggedin')) {
         await dispatch(authRefresh());
       }
     } catch (err) {

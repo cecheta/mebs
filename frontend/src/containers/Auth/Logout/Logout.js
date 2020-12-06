@@ -8,8 +8,9 @@ const Logout = () => {
 
   const logout = () => {
     dispatch(actions.authLogout());
+    dispatch(actions.clearFavourites());
     try {
-      localStorage.setItem('logout', Date.now());
+      localStorage.removeItem('loggedin');
     } catch (err) {
       console.log(err);
     }

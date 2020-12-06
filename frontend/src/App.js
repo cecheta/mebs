@@ -16,24 +16,29 @@ import './App.scss';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loaded } = useSelector((state) => ({ loaded: state.auth.loaded }), shallowEqual);
+  const { loaded, loggedIn } = useSelector(
+    (state) => ({
+      loaded: state.auth.loaded,
+      loggedIn: state.auth.loggedIn,
+    }),
+    shallowEqual
+  );
 
   useEffect(() => {
-    let data;
-    try {
-      data = localStorage.getItem('data');
-      data = JSON.parse(data);
-    } catch (e) {}
-
-    dispatch(actions.loadFavourites(data?.favourites));
-    dispatch(actions.loadPlaylists(data?.playlists));
-
     dispatch(actions.authLoadRefresh());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (loggedIn) {
+      dispatch(actions.loadFavourites());
+      // dispatch(actions.loadPlaylists(data?.playlists));
+    }
+  }, [dispatch, loggedIn]);
+
   const logoutListener = (e) => {
-    if (e.key === 'logout' && e.newValue) {
+    if (e.key === 'loggedin' && !e.newValue) {
       dispatch(actions.authLogout());
+      dispatch(actions.clearFavourites());
       history.push('/');
     }
   };

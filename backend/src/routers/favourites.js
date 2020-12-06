@@ -3,6 +3,13 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
+router.get('/favourites', authMiddleware, async (req, res) => {
+  const user = req.user;
+  res.send({
+    favourites: user.favourites,
+  });
+});
+
 router.post('/favourites/artist', authMiddleware, async (req, res) => {
   const user = req.user;
   const id = req.body.id;
