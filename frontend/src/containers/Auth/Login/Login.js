@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions';
 import './Login.scss';
 
 const Login = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
+  const { token } = useSelector((state) => ({ token: state.auth.token }), shallowEqual);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -36,7 +38,7 @@ const Login = () => {
       const token = response.data.jwt;
 
       dispatch(actions.authLogin(token));
-      history.push('/account')
+      history.push('/account');
     } catch (err) {
       console.log(err);
     }
@@ -44,6 +46,7 @@ const Login = () => {
 
   return (
     <div className="Login">
+      {token ? <Redirect to="/account" /> : null}
       <h2>Login</h2>
       <form onSubmit={submitHandler}>
         <div className="input">
