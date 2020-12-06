@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 
 export const loadFavourites = () => {
   return async (dispatch) => {
-    const response = await axios.get('/favourites');
+    const response = await axios.get('/api/favourites');
     const favourites = response.data.favourites;
     dispatch(saveFavourites(favourites));
   }

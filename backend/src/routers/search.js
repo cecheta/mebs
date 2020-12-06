@@ -3,7 +3,7 @@ const axios = require('../axios/axios-spotify');
 
 const router = express.Router();
 
-router.get('/api/search', async (req, res) => {
+router.get('/search', async (req, res) => {
   const config = { params: req.query };
   try {
     const response = await axios.get('/v1/search', config);
@@ -24,7 +24,7 @@ router.get('/api/search', async (req, res) => {
   }
 });
 
-router.get('/api/albums/:id', async (req, res) => {
+router.get('/albums/:id', async (req, res) => {
   try {
     const response = await axios.get(`/v1/albums/${req.params.id}`);
     res.send(response.data);
@@ -33,7 +33,7 @@ router.get('/api/albums/:id', async (req, res) => {
   }
 });
 
-router.get('/api/albums', async (req, res) => {
+router.get('/albums', async (req, res) => {
   try {
     const response = await axios.get(`/v1/albums?ids=${req.query.ids}`);
     res.send(response.data);
@@ -42,7 +42,7 @@ router.get('/api/albums', async (req, res) => {
   }
 });
 
-router.get('/api/artists/:id', async (req, res) => {
+router.get('/artists/:id', async (req, res) => {
   try {
     const requests = [axios.get(`/v1/artists/${req.params.id}`), axios.get(`/v1/artists/${req.params.id}/albums`), axios.get(`/v1/artists/${req.params.id}/top-tracks?country=GB`)];
 
@@ -57,7 +57,7 @@ router.get('/api/artists/:id', async (req, res) => {
   }
 });
 
-router.get('/api/artists', async (req, res) => {
+router.get('/artists', async (req, res) => {
   try {
     const response = await axios.get(`/v1/artists?ids=${req.query.ids}`);
     res.send(response.data);
@@ -66,7 +66,7 @@ router.get('/api/artists', async (req, res) => {
   }
 });
 
-router.get('/api/songs', async (req, res) => {
+router.get('/songs', async (req, res) => {
   try {
     const response = await axios.get(`/v1/tracks?ids=${req.query.ids}`);
     res.send(response.data.tracks);

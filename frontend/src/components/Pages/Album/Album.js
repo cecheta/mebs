@@ -31,7 +31,7 @@ const Album = ({ id, artists, name, image, songs }) => {
       const payload = {
         id,
       };
-      await axios.post('/favourites/album', payload);
+      await axios.post('/api/favourites/album', payload);
       dispatch(actions.addAlbum(id));
     } catch (e) {
       console.log(e);
@@ -39,7 +39,7 @@ const Album = ({ id, artists, name, image, songs }) => {
   };
   const removeAlbum = async (id) => {
     try {
-      await axios.delete(`/favourites/album/${id}`);
+      await axios.delete(`/api/favourites/album/${id}`);
       dispatch(actions.removeAlbum(id));
     } catch (e) {
       console.log(e);

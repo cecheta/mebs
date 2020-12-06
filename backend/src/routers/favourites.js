@@ -3,14 +3,14 @@ const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/favourites', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, async (req, res) => {
   const user = req.user;
   res.send({
     favourites: user.favourites,
   });
 });
 
-router.post('/favourites/artist', authMiddleware, async (req, res) => {
+router.post('/artist', authMiddleware, async (req, res) => {
   const user = req.user;
   const id = req.body.id;
 
@@ -23,7 +23,7 @@ router.post('/favourites/artist', authMiddleware, async (req, res) => {
   }
 });
 
-router.post('/favourites/album', authMiddleware, async (req, res) => {
+router.post('/album', authMiddleware, async (req, res) => {
   const user = req.user;
   const id = req.body.id;
 
@@ -36,7 +36,7 @@ router.post('/favourites/album', authMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/favourites/artist/:id', authMiddleware, async (req, res) => {
+router.delete('/artist/:id', authMiddleware, async (req, res) => {
   const user = req.user;
   const id = req.params.id;
   const artists = user.favourites.artists;
@@ -50,7 +50,7 @@ router.delete('/favourites/artist/:id', authMiddleware, async (req, res) => {
   }
 });
 
-router.delete('/favourites/album/:id', authMiddleware, async (req, res) => {
+router.delete('/album/:id', authMiddleware, async (req, res) => {
   const user = req.user;
   const id = req.params.id;
   const albums = user.favourites.albums;

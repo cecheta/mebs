@@ -19,34 +19,20 @@ const Account = () => {
 
   const dispatch = useDispatch();
 
-  const { token, albums, artists, playlists, loaded } = useSelector(
+  const { loggedIn, playlists, loaded } = useSelector(
     (state) => ({
-      token: state.auth.token,
-      albums: state.favourites.albums,
-      artists: state.favourites.artists,
+      loggedIn: state.auth.loggedIn,
       playlists: state.playlists.playlists,
       loaded: state.favourites.loaded,
     }),
     shallowEqual
   );
 
-  const albumIds = albums.join(',');
-  const artistIds = artists.join(',');
-
-  const query = [];
-  if (albumIds) {
-    query.push(`albums=${albumIds}`);
-  }
-  if (artistIds) {
-    query.push(`artists=${artistIds}`);
-  }
-  const queryString = query.join('&');
-
   useEffect(() => {
     (async () => {
       if (loaded && !data && !error) {
         try {
-          const response = await axios.get(`/api/account?${queryString}`, {
+          const response = await axios.get(`/api/account`, {
             cancelToken: requestRef.current.source.token,
           });
           setData(response.data);
@@ -57,7 +43,7 @@ const Account = () => {
         }
       }
     })();
-  }, [token, loaded, data, error, queryString]);
+  }, [loaded, data, error]);
 
   useEffect(() => {
     return () => {
@@ -124,7 +110,7 @@ const Account = () => {
     classes.push('loading');
   }
 
-  if (!token) {
+  if (!loggedIn) {
     results = <Redirect to="/login" />;
   }
 

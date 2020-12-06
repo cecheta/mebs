@@ -6,7 +6,7 @@ const router = express.Router();
 
 const BCRYPT_ROUNDS = 12;
 
-router.post('/api/auth/register', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const password = req.body.password;
     const hash = await bcrypt.hash(password, BCRYPT_ROUNDS);
@@ -32,7 +32,7 @@ router.post('/api/auth/register', async (req, res) => {
   }
 });
 
-router.post('/api/auth/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     let user;
     if (req.body.username) {
@@ -59,7 +59,7 @@ router.post('/api/auth/login', async (req, res) => {
   }
 });
 
-router.post('/api/auth/refresh', async (req, res) => {
+router.post('/refresh', async (req, res) => {
   try {
     const refresh = req.signedCookies.refresh;
 
@@ -80,7 +80,7 @@ router.post('/api/auth/refresh', async (req, res) => {
 });
 
 // TESTING
-router.delete('/api/auth/delete', async (req, res) => {
+router.delete('/delete', async (req, res) => {
   await User.deleteMany({});
   res.send('OK');
 });

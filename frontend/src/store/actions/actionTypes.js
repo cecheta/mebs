@@ -4,6 +4,7 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const LOAD_FAVOURITES = 'LOAD_FAVOURITES';
 export const CLEAR_FAVOURITES = 'CLEAR_FAVOURITES';
+export const REFRESH_FAVOURITES = 'REFRESH_FAVOURITES';
 export const ADD_ARTIST = 'ADD_ARTIST';
 export const REMOVE_ARTIST = 'REMOVE_ARTIST';
 export const ADD_ALBUM = 'ADD_ALBUM';

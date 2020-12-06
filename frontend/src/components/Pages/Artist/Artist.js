@@ -19,7 +19,7 @@ const Artist = ({ id, name, albums, image, songs }) => {
       const payload = {
         id,
       };
-      await axios.post('/favourites/artist', payload);
+      await axios.post('/api/favourites/artist', payload);
       dispatch(actions.addArtist(id));
     } catch (e) {
       console.log(e);
@@ -27,7 +27,7 @@ const Artist = ({ id, name, albums, image, songs }) => {
   };
   const removeArtist = async (id) => {
     try {
-      await axios.delete(`/favourites/artist/${id}`);
+      await axios.delete(`/api/favourites/artist/${id}`);
       dispatch(actions.removeArtist(id));
     } catch (e) {
       console.log(e);
