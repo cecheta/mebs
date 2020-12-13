@@ -14,7 +14,6 @@ const AddToPlaylist = (props) => {
   useEffect(() => {
     (async () => {
       const response = await axios.get('/api/playlists');
-      console.log(response.data);
       setPlaylists(response.data);
     })();
   }, []);

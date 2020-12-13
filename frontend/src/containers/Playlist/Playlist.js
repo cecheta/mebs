@@ -1,33 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
 import SongItem from '../../components/Playlist/SongItem/SongItem';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import './Playlist.scss';
 
 const Playlist = (props) => {
+  // TODO: Redirect if not logged in
   const [error, setError] = useState(false);
-  const [data, setData] = useState(null);
+  const [playlist, setPlaylist] = useState(null);
 
   const requestRef = useRef({
     source: axios.CancelToken.source(),
   });
 
-  const { playlists, loaded } = useSelector((state) => ({ playlists: state.playlists.playlists, loaded: state.playlists.loaded }), shallowEqual);
-
   const id = props.match.params.id;
-  const playlist = playlists.find((playlist) => playlist.id === id);
-
-  const songIds = playlist?.songs.map((song) => song.id);
 
   useEffect(() => {
     (async () => {
-      if (loaded && !data && songIds.length > 0 && !error) {
+      if (!playlist && !error) {
         try {
-          const response = await axios.get(`/api/songs?ids=${songIds.join(',')}`, {
+          const response = await axios.get(`/api/playlists/${id}`, {
             cancelToken: requestRef.current.source.token,
           });
-          setData(response.data);
+          setPlaylist(response.data);
         } catch (error) {
           if (!axios.isCancel(error)) {
             setError(true);
@@ -35,7 +30,7 @@ const Playlist = (props) => {
         }
       }
     })();
-  }, [loaded, data, error, songIds]);
+  }, [playlist, id, error]);
 
   useEffect(() => {
     return () => {
@@ -53,23 +48,24 @@ const Playlist = (props) => {
   }, []);
 
   let songItems;
-  if (data) {
-    songItems = data.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
+  if (playlist) {
+    const songs = playlist.songs;
+    songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
   }
 
-  if (data && data.length !== playlist.songs.length) {
-    setData((oldData) => {
-      const songs = [...oldData];
-      return songs.filter((song) => {
-        const id = song.id;
-        return playlist.songs.findIndex((song) => song.id === id) > -1;
-      });
-    });
-  }
+  // if (data && data.length !== playlist.songs.length) {
+  //   setData((oldData) => {
+  //     const songs = [...oldData];
+  //     return songs.filter((song) => {
+  //       const id = song.id;
+  //       return playlist.songs.findIndex((song) => song.id === id) > -1;
+  //     });
+  //   });
+  // }
 
   let results;
 
-  if (data) {
+  if (playlist) {
     results = songItems;
   } else if (error) {
     results = (
@@ -82,12 +78,8 @@ const Playlist = (props) => {
     results = <Spinner />;
   }
 
-  if (songIds?.length === 0) {
-    results = <div>This playlist is empty</div>
-  }
-
   const classes = ['Songs'];
-  if (!data && !error) {
+  if (!playlist && !error) {
     classes.push('loading');
   }
 

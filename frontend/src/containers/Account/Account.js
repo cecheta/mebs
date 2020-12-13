@@ -12,6 +12,7 @@ import './Account.scss';
 const Account = () => {
   const [error, setError] = useState(false);
   const [data, setData] = useState(null);
+  const [playlists, setPlaylists] = useState([]);
 
   const requestRef = useRef({
     source: axios.CancelToken.source(),
@@ -19,23 +20,22 @@ const Account = () => {
 
   const dispatch = useDispatch();
 
-  const { token, playlists, loaded } = useSelector(
+  const { token } = useSelector(
     (state) => ({
       token: state.auth.token,
-      playlists: state.playlists.playlists,
-      loaded: state.favourites.loaded,
     }),
     shallowEqual
   );
 
   useEffect(() => {
     (async () => {
-      if (loaded && !data && !error) {
+      if (!data && !error) {
         try {
           const response = await axios.get(`/api/account`, {
             cancelToken: requestRef.current.source.token,
           });
           setData(response.data);
+          setPlaylists(response.data.playlists);
         } catch (error) {
           if (!axios.isCancel(error)) {
             setError(true);
@@ -43,7 +43,7 @@ const Account = () => {
         }
       }
     })();
-  }, [loaded, data, error]);
+  }, [data, error]);
 
   useEffect(() => {
     return () => {
@@ -71,9 +71,9 @@ const Account = () => {
   }
 
   const playlistItems = playlists.map((playlist) => (
-    <li key={playlist.id}>
-      <Link to={`/account/playlist/${playlist.id}`}>{playlist.name}</Link>
-      <Delete fill="red" onClick={() => deletePlaylist(playlist.id)} />
+    <li key={playlist._id}>
+      <Link to={`/account/playlist/${playlist._id}`}>{playlist.name}</Link>
+      <Delete fill="red" onClick={() => deletePlaylist(playlist._id)} />
     </li>
   ));
 

@@ -26,6 +26,10 @@ router.get('/account', authMiddleware, async (req, res) => {
       response.albums = albumResponse.data.albums;
     }
 
+    const user = req.user;
+    await user.populate('playlists').execPopulate();
+    response.playlists = user.playlists;
+
     res.send(response);
   } catch (error) {
     res.status(400).send({ error: error.message });

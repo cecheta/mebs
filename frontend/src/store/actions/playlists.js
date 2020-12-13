@@ -1,13 +1,6 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
-export const loadPlaylists = (playlists) => {
-  return {
-    type: actionTypes.LOAD_PLAYLISTS,
-    playlists,
-  };
-};
-
 export const playlistStart = (song) => {
   return {
     type: actionTypes.PLAYLIST_START,

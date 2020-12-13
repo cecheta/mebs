@@ -7,19 +7,6 @@ const initialState = {
   loaded: false,
 };
 
-const loadPlaylists = (state, action) => {
-  let newState = { ...state };
-  if (action.playlists) {
-    newState = {
-      ...newState,
-      ...action.playlists,
-    };
-  }
-
-  newState.loaded = true;
-  return newState;
-};
-
 const playlistStart = (state, action) => {
   const newState = {
     ...state,
@@ -65,9 +52,6 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.PLAYLIST_START:
       return playlistStart(state, action);
-
-    case actionTypes.LOAD_PLAYLISTS:
-      return loadPlaylists(state, action);
 
     case actionTypes.PLAYLIST_ADD_SONG:
       return playlistAddSong(state, action);

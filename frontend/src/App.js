@@ -31,7 +31,6 @@ const App = () => {
   useEffect(() => {
     if (token) {
       dispatch(actions.loadFavourites());
-      // dispatch(actions.loadPlaylists(data?.playlists));
     }
   }, [dispatch, token]);
 
