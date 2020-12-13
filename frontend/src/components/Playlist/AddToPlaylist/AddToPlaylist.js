@@ -1,22 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import axios from 'axios';
 import * as actions from '../../../store/actions';
 import './AddToPlaylist.scss';
 
 const AddToPlaylist = (props) => {
-  const { playlists, song } = useSelector((state) => ({ playlists: state.playlists.playlists, song: state.playlists.song }), shallowEqual);
+  const [playlists, setPlaylists] = useState([]);
+
+  const { song } = useSelector((state) => ({ song: state.playlists.song }), shallowEqual);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get('/api/playlists');
+      console.log(response.data);
+      setPlaylists(response.data);
+    })();
+  }, []);
+
   const playlistElements = playlists.map((playlist) => (
-    <li key={playlist.id} onClick={() => addSong(playlist.id)}>
+    <li key={playlist._id} onClick={() => addSong(playlist._id)}>
       {playlist.name}
     </li>
   ));
 
   const addSong = (playlistId) => {
-    const playlist = playlists.find((playlist) => playlist.id === playlistId);
-    if (playlist.songs.find((playlistSong) => playlistSong.id === song.id)) {
+    const playlist = playlists.find((playlist) => playlist._id === playlistId);
+    if (playlist.songs.find((playlistSong) => playlistSong === song)) {
       alert('Song is already in playlist!');
     } else {
       dispatch(actions.playlistAddSong(playlistId));

@@ -4,6 +4,12 @@ const Playlist = require('../models/playlist');
 
 const router = express.Router();
 
+router.get('/', authMiddleware, async (req, res) => {
+  const user = req.user;
+  await user.populate('playlists').execPopulate();
+  res.send(user.playlists);
+})
+
 router.post('/new', authMiddleware, async (req, res) => {
   // TODO: Playlist with name already exists
   const playlist = new Playlist({
