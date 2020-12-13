@@ -1,13 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as actions from '../../../store/actions';
+import axios from 'axios';
 import { ReactComponent as Delete } from '../../../assets/images/cross.svg';
 import classes from './SongItem.module.scss';
 
-const SongItem = ({ id, playlistId, name, artists, image, album }) => {
-  const dispatch = useDispatch();
-
+const SongItem = ({ id, playlistId, name, artists, image, album, remove }) => {
   const songArtists = artists.map((artist) => ({
     name: artist.name,
     id: artist.id,
@@ -22,9 +19,11 @@ const SongItem = ({ id, playlistId, name, artists, image, album }) => {
     );
   });
 
-  const deleteSong = () => {
-    dispatch(actions.playlistDeleteSong(id, playlistId));
-  }
+  const deleteSong = async () => {
+    const payload = { id };
+    axios.patch(`/api/playlists/${playlistId}`, payload);
+    remove();
+  };
 
   return (
     <div className={classes.SongItem}>

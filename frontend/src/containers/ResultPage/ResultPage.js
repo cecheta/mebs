@@ -18,7 +18,7 @@ const ResultPage = (props) => {
 
   const dispatch = useDispatch();
 
-  const { adding } = useSelector((state) => ({ adding: state.playlists.addingStart }), shallowEqual);
+  const { song } = useSelector((state) => ({ song: state.playlists.song }), shallowEqual);
 
   const requestRef = useRef({
     source: axios.CancelToken.source(),
@@ -118,12 +118,12 @@ const ResultPage = (props) => {
         <Back />
         {results}
       </div>
-      {adding ? (
+      {song ? (
         <Modal close={cancelPlaylist}>
           <AddToPlaylist addNewPlaylist={addNewPlaylist} />
         </Modal>
       ) : null}
-      {adding && newPlaylist ? (
+      {song && newPlaylist ? (
         <Modal close={cancelNewPlaylist} order={2} size="small">
           <NewPlaylist submit={submitNewPlaylist} />
         </Modal>

@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Album from '../../components/AccountItems/Album/Album';
 import Artist from '../../components/AccountItems/Artist/Artist';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actions from '../../store/actions';
 import { ReactComponent as Delete } from '../../assets/images/cross.svg';
 import './Account.scss';
 
@@ -17,8 +16,6 @@ const Account = () => {
   const requestRef = useRef({
     source: axios.CancelToken.source(),
   });
-
-  const dispatch = useDispatch();
 
   const { token } = useSelector(
     (state) => ({
@@ -60,8 +57,12 @@ const Account = () => {
     };
   }, []);
 
-  const deletePlaylist = (id) => {
-    dispatch(actions.playlistDelete(id));
+  const deletePlaylist = async (id) => {
+    await axios.delete(`/api/playlists/${id}`);
+    setPlaylists((playlists) => {
+      const updatedPlaylists = playlists.filter((filter) => filter._id !== id);
+      return updatedPlaylists;
+    });
   };
 
   let albumItems, artistItems;

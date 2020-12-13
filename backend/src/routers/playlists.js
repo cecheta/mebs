@@ -54,4 +54,31 @@ router.post('/add/:id', authMiddleware, async (req, res) => {
   }
 });
 
+router.delete('/:id', authMiddleware, async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+  if (user.playlists.includes(id)) {
+    await Playlist.findByIdAndDelete(id);
+    user.playlists = user.playlists.filter((playlist) => playlist.toString() !== id);
+    await user.save();
+    res.send({});
+  } else {
+    res.status(404).send({ error: `${id} could not be found` });
+  }
+});
+
+router.patch('/:id', authMiddleware, async (req, res) => {
+  const user = req.user;
+  const id = req.params.id;
+  if (user.playlists.includes(id)) {
+    const playlist = await Playlist.findById(id);
+    const songId = req.body.id;
+    playlist.songs = playlist.songs.filter((song) => song !== songId);
+    await playlist.save();
+    res.send(playlist);
+  } else {
+    res.status(404).send({ error: `${id} could not be found` });
+  }
+});
+
 module.exports = router;

@@ -47,21 +47,19 @@ const Playlist = (props) => {
     };
   }, []);
 
+  const updateState = (id) => {
+    setPlaylist((playlist) => {
+      const updatedPlaylist = { ...playlist };
+      updatedPlaylist.songs = updatedPlaylist.songs.filter((song) => song.id !== id);
+      return updatedPlaylist;
+    });
+  };
+
   let songItems;
   if (playlist) {
     const songs = playlist.songs;
-    songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} />);
+    songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} remove={() => updateState(song.id)} />);
   }
-
-  // if (data && data.length !== playlist.songs.length) {
-  //   setData((oldData) => {
-  //     const songs = [...oldData];
-  //     return songs.filter((song) => {
-  //       const id = song.id;
-  //       return playlist.songs.findIndex((song) => song.id === id) > -1;
-  //     });
-  //   });
-  // }
 
   let results;
 

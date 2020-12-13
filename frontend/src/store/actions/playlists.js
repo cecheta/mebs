@@ -22,21 +22,6 @@ export const playlistAddSong = (id) => {
   };
 };
 
-export const playlistDelete = (id) => {
-  return {
-    type: actionTypes.PLAYLIST_DELETE,
-    id,
-  };
-};
-
-export const playlistDeleteSong = (songId, playlistId) => {
-  return {
-    type: actionTypes.PLAYLIST_DELETE_SONG,
-    songId,
-    playlistId,
-  };
-};
-
 export const playlistEnd = () => {
   return {
     type: actionTypes.PLAYLIST_END,
