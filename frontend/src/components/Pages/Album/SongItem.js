@@ -36,12 +36,7 @@ const SongItem = ({ id, name, number, songArtists, albumArtists }) => {
   });
 
   const addToPlaylist = () => {
-    const song = {
-      id,
-      name,
-      artists,
-    }
-    dispatch(actions.playlistStart(song));
+    dispatch(actions.playlistStart(id));
   };
 
   return (

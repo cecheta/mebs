@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
-import { nanoid } from 'nanoid';
 import Album from '../../components/Pages/Album/Album';
 import Artist from '../../components/Pages/Artist/Artist';
 import AddToPlaylist from '../../components/Playlist/AddToPlaylist/AddToPlaylist';
@@ -84,7 +83,7 @@ const ResultPage = (props) => {
   }
 
   const cancelPlaylist = () => {
-    dispatch(actions.playlistCancel());
+    dispatch(actions.playlistEnd());
   };
 
   const addNewPlaylist = () => {
@@ -95,12 +94,22 @@ const ResultPage = (props) => {
     setNewPlaylist(false);
   };
 
-  const submitNewPlaylist = (e, name) => {
+  const createNewPlaylist = async (name) => {
+    const payload = { name };
+    const response = await axios.post('/api/playlists/new', payload);
+    return response.data;
+  };
+
+  const submitNewPlaylist = async (e, name) => {
     e.preventDefault();
-    const id = nanoid();
-    dispatch(actions.playlistAdd(name, id));
-    dispatch(actions.playlistAddSong(id));
-    setNewPlaylist(false);
+    try {
+      const data = await createNewPlaylist(name);
+      dispatch(actions.playlistAddSong(data._id));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setNewPlaylist(false);
+    }
   };
 
   return (

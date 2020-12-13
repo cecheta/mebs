@@ -7,7 +7,7 @@ const playlistSchema = new mongoose.Schema({
   },
   songs: [
     {
-      song: String,
+      type: String,
     },
   ],
 });

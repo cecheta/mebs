@@ -5,6 +5,7 @@ const searchRouter = require('./routers/search');
 const accountRouter = require('./routers/account');
 const authRouter = require('./routers/auth');
 const favouritesRouter = require('./routers/favourites');
+const playlistsRouter = require('./routers/playlists');
 
 if (process.env.NODE_ENV !== 'PRODUCTION') {
   require('dotenv').config();
@@ -28,6 +29,7 @@ apiRouter.use(searchRouter);
 apiRouter.use(accountRouter);
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/favourites', favouritesRouter);
+apiRouter.use('/playlists', playlistsRouter);
 
 app.get('*', (req, res) => {
   res.send('Server is up');

@@ -4,12 +4,10 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-const BCRYPT_ROUNDS = 12;
-
 router.post('/register', async (req, res) => {
   try {
     const password = req.body.password;
-    const hash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+    const hash = await bcrypt.hash(password, +process.env.BCRYPT_ROUNDS);
     const user = new User({
       username: req.body.username,
       email: req.body.email,

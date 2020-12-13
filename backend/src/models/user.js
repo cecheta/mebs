@@ -32,10 +32,12 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-  playlists: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Playlist',
-  },
+  playlists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Playlist',
+    },
+  ],
 });
 
 userSchema.statics.findByUsername = async (username, password) => {

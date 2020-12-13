@@ -29,27 +29,11 @@ const playlistStart = (state, action) => {
   return newState;
 };
 
-const playlistAdd = (state, action) => {
+const playlistAddSong = (state, action) => {
   const newState = {
     ...state,
-    playlists: [
-      ...state.playlists,
-      {
-        id: action.id,
-        name: action.name,
-        songs: [],
-      },
-    ],
+    addingStart: false,
   };
-  return newState;
-};
-
-const playlistAddSong = (state, action) => {
-  const newState = JSON.parse(JSON.stringify(state));
-  const playlist = newState.playlists.find((playlist) => playlist.id === action.id);
-  playlist.songs.push(state.song);
-  newState.song = null;
-  newState.addingStart = false;
   return newState;
 };
 
@@ -68,7 +52,7 @@ const playlistDeleteSong = (state, action) => {
   return newState;
 };
 
-const playlistCancel = (state, action) => {
+const playlistEnd = (state, action) => {
   const newState = {
     ...state,
     addingStart: false,
@@ -85,9 +69,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.LOAD_PLAYLISTS:
       return loadPlaylists(state, action);
 
-    case actionTypes.PLAYLIST_ADD:
-      return playlistAdd(state, action);
-
     case actionTypes.PLAYLIST_ADD_SONG:
       return playlistAddSong(state, action);
 
@@ -97,8 +78,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.PLAYLIST_DELETE_SONG:
       return playlistDeleteSong(state, action);
 
-    case actionTypes.PLAYLIST_CANCEL:
-      return playlistCancel(state, action);
+    case actionTypes.PLAYLIST_END:
+      return playlistEnd(state, action);
 
     default:
       return state;
