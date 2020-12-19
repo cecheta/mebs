@@ -20,27 +20,39 @@ router.get('/:id', authMiddleware, async (req, res) => {
     const playlist = await Playlist.findById(id);
     const songs = playlist.songs;
 
-    // TODO: No songs in playlist
-    const response = await axios.get(`/v1/tracks?ids=${songs.join(',')}`);
+    let tracks = [];
+    if (songs.length > 0) {
+      tracks = (await axios.get(`/v1/tracks?ids=${songs.join(',')}`)).data.tracks;
+    }
+
     res.send({
       name: playlist.name,
-      songs: response.data.tracks,
+      songs: tracks,
     });
   }
 });
 
 router.post('/new', authMiddleware, async (req, res) => {
-  // TODO: Playlist with name already exists
-  const playlist = new Playlist({
-    name: req.body.name,
-  });
-  await playlist.save();
-
+  const name = req.body.name;
   const user = req.user;
-  user.playlists.push(playlist.id);
-  await user.save();
+  await user.populate('playlists').execPopulate();
 
-  res.status(201).send(playlist);
+  let playlists = user.playlists;
+  playlists = playlists.filter((playlist) => playlist.name === name);
+
+  if (playlists.length > 0) {
+    res.status(400).send({ error: 'Playlist already exists' });
+  } else {
+    const playlist = new Playlist({
+      name,
+    });
+    await playlist.save();
+
+    user.playlists.push(playlist.id);
+    await user.save();
+
+    res.status(201).send(playlist);
+  }
 });
 
 router.post('/add/:id', authMiddleware, async (req, res) => {

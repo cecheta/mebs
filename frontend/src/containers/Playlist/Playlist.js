@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import axios from 'axios';
 import SongItem from '../../components/Playlist/SongItem/SongItem';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import './Playlist.scss';
+import { Redirect } from 'react-router-dom';
 
 const Playlist = (props) => {
-  // TODO: Redirect if not logged in
   const [error, setError] = useState(false);
   const [playlist, setPlaylist] = useState(null);
+
+  const { token } = useSelector((state) => ({ token: state.auth.token }), shallowEqual);
 
   const requestRef = useRef({
     source: axios.CancelToken.source(),
@@ -17,7 +20,7 @@ const Playlist = (props) => {
 
   useEffect(() => {
     (async () => {
-      if (!playlist && !error) {
+      if (token && !playlist && !error) {
         try {
           const response = await axios.get(`/api/playlists/${id}`, {
             cancelToken: requestRef.current.source.token,
@@ -30,7 +33,7 @@ const Playlist = (props) => {
         }
       }
     })();
-  }, [playlist, id, error]);
+  }, [token, playlist, id, error]);
 
   useEffect(() => {
     return () => {
@@ -56,14 +59,11 @@ const Playlist = (props) => {
   };
 
   let songItems;
-  if (playlist) {
-    const songs = playlist.songs;
-    songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} remove={() => updateState(song.id)} />);
-  }
-
   let results;
 
   if (playlist) {
+    const songs = playlist.songs;
+    songItems = songs.map((song) => <SongItem key={song.id} id={song.id} playlistId={id} name={song.name} artists={song.artists} image={song.album.images[2]} album={song.album} remove={() => updateState(song.id)} />);
     results = songItems;
   } else if (error) {
     results = (
@@ -79,6 +79,10 @@ const Playlist = (props) => {
   const classes = ['Songs'];
   if (!playlist && !error) {
     classes.push('loading');
+  }
+
+  if (!token) {
+    results = <Redirect to="/login" />;
   }
 
   return (
