@@ -25,6 +25,7 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/albums/:id', async (req, res) => {
+  // TODO: manipulate response before returning to frontend
   try {
     const response = await axios.get(`/v1/albums/${req.params.id}`);
     res.send(response.data);

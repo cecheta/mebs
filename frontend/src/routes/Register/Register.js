@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as actions from '../../../store/actions';
+import * as actions from '../../store/actions';
 import './Register.scss';
 
 const Register = () => {

@@ -1,11 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { withRouter, Redirect, Switch } from 'react-router-dom';
+import { Redirect, Switch, useLocation, useHistory } from 'react-router-dom';
 import Tabs from '../../components/Tabs/Tabs';
-import Results from './SearchResults/SearchResults';
-import './SearchResultsPage.scss';
+import Results from '../../containers/SearchResultsPage/SearchResults/SearchResults';
+import classes from './Search.module.scss';
 
-const SearchResultsPage = (props) => {
-  const queryString = props.location.search;
+const Search = () => {
+  const timerRef = useRef(null);
+  const inputChangedRef = useRef(false);
+
+  const location = useLocation();
+  const history = useHistory();
+
+  const queryString = location.search;
   const searchParams = new URLSearchParams(queryString);
   const q = searchParams.get('q');
   const type = searchParams.get('type');
@@ -13,9 +19,6 @@ const SearchResultsPage = (props) => {
 
   const [text, setText] = useState(q);
   const [query, setQuery] = useState(q);
-
-  const timerRef = useRef(null);
-  const inputChangedRef = useRef(false);
 
   if (q !== text && !inputChangedRef.current) {
     setText(q);
@@ -26,12 +29,12 @@ const SearchResultsPage = (props) => {
     const input = e.target.value;
     inputChangedRef.current = true;
     setText(input);
-    
+
     if (input !== '') {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
-        const queryString = props.location.search.replace(encodeURIComponent(q), encodeURIComponent(input));
-        props.history.push(`/search${queryString}`);
+        const queryString = location.search.replace(encodeURIComponent(q), encodeURIComponent(input));
+        history.push(`/search${queryString}`);
         inputChangedRef.current = false;
         setQuery(input);
       }, 300);
@@ -45,7 +48,7 @@ const SearchResultsPage = (props) => {
   }, []);
 
   return (
-    <div className="SearchResultsPage">
+    <div className={classes.Search}>
       <Switch>
         {!q ? <Redirect to="/" /> : null}
         {!valid ? <Redirect to={`/search?q=${q}&type=all`} /> : null}
@@ -57,4 +60,4 @@ const SearchResultsPage = (props) => {
   );
 };
 
-export default withRouter(SearchResultsPage);
+export default Search;

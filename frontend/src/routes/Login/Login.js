@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../../store/actions';
+import * as actions from '../../store/actions';
 import './Login.scss';
 
 const Login = () => {

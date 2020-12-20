@@ -9,9 +9,9 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import Back from '../../components/UI/Back/Back';
 import Modal from '../../components/UI/Modal/Modal';
 import * as actions from '../../store/actions';
-import './ResultPage.scss';
+import './Result.scss';
 
-const ResultPage = (props) => {
+const Result = (props) => {
   const [error, setError] = useState(false);
   const [data, setData] = useState({});
   const [newPlaylist, setNewPlaylist] = useState(false);
@@ -77,7 +77,7 @@ const ResultPage = (props) => {
     results = <Spinner />;
   }
 
-  const classes = ['ResultPage'];
+  const classes = ['Result'];
   if (!data[type] && !error) {
     classes.push('loading');
   }
@@ -132,4 +132,4 @@ const ResultPage = (props) => {
   );
 };
 
-export default ResultPage;
+export default Result;

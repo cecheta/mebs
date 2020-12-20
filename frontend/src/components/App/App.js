@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import Home from './containers/Home/Home';
-import SearchResultsPage from './containers/SearchResultsPage/SearchResultsPage';
-import ResultPage from './containers/ResultPage/ResultPage';
-import Playlist from './containers/Playlist/Playlist';
-import Account from './containers/Account/Account';
-import Login from './containers/Auth/Login/Login';
-import Logout from './containers/Auth/Logout/Logout';
-import Register from './containers/Auth/Register/Register';
-import Navigation from './components/Navigation/Navigation';
-import * as actions from './store/actions';
+import Navigation from '../Navigation';
+import Home from '../../routes/Home';
+import Search from '../../routes/Search';
+import Result from '../../routes/Result';
+import Playlist from '../../routes/Playlist';
+import Account from '../../routes/Account';
+import Login from '../../routes/Login';
+import Logout from '../../routes/Logout';
+import Register from '../../routes/Register';
+import * as actions from '../../store/actions';
 import './App.scss';
 
 const App = () => {
@@ -56,10 +56,10 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
           <Route path="/register" component={Register} />
-          <Route path="/search" component={SearchResultsPage} />
+          <Route path="/search" component={Search} />
           <Route path="/account/playlist/:id" component={Playlist} />
           <Route path="/account" component={Account} />
-          <Route path="/r/:type/:id" component={ResultPage} />
+          <Route path="/r/:type/:id" component={Result} />
           <Route path="/" component={Home} />
         </Switch>
       ) : null}
