@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Album from '../../components/AccountItems/Album/Album';
-import Artist from '../../components/AccountItems/Artist/Artist';
-import Spinner from '../../components/UI/Spinner/Spinner';
+import Album from './components/Album';
+import Artist from './components/Artist';
+import Spinner from '../../components/UI/Spinner';
 import { ReactComponent as Delete } from '../../assets/images/cross.svg';
 import './Account.scss';
 

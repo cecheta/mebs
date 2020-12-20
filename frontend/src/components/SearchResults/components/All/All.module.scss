@@ -1,0 +1,38 @@
+.Albums {
+  display: flex;
+  overflow: scroll;
+}
+
+.Artists,
+.Songs {
+  width: 50%;
+  float: left;
+}
+
+.Album {
+  text-align: center;
+
+  img {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+  }
+}
+
+.Artist {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+
+  img {
+    height: 5rem;
+    width: 5rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.Song {
+  display: flex;
+  align-items: center;
+}

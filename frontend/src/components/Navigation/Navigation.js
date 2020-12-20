@@ -1,10 +1,9 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import './Navigation.scss';
 
-const Navigation = (props) => {
+const Navigation = () => {
   const { token } = useSelector(
     (state) => ({
       token: state.auth.token,
@@ -35,4 +34,4 @@ const Navigation = (props) => {
   );
 };
 
-export default withRouter(Navigation);
+export default Navigation;

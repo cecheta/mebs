@@ -1,0 +1,31 @@
+.Artists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  row-gap: 8rem;
+  margin: 5rem auto 0;
+  width: 90%;
+}
+
+.Artist {
+  text-align: center;
+
+  img {
+    height: 15rem;
+    width: 15rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.Name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+
+  .Star {
+    margin-left: 0.5rem;
+    height: 2rem;
+    width: 2rem;
+  }
+}

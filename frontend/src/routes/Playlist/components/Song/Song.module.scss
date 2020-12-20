@@ -1,0 +1,16 @@
+.Song{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .Container {
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    height: 2rem;
+    width: 2rem;
+    justify-self: end;
+  }
+}

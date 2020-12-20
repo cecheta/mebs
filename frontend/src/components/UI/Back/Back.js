@@ -1,13 +1,15 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Back.scss';
 
-const Back = (props) => {
+const Back = () => {
+  const history = useHistory();
+
   return (
-    <div className="Back" onClick={() => props.history.goBack()}>
+    <div className="Back" onClick={() => history.goBack()}>
       &larr;
     </div>
   );
 };
 
-export default withRouter(Back);
+export default Back;

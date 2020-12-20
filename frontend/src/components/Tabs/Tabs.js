@@ -1,9 +1,11 @@
 import React from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Tabs.scss';
 
-const Tabs = (props) => {
-  const params = new URLSearchParams(props.location.search);
+const Tabs = () => {
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
   const query = params.get('q');
   const searchType = params.get('type');
 
@@ -37,4 +39,4 @@ const Tabs = (props) => {
   );
 };
 
-export default withRouter(Tabs);
+export default Tabs;

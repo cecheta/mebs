@@ -3,11 +3,11 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
 import Album from '../../components/Pages/Album/Album';
 import Artist from '../../components/Pages/Artist/Artist';
-import AddToPlaylist from '../../components/Playlist/AddToPlaylist/AddToPlaylist';
-import NewPlaylist from '../../components/Playlist/NewPlaylist/NewPlaylist';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import Back from '../../components/UI/Back/Back';
-import Modal from '../../components/UI/Modal/Modal';
+import AddToPlaylist from '../../components/AddToPlaylist';
+import NewPlaylist from '../../components/NewPlaylist';
+import Spinner from '../../components/UI/Spinner';
+import Back from '../../components/UI/Back';
+import Modal from '../../components/UI/Modal';
 import * as actions from '../../store/actions';
 import './Result.scss';
 

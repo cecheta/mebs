@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Search.scss';
 
-const HomeSearch = (props) => {
+const HomeSearch = () => {
   const [query, setQuery] = useState('');
+
+  const history = useHistory();
 
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
@@ -11,7 +13,7 @@ const HomeSearch = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    props.history.push(`/search?q=${encodeURIComponent(query)}&type=all`);
+    history.push(`/search?q=${encodeURIComponent(query)}&type=all`);
   };
 
   return (
@@ -25,4 +27,4 @@ const HomeSearch = (props) => {
   );
 };
 
-export default withRouter(HomeSearch);
+export default HomeSearch;
