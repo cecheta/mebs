@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import Album from '../../components/Pages/Album/Album';
-import Artist from '../../components/Pages/Artist/Artist';
+import Album from './components/Album';
 import AddToPlaylist from '../../components/AddToPlaylist';
 import NewPlaylist from '../../components/NewPlaylist';
 import Spinner from '../../components/UI/Spinner';
 import Back from '../../components/UI/Back';
 import Modal from '../../components/UI/Modal';
 import * as actions from '../../store/actions';
-import './Result.scss';
+import './AlbumPage.scss';
 
-const Result = (props) => {
-  const [error, setError] = useState(false);
-  const [data, setData] = useState({});
+const AlbumPage = (props) => {
+  const [album, setAlbum] = useState(null);
   const [newPlaylist, setNewPlaylist] = useState(false);
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -25,16 +24,15 @@ const Result = (props) => {
   });
 
   const id = props.match.params.id;
-  const type = props.match.params.type;
 
   useEffect(() => {
     (async () => {
-      if (!error && !data[type]) {
+      if (!error && !album) {
         try {
-          const response = await axios.get(`/api/${type}s/${id}`, {
+          const response = await axios.get(`/api/albums/${id}`, {
             cancelToken: requestRef.current.source.token,
           });
-          setData({ [type]: response.data });
+          setAlbum(response.data);
         } catch (error) {
           if (!axios.isCancel(error)) {
             setError(true);
@@ -42,7 +40,7 @@ const Result = (props) => {
         }
       }
     })();
-  }, [data, error, id, type]);
+  }, [error, id, album]);
 
   useEffect(() => {
     return () => {
@@ -60,12 +58,8 @@ const Result = (props) => {
   }, []);
 
   let results;
-  if (data[type]) {
-    if (type === 'album') {
-      results = <Album id={data.album.id} name={data.album.name} artists={data.album.artists} image={data.album.images[0]} songs={data.album.tracks} />;
-    } else if (type === 'artist') {
-      results = <Artist id={data.artist.id} name={data.artist.name} albums={data.artist.albums} image={data.artist.images[0]} songs={data.artist.tracks} />;
-    }
+  if (album) {
+    results = <Album id={album.id} name={album.name} artists={album.artists} image={album.images[0]} songs={album.tracks} />;
   } else if (error) {
     results = (
       <div>
@@ -77,8 +71,8 @@ const Result = (props) => {
     results = <Spinner />;
   }
 
-  const classes = ['Result'];
-  if (!data[type] && !error) {
+  const classes = ['AlbumPage'];
+  if (!album && !error) {
     classes.push('loading');
   }
 
@@ -132,4 +126,4 @@ const Result = (props) => {
   );
 };
 
-export default Result;
+export default AlbumPage;

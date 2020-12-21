@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
-import SongItem from './SongItem';
-import AlbumItem from './AlbumItem';
-import * as actions from '../../../store/actions';
-import { ReactComponent as StarEmpty } from '../../../assets/images/star-empty.svg';
-import { ReactComponent as StarFull } from '../../../assets/images/star-full.svg';
+import Song from '../Song';
+import Album from '../Album';
+import * as actions from '../../../../store/actions';
+import { ReactComponent as StarEmpty } from '../../../../assets/images/star-empty.svg';
+import { ReactComponent as StarFull } from '../../../../assets/images/star-full.svg';
 import classes from './Artist.module.scss';
 
 const Artist = ({ id, name, albums, image, songs }) => {
-  const songsElements = songs.map((song) => <SongItem key={song.id} name={song.name} image={song.album.images[2]} album={song.album} />);
-  const albumElements = albums.map((album) => <AlbumItem key={album.id} id={album.id} name={album.name} image={album.images[2]} />);
+  const songsElements = songs.map((song) => <Song key={song.id} name={song.name} image={song.album.images[2]} album={song.album} />);
+  const albumElements = albums.map((album) => <Album key={album.id} id={album.id} name={album.name} image={album.images[2]} />);
 
   const dispatch = useDispatch();
 

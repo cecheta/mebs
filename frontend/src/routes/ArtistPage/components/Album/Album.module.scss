@@ -1,0 +1,10 @@
+.Album {
+  display: flex;
+  align-items: center;
+
+  .AlbumImage {
+    height: 7rem;
+    width: 7rem;
+    object-fit: cover;
+  }
+}

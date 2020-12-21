@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import axios from 'axios';
-import SongItem from './SongItem';
-import * as actions from '../../../store/actions';
-import { ReactComponent as StarEmpty } from '../../../assets/images/star-empty.svg';
-import { ReactComponent as StarFull } from '../../../assets/images/star-full.svg';
+import Song from '../Song';
+import * as actions from '../../../../store/actions';
+import { ReactComponent as StarEmpty } from '../../../../assets/images/star-empty.svg';
+import { ReactComponent as StarFull } from '../../../../assets/images/star-full.svg';
 import classes from './Album.module.scss';
 
 const Album = ({ id, artists, name, image, songs }) => {
@@ -22,7 +22,7 @@ const Album = ({ id, artists, name, image, songs }) => {
       </span>
     );
   });
-  const albumSongs = songs.items.map((song) => <SongItem key={song.id} id={song.id} songArtists={song.artists} albumArtists={albumArtists} number={song.track_number} name={song.name} />);
+  const albumSongs = songs.items.map((song) => <Song key={song.id} id={song.id} songArtists={song.artists} albumArtists={albumArtists} number={song.track_number} name={song.name} />);
 
   const dispatch = useDispatch();
 

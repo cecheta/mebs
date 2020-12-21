@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as actions from '../../../store/actions';
-import { ReactComponent as Add } from '../../../assets/images/plus.svg';
-import classes from './SongItem.module.scss';
+import * as actions from '../../../../store/actions';
+import { ReactComponent as Add } from '../../../../assets/images/plus.svg';
+import classes from './Song.module.scss';
 
-const SongItem = ({ id, name, number, songArtists, albumArtists }) => {
+const Song = ({ id, name, number, songArtists, albumArtists }) => {
   const dispatch = useDispatch();
 
   const artists = songArtists.map((artist) => ({
@@ -40,7 +40,7 @@ const SongItem = ({ id, name, number, songArtists, albumArtists }) => {
   };
 
   return (
-    <div className={classes.SongItem}>
+    <div className={classes.Song}>
       <h4>
         <span className={classes.number}>{number}.</span>
         {name}
@@ -53,4 +53,4 @@ const SongItem = ({ id, name, number, songArtists, albumArtists }) => {
   );
 };
 
-export default SongItem;
+export default Song;

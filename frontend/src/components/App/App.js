@@ -4,7 +4,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Navigation from '../Navigation';
 import Home from '../../routes/Home';
 import Search from '../../routes/Search';
-import Result from '../../routes/Result';
+import AlbumPage from '../../routes/AlbumPage';
+import ArtistPage from '../../routes/ArtistPage';
 import Playlist from '../../routes/Playlist';
 import Account from '../../routes/Account';
 import Login from '../../routes/Login';
@@ -59,7 +60,8 @@ const App = () => {
           <Route path="/search" component={Search} />
           <Route path="/account/playlist/:id" component={Playlist} />
           <Route path="/account" component={Account} />
-          <Route path="/r/:type/:id" component={Result} />
+          <Route path="/r/album/:id" component={AlbumPage} />
+          <Route path="/r/artist/:id" component={ArtistPage} />
           <Route path="/" component={Home} />
         </Switch>
       ) : null}
