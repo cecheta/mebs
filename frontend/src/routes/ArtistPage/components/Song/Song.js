@@ -4,7 +4,7 @@ import classes from './Song.module.scss';
 
 const Song = ({ name, image, album }) => {
   return (
-    <Link to={`/r/album/${album.id}`}>
+    <Link to={`/album/${album.id}`}>
       <div className={classes.Song}>
         {image ? <img className={classes.SongImage} src={image.url} alt="" /> : null}
         <h4>{name}</h4>

@@ -60,8 +60,8 @@ const App = () => {
           <Route path="/search" component={Search} />
           <Route path="/account/playlist/:id" component={Playlist} />
           <Route path="/account" component={Account} />
-          <Route path="/r/album/:id" component={AlbumPage} />
-          <Route path="/r/artist/:id" component={ArtistPage} />
+          <Route path="/album/:id" component={AlbumPage} />
+          <Route path="/artist/:id" component={ArtistPage} />
           <Route path="/" component={Home} />
         </Switch>
       ) : null}

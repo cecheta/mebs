@@ -20,7 +20,7 @@ const Artist = ({ id, name, image }) => {
   ) : null;
 
   return (
-    <Link to={`/r/artist/${id}`}>
+    <Link to={`/artist/${id}`}>
       <div className={classes.Artist}>
         {image ? <img src={image.url} alt="" /> : null}
         <div className={classes.Name}>

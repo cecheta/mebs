@@ -19,7 +19,7 @@ const Album = ({ id, name, artists, image }) => {
     const comma = <span>,&nbsp;</span>;
     return (
       <span key={artist.id}>
-        <Link to={`/r/artist/${artist.id}`}>{artist.name}</Link>
+        <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
         {i !== arr.length - 1 ? comma : null}
       </span>
     );
@@ -35,11 +35,11 @@ const Album = ({ id, name, artists, image }) => {
 
   return (
     <div className={classes.Album}>
-      <Link to={`/r/album/${id}`}>{image ? <img src={image.url} alt="" /> : null}</Link>
+      <Link to={`/album/${id}`}>{image ? <img src={image.url} alt="" /> : null}</Link>
       <div className={classes.Info}>
         <div>
           <h3>
-            <Link to={`/r/album/${id}`}>{name}</Link>
+            <Link to={`/album/${id}`}>{name}</Link>
           </h3>
           <h4>{artistElements}</h4>
         </div>
