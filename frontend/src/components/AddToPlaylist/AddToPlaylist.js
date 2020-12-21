@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions';
 import './AddToPlaylist.scss';
 
 const AddToPlaylist = (props) => {
-  const [playlists, setPlaylists] = useState([]);
-
-  const { song } = useSelector((state) => ({ song: state.playlists.song }), shallowEqual);
+  const song = useSelector((state) => state.playlists.song);
+  const playlists = useSelector((state) => state.playlists.playlists);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => {
-      const response = await axios.get('/api/playlists');
-      setPlaylists(response.data);
-    })();
-  }, []);
+    dispatch(actions.playlistFetch());
+  }, [dispatch]);
 
   const playlistElements = playlists.map((playlist) => (
     <li key={playlist._id} onClick={() => addSong(playlist._id)}>

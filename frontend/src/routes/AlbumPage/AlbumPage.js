@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Album from './components/Album';
 import AddToPlaylist from '../../components/AddToPlaylist';
@@ -17,7 +17,8 @@ const AlbumPage = (props) => {
 
   const dispatch = useDispatch();
 
-  const { song } = useSelector((state) => ({ song: state.playlists.song }), shallowEqual);
+  const song = useSelector((state) => state.playlists.song);
+  const playlists = useSelector((state) => state.playlists.playlists);
 
   const requestRef = useRef({
     source: axios.CancelToken.source(),
@@ -90,19 +91,29 @@ const AlbumPage = (props) => {
 
   const createNewPlaylist = async (name) => {
     const payload = { name };
-    const response = await axios.post('/api/playlists/new', payload);
-    return response.data;
+    const playlistNames = playlists.map((playlist) => playlist.name);
+    if (playlistNames.includes(name)) {
+      alert(`Playlist called ${name} already exists`);
+    } else {
+      const response = await axios.post('/api/playlists/new', payload);
+      return response.data;
+    }
   };
 
   const submitNewPlaylist = async (e, name) => {
     e.preventDefault();
     try {
       const data = await createNewPlaylist(name);
-      dispatch(actions.playlistAddSong(data._id));
+      if (data) {
+        dispatch(actions.playlistAddSong(data._id));
+        setNewPlaylist(false);
+      }
     } catch (err) {
-      console.log(err);
-    } finally {
-      setNewPlaylist(false);
+      if (err.response.status === 400) {
+        alert(`Playlist called ${name} already exists`);
+      } else {
+        console.log(err);
+      }
     }
   };
 

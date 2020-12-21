@@ -11,4 +11,5 @@ export const ADD_ALBUM = 'ADD_ALBUM';
 export const REMOVE_ALBUM = 'REMOVE_ALBUM';
 
 export const PLAYLIST_START = 'PLAYLIST_START';
+export const PLAYLIST_SAVE = 'PLAYLIST_SAVE';
 export const PLAYLIST_END = 'PLAYLIST_END';
