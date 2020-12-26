@@ -5,4 +5,15 @@
   position: absolute;
   left: 0;
   top: 100vh;
+  animation: fadein 5s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
 }

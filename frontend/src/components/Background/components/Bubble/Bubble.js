@@ -8,6 +8,13 @@ const Bubble = () => {
   useEffect(() => {
     const bubble = ref.current;
 
+    const top = Math.random() * 100;
+    bubble.style.top = `${top}vh`;
+  }, []);
+
+  useEffect(() => {
+    const bubble = ref.current;
+
     const size = Math.random() * 8 + 5;
     const left = Math.random() * (100 - size);
 
@@ -18,20 +25,23 @@ const Bubble = () => {
     const speed = Math.random() / 5 + 0.1;
     const delay = Math.random() * 10 * 1000;
 
-    
     let interval;
-    let timeout = setTimeout(() => {
-      interval = setInterval(() => {
-        const top = bubble.getBoundingClientRect().top;
-        const width = bubble.getBoundingClientRect().width;
-        bubble.style.top = `${top - speed}px`;
+    let timeout;
 
-        if (+(top - speed) + width < 0) {
-          bubble.style.removeProperty('top');
+    interval = setInterval(() => {
+      const top = bubble.getBoundingClientRect().top;
+      const width = bubble.getBoundingClientRect().width;
+      bubble.style.top = `${top - speed}px`;
+
+      if (+(top - speed) + width < 0) {
+        bubble.style.removeProperty('top');
+        clearInterval(interval);
+
+        timeout = setTimeout(() => {
           setLoop((loop) => loop + 1);
-        }
-      }, 1);
-    }, delay);
+        }, delay);
+      }
+    }, 1);
 
     return () => {
       clearTimeout(timeout);
