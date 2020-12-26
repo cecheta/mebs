@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import './Search.scss';
+import './HomeSearch.scss';
 
 const HomeSearch = () => {
   const [query, setQuery] = useState('');
