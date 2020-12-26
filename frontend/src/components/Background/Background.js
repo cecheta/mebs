@@ -21,4 +21,4 @@ const Background = () => {
   return <>{bubbles}</>;
 };
 
-export default Background;
+export default React.memo(Background);

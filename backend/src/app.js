@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const searchRouter = require('./routers/search');
+const chartsRouter = require('./routers/charts');
 const accountRouter = require('./routers/account');
 const authRouter = require('./routers/auth');
 const favouritesRouter = require('./routers/favourites');
@@ -26,6 +27,7 @@ const apiRouter = express.Router();
 app.use('/api', apiRouter);
 
 apiRouter.use(searchRouter);
+apiRouter.use('/charts', chartsRouter);
 apiRouter.use(accountRouter);
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/favourites', favouritesRouter);

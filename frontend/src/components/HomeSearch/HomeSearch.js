@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './HomeSearch.scss';
 
-const HomeSearch = () => {
+const HomeSearch = ({ suggestion }) => {
   const [query, setQuery] = useState('');
 
   const history = useHistory();
@@ -20,7 +20,7 @@ const HomeSearch = () => {
     <div className="HomeSearch">
       <h1>Mebs</h1>
       <form onSubmit={submitHandler}>
-        <input type="text" name="query" placeholder="Search" value={query} onChange={queryChangeHandler} />
+        <input type="text" name="query" placeholder={`Search for ${suggestion ? suggestion : '...'}`} value={query} onChange={queryChangeHandler} />
         <button>Search</button>
       </form>
     </div>
