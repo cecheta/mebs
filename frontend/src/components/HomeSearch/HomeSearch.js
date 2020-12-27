@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import './HomeSearch.scss';
@@ -9,30 +9,32 @@ const HomeSearch = ({ suggestions }) => {
 
   const history = useHistory();
 
+  const counter = useRef(0);
   const nodeRef = React.useRef(null);
 
-  const randomSuggestion = useCallback((suggestions) => {
-    return suggestions[Math.floor(Math.random() * suggestions.length)];
-  }, []);
+  const nextSuggestion = useCallback(() => {
+    setSuggestion(suggestions[counter.current]);
+    counter.current++;
+    if (counter.current === suggestions.length) {
+      counter.current = 0;
+    }
+  }, [suggestions]);
 
   useEffect(() => {
-    setSuggestion(randomSuggestion(suggestions));
-  }, [suggestions, randomSuggestion]);
+    if (suggestions.length > 0) {
+      nextSuggestion();
+    }
+  }, [suggestions, nextSuggestion]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      let newSuggestion = randomSuggestion(suggestions);
-      while (newSuggestion === suggestion) {
-        newSuggestion = randomSuggestion(suggestions);
-      }
-
-      setSuggestion(newSuggestion);
+      nextSuggestion();
     }, 2000);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [suggestion, suggestions, randomSuggestion]);
+  }, [suggestion, suggestions, nextSuggestion]);
 
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
