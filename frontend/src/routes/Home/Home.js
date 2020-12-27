@@ -24,7 +24,12 @@ const Home = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setSuggestion(randomSuggestion(suggestions));
+      let newSuggestion = randomSuggestion(suggestions);
+      while (newSuggestion === suggestion) {
+        newSuggestion = randomSuggestion(suggestions);
+      }
+
+      setSuggestion(newSuggestion);
     }, 5000);
 
     return () => {
