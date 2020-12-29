@@ -1,5 +1,5 @@
 .App {
-  background-image: linear-gradient(to right bottom, rgb(46, 19, 119), rgb(131, 103, 207));
+  background-image: linear-gradient(to right bottom, var(--color-primary-dark), var(--color-primary-light));
   min-height: 100vh;
   overflow: auto;
 }

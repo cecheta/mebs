@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import Button from '../UI/Button';
+import Input from '../UI/Input';
 import './HomeSearch.scss';
 
 const HomeSearch = ({ suggestions }) => {
@@ -15,7 +17,7 @@ const HomeSearch = ({ suggestions }) => {
   const nextSuggestion = useCallback(() => {
     setSuggestion(suggestions[counter.current]);
     counter.current++;
-    if (counter.current === suggestions.length) {
+    if (counter.current >= suggestions.length) {
       counter.current = 0;
     }
   }, [suggestions]);
@@ -54,7 +56,9 @@ const HomeSearch = ({ suggestions }) => {
       <h1 className="HomeSearch__Title">Mebs</h1>
       <form className="HomeSearch__Form" onSubmit={submitHandler}>
         <div className="HomeSearch__Search">
-          <input className="HomeSearch__Input" type="text" name="query" value={query} onChange={queryChangeHandler} />
+          <div className="HomeSearch__Input">
+            <Input type="text" name="query" value={query} onChange={queryChangeHandler} />
+          </div>
           {!query ? (
             <div className="HomeSearch__Placeholder">
               <span>Search for </span>
@@ -75,7 +79,9 @@ const HomeSearch = ({ suggestions }) => {
             </div>
           ) : null}
         </div>
-        <button className="HomeSearch__Submit">Search</button>
+        <div className="HomeSearch__Submit">
+          <Button>Search</Button>
+        </div>
       </form>
     </div>
   );

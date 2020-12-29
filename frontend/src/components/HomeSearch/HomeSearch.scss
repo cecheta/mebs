@@ -1,31 +1,31 @@
 .HomeSearch {
   background-color: #fff;
   width: 60vw;
-  height: 50vh;
   margin: 12rem auto;
   text-align: center;
   position: relative;
   z-index: 1;
+  border-radius: 20px;
+  border: 3px solid black;
+  animation: boxIn 0.4s ease-in;
+  padding-bottom: 5rem;
 
   &__Title {
     font-size: 8rem;
-    padding-top: 2rem;
-    margin-bottom: 2rem;
+    line-height: 1;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    margin: 3rem 0 3rem;
   }
 
   &__Search {
     position: relative;
     display: inline-block;
-    font-family: Arial, Helvetica, sans-serif;
   }
 
   &__Input {
     width: 50vw;
-    height: 60px;
-    font-size: 5rem;
-    border-radius: 100px;
-    border: 1px solid black;
-    padding-left: 30px;
+    height: 6rem;
   }
 
   &__Placeholder {
@@ -33,34 +33,34 @@
     pointer-events: none;
     white-space: nowrap;
     text-align: left;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font-family: inherit;
     width: 100%;
-    padding-left: 30px;
+    padding-left: 3.3rem;
     color: rgb(144, 144, 144);
-    top: 2px;
+    top: 0.8rem;
     left: 0;
 
     &--Suggestion {
-      font-size: 5rem;
+      font-size: 4rem;
       display: inline-block;
 
       &.enter {
-        animation: fadeIn 0.3s ease-in;
+        animation: textIn 0.3s ease-in;
       }
 
       &.exit {
-        animation: fadeOut 0.1s linear;
+        animation: textOut 0.1s linear;
       }
     }
   }
 
   &__Submit {
-    display: block;
-    margin: auto;
+    padding-top: 4rem;
   }
 }
 
-@keyframes fadeIn {
+@keyframes textIn {
   0% {
     transform: translateY(-5rem);
     opacity: 0;
@@ -76,7 +76,7 @@
   }
 }
 
-@keyframes fadeOut {
+@keyframes textOut {
   from {
     transform: translateY(0);
     opacity: 1;
@@ -85,5 +85,17 @@
   to {
     transform: translateY(5rem);
     opacity: 0;
+  }
+}
+
+@keyframes boxIn {
+  0% {
+    opacity: 0.5;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
