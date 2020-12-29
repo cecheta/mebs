@@ -18,7 +18,7 @@ const Home = () => {
     (async () => {
       const response = await axios.get('/api/charts');
       const data = [...response.data.artists, ...response.data.albums, ...response.data.songs];
-      const filteredSuggestions = [...new Set(data)].filter((el) => el.length <= 15);
+      const filteredSuggestions = [...new Set(data)].filter((el) => el.length <= 20);
       shuffleArray(filteredSuggestions);
 
       setSuggestions(filteredSuggestions);
