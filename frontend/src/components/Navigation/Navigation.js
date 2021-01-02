@@ -13,20 +13,20 @@ const Navigation = () => {
 
   return (
     <ul className="Navigation">
-      <li>
-        <Link to="/">HOME</Link>
+      <li className="Navigation__Item">
+        <Link to="/" >HOME</Link>
       </li>
       {token ? (
         <>
-          <li>
+          <li className="Navigation__Item">
             <Link to="/account">MY ACCOUNT</Link>
           </li>
-          <li>
+          <li className="Navigation__Item">
             <Link to="/logout">LOGOUT</Link>
           </li>
         </>
       ) : (
-        <li>
+        <li className="Navigation__Item">
           <Link to="/login">LOGIN</Link>
         </li>
       )}
