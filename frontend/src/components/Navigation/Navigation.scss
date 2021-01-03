@@ -11,23 +11,41 @@
   border-bottom: 2px solid black;
 
   &__Item {
-    margin: 0 2rem;
-  }
+    height: 100%;
 
-  &__Item a {
-    &:link,
-    &:visited {
-      text-decoration: none;
-      font-size: 2rem;
-      color: white;
-      transition: all 0.4s;
+    &:not(:first-child)::after {
+      content: "";
+      background-color: rgba(90, 90, 90, 0.4);
+      display: block;
+      position: relative;
+      top: -95%;
+      height: 90%;
+      left: -1px;
+      width: 2px;
+      border-radius: 50%;
     }
 
-    &:hover,
-    &:active {
-      display: inline-block;
-      color: var(--color-primary-light);
-      transform: translateY(-2px);
+    & a {
+      height: 100%;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      outline: none;
+
+      &:link,
+      &:visited {
+        text-decoration: none;
+        font-size: 2rem;
+        color: white;
+        transition: all 0.4s;
+      }
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: rgb(51, 36, 82);
+        color: rgb(185, 151, 255);
+      }
     }
   }
 }

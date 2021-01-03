@@ -51,19 +51,21 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navigation />
       {loaded ? (
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/register" component={Register} />
-          <Route path="/search" component={Search} />
-          <Route path="/account/playlist/:id" component={Playlist} />
-          <Route path="/account" component={Account} />
-          <Route path="/album/:id" component={AlbumPage} />
-          <Route path="/artist/:id" component={ArtistPage} />
-          <Route path="/" component={Home} />
-        </Switch>
+        <>
+          <Navigation />
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/register" component={Register} />
+            <Route path="/search" component={Search} />
+            <Route path="/account/playlist/:id" component={Playlist} />
+            <Route path="/account" component={Account} />
+            <Route path="/album/:id" component={AlbumPage} />
+            <Route path="/artist/:id" component={ArtistPage} />
+            <Route path="/" component={Home} />
+          </Switch>
+        </>
       ) : null}
     </div>
   );
