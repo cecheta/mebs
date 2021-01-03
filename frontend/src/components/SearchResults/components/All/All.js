@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Album from './Album';
+import Artist from './Artist';
+import Song from './Song';
 import classes from './All.module.scss';
 
 const All = ({ albums, artists, songs }) => {
@@ -16,71 +18,6 @@ const All = ({ albums, artists, songs }) => {
       <h3>Songs</h3>
       <div className={classes.Songs}>{songsElements}</div>
     </>
-  );
-};
-
-const Album = ({ id, name, artists, image }) => {
-  const albumArtists = artists.map((artist) => ({
-    name: artist.name,
-    id: artist.id,
-  }));
-  const artistElements = albumArtists.map((artist, i, arr) => {
-    const comma = <span>,&nbsp;</span>;
-    return (
-      <span key={artist.id}>
-        <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
-        {i !== arr.length - 1 ? comma : null}
-      </span>
-    );
-  });
-
-  return (
-    <div className={classes.Album}>
-      <Link to={`/album/${id}`}>
-        {image ? <img src={image.url} alt="" /> : null}
-        <h4>{name}</h4>
-      </Link>
-      <h5>{artistElements}</h5>
-    </div>
-  );
-};
-
-const Artist = ({ id, name, image }) => {
-  return (
-    <Link to={`/artist/${id}`}>
-      <div className={classes.Artist}>
-        {image ? <img src={image.url} alt="" /> : null}
-        <h4>{name}</h4>
-      </div>
-    </Link>
-  );
-};
-
-const Song = ({ name, artists, image, album }) => {
-  const songArtists = artists.map((artist) => ({
-    name: artist.name,
-    id: artist.id,
-  }));
-  const artistsElements = songArtists.map((artist, i, arr) => {
-    const comma = <span>,&nbsp;</span>;
-    return (
-      <span key={artist.id}>
-        <Link to={`/artist/${artist.id}`}>{artist.name}</Link>
-        {i !== arr.length - 1 ? comma : null}
-      </span>
-    );
-  });
-
-  return (
-    <div className={classes.Song}>
-      <Link to={`/album/${album.id}`}>{image ? <img src={image.url} alt="" /> : null}</Link>
-      <div className="info">
-        <h4>
-          <Link to={`/album/${album.id}`}>{name}</Link>
-        </h4>
-        <h5>{artistsElements}</h5>
-      </div>
-    </div>
   );
 };
 
