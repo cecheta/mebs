@@ -5,7 +5,7 @@ import All from './components/All';
 import Albums from './components/Albums';
 import Artists from './components/Artists';
 import Songs from './components/Songs';
-import './SearchResults.scss';
+import './Results.scss';
 
 const reducer = (state, action) => {
   const result = JSON.parse(JSON.stringify(state));

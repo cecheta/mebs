@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Redirect, Switch, useLocation, useHistory } from 'react-router-dom';
 import Input from '../../components/UI/Input';
 import Tabs from '../../components/Tabs';
-import Results from '../../components/SearchResults';
+import Results from '../../components/Results';
 import classes from './Search.module.scss';
 
 const Search = () => {
