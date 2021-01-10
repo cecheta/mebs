@@ -1,18 +1,19 @@
 .Tabs {
-  list-style: none;
-  display: flex;
-}
-
-.Tab {
   --tab-border-radius: 10px;
   --tab-border-thickness: 3px;
   --tab-height: 5rem;
   --tab-extra-width: 2rem;
   --tab-extra-width-placement: 4%;
 
+  list-style: none;
+  display: flex;
+  border-bottom: 4px solid rgb(187, 187, 187);
+}
+
+.Tab {
   height: var(--tab-height);
   flex: 1 0 0;
-  border: var(--tab-border-thickness) solid rgb(236, 236, 236);
+  border: var(--tab-border-thickness) solid rgb(230, 230, 230);
   border-bottom: 0;
   border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0;
   position: relative;
@@ -33,6 +34,11 @@
     color: rgb(161, 161, 161);
   }
 
+  &.active {
+    border: var(--tab-border-thickness) solid rgb(187, 187, 187);
+    border-bottom: 0;
+  }
+
   &.active:not(:first-child)::before {
     content: "";
     background-color: white;
@@ -42,8 +48,8 @@
     height: var(--tab-height);
     width: var(--tab-extra-width);
     left: calc(calc(0px - var(--tab-border-thickness)) - var(--tab-extra-width-placement));
-    border-top: var(--tab-border-thickness) solid rgb(236, 236, 236);
-    border-left: var(--tab-border-thickness) solid rgb(236, 236, 236);
+    border-top: var(--tab-border-thickness) solid rgb(187, 187, 187);
+    border-left: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-top-left-radius: var(--tab-border-radius);
     box-shadow: -3px 1px 2px -2px;
     z-index: 1;
@@ -59,8 +65,8 @@
     height: var(--tab-height);
     width: var(--tab-extra-width);
     left: calc(100% - var(--tab-extra-width) + var(--tab-border-thickness) + var(--tab-extra-width-placement));
-    border-top: var(--tab-border-thickness) solid rgb(236, 236, 236);
-    border-right: var(--tab-border-thickness) solid rgb(236, 236, 236);
+    border-top: var(--tab-border-thickness) solid rgb(187, 187, 187);
+    border-right: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-top-right-radius: var(--tab-border-radius);
     box-shadow: 3px 1px 2px -2px;
     z-index: 1;
