@@ -1,20 +1,73 @@
 .Tabs {
   list-style: none;
   display: flex;
+}
 
-  li {
-    flex-grow: 1;
-    text-align: center;
-    
-    a:link,
-    a:visited {
-      font-size: 3rem;
-      text-decoration: none;
-      color: rgb(161, 161, 161);
-    }
+.Tab {
+  --tab-border-radius: 10px;
+  --tab-border-thickness: 3px;
+  --tab-height: 5rem;
+  --tab-extra-width: 2rem;
+  --tab-extra-width-placement: 4%;
 
-    a.active {
-      color: black;
-    }
+  height: var(--tab-height);
+  flex: 1 0 0;
+  border: var(--tab-border-thickness) solid rgb(236, 236, 236);
+  border-bottom: 0;
+  border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0;
+  position: relative;
+
+  &__Link {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 0.2rem;
+  }
+
+  &__Link:link,
+  &__Link:visited {
+    font-size: 3rem;
+    text-decoration: none;
+    color: rgb(161, 161, 161);
+  }
+
+  &.active:not(:first-child)::before {
+    content: "";
+    background-color: white;
+    display: block;
+    position: absolute;
+    top: calc(0px - var(--tab-border-thickness));
+    height: var(--tab-height);
+    width: var(--tab-extra-width);
+    left: calc(calc(0px - var(--tab-border-thickness)) - var(--tab-extra-width-placement));
+    border-top: var(--tab-border-thickness) solid rgb(236, 236, 236);
+    border-left: var(--tab-border-thickness) solid rgb(236, 236, 236);
+    border-top-left-radius: var(--tab-border-radius);
+    box-shadow: -3px 1px 2px -2px;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  &.active:not(:last-child)::after {
+    content: "";
+    background-color: white;
+    display: block;
+    position: absolute;
+    top: calc(0px - var(--tab-border-thickness));
+    height: var(--tab-height);
+    width: var(--tab-extra-width);
+    left: calc(100% - var(--tab-extra-width) + var(--tab-border-thickness) + var(--tab-extra-width-placement));
+    border-top: var(--tab-border-thickness) solid rgb(236, 236, 236);
+    border-right: var(--tab-border-thickness) solid rgb(236, 236, 236);
+    border-top-right-radius: var(--tab-border-radius);
+    box-shadow: 3px 1px 2px -2px;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  &.active &__Link {
+    color: black;
   }
 }
