@@ -2,7 +2,7 @@
   --tab-border-radius: 10px;
   --tab-border-thickness: 3px;
   --tab-height: 5rem;
-  --tab-extra-width: 2rem;
+  --tab-extra-width: 10%;
   --tab-extra-width-placement: 4%;
 
   list-style: none;
@@ -47,7 +47,7 @@
     top: calc(0px - var(--tab-border-thickness));
     height: var(--tab-height);
     width: var(--tab-extra-width);
-    left: calc(calc(0px - var(--tab-border-thickness)) - var(--tab-extra-width-placement));
+    left: calc(0px - var(--tab-border-thickness)) - var(--tab-extra-width-placement);
     border-top: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-left: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-top-left-radius: var(--tab-border-radius);
@@ -64,7 +64,7 @@
     top: calc(0px - var(--tab-border-thickness));
     height: var(--tab-height);
     width: var(--tab-extra-width);
-    left: calc(100% - var(--tab-extra-width) + var(--tab-border-thickness) + var(--tab-extra-width-placement));
+    right: calc(0px - var(--tab-border-thickness) - var(--tab-extra-width-placement));
     border-top: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-right: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-top-right-radius: var(--tab-border-radius);
