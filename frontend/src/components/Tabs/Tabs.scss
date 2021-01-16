@@ -47,7 +47,7 @@
     top: calc(0px - var(--tab-border-thickness));
     height: var(--tab-height);
     width: var(--tab-extra-width);
-    left: calc(0px - var(--tab-border-thickness)) - var(--tab-extra-width-placement);
+    left: calc(0px - var(--tab-border-thickness) - var(--tab-extra-width-placement));
     border-top: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-left: var(--tab-border-thickness) solid rgb(187, 187, 187);
     border-top-left-radius: var(--tab-border-radius);
