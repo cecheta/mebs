@@ -34,7 +34,7 @@ const Search = () => {
     if (input !== '') {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
-        const queryString = location.search.replace(encodeURIComponent(q), encodeURIComponent(input));
+        const queryString = decodeURIComponent(location.search).replace(q, input);
         history.push(`/search${queryString}`);
         inputChangedRef.current = false;
         setQuery(input);
