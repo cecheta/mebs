@@ -1,12 +1,15 @@
 .Albums {
   position: relative;
+  margin: 1rem 4rem 0;
 
   &__Title {
-    font-size: 2rem;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   &__Container {
     width: 100%;
+    margin-bottom: 3rem;
     position: relative;
     white-space: nowrap;
 
@@ -17,7 +20,8 @@
   }
 
   &__Images {
-    width: 100%;
+    width: 94%;
+    margin: 0 3%;
     position: relative;
     transition: left 0.6s;
     display: inline-flex;

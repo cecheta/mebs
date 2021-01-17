@@ -21,9 +21,9 @@ const Album = ({ id, name, artists, image }) => {
     <div className={classes.Album}>
       <Link to={`/album/${id}`}>
         {image ? <img className={classes.Album__Image} src={image.url} alt="" /> : null}
-        <h4 className={classes.Album__Name}>{name}</h4>
+        <h3 className={classes.Album__Name}>{name}</h3>
       </Link>
-      <h5 className={classes.Album__Artists}>{artistElements}</h5>
+      <h4 className={classes.Album__Artists}>{artistElements}</h4>
     </div>
   );
 };
