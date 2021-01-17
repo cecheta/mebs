@@ -12,7 +12,7 @@ const HomeSearch = ({ suggestions }) => {
   const history = useHistory();
 
   const counter = useRef(0);
-  const nodeRef = React.useRef(null);
+  const nodeRef = useRef(null);
 
   const nextSuggestion = useCallback(() => {
     setSuggestion(suggestions[counter.current]);
@@ -49,7 +49,7 @@ const HomeSearch = ({ suggestions }) => {
     }
   };
 
-  const suggestionText = suggestion ? suggestion : '...';
+  const suggestionText = suggestion || '...';
 
   return (
     <div className="HomeSearch">
@@ -62,7 +62,7 @@ const HomeSearch = ({ suggestions }) => {
           {!query ? (
             <div className="HomeSearch__Placeholder">
               <span>Search for </span>
-              <SwitchTransition className="HomeSearch__Placeholder">
+              <SwitchTransition>
                 <CSSTransition
                   nodeRef={nodeRef}
                   timeout={{

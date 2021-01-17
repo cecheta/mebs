@@ -1,6 +1,48 @@
 .Albums {
-  display: flex;
-  overflow: scroll;
+  position: relative;
+
+  &__Title {
+    font-size: 2rem;
+  }
+
+  &__Container {
+    width: 100%;
+    position: relative;
+    white-space: nowrap;
+
+    &:hover .Albums__Button {
+      opacity: 1;
+      top: calc((100% - 5rem) / 2);
+    }
+  }
+
+  &__Images {
+    width: 100%;
+    position: relative;
+    transition: left 0.6s;
+    display: inline-flex;
+    justify-content: space-evenly;
+  }
+
+  &__Button {
+    position: absolute;
+    z-index: 1;
+    height: 5rem;
+    width: 5rem;
+    font-size: 4rem;
+    border-radius: 50%;
+    top: calc(((100% - 5rem) / 2) + 4rem);
+    opacity: 0;
+    transition: all 0.3s;
+
+    &--Decrement {
+      left: 3rem;
+    }
+
+    &--Increment {
+      right: 3rem;
+    }
+  }
 }
 
 .Artists,

@@ -20,10 +20,10 @@ const Album = ({ id, name, artists, image }) => {
   return (
     <div className={classes.Album}>
       <Link to={`/album/${id}`}>
-        {image ? <img src={image.url} alt="" /> : null}
-        <h4>{name}</h4>
+        {image ? <img className={classes.Album__Image} src={image.url} alt="" /> : null}
+        <h4 className={classes.Album__Name}>{name}</h4>
       </Link>
-      <h5>{artistElements}</h5>
+      <h5 className={classes.Album__Artists}>{artistElements}</h5>
     </div>
   );
 };

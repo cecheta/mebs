@@ -1,9 +1,37 @@
 .Album {
   text-align: center;
+  width: 25rem;
 
-  img {
+  & a {
+    text-decoration: none;
+  }
+
+  & a:hover {
+    text-decoration: underline;
+    text-decoration-color: black;
+  }
+
+  &__Image {
     height: 15rem;
     width: 15rem;
     object-fit: cover;
+  }
+
+  &__Name,
+  &__Artists {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__Name {
+    font-size: 2rem;
+    color: black;
+  }
+
+  &__Artists a,
+  &__Artists span {
+    font-size: 1.3rem;
+    color: black;
   }
 }
