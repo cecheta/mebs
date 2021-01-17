@@ -31,7 +31,7 @@ const Search = () => {
     inputChangedRef.current = true;
     setText(input);
 
-    if (input !== '') {
+    if (input !== '' && text.trim() !== input.trim()) {
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(() => {
         const queryString = decodeURIComponent(location.search).replace(q, input);
